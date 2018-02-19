@@ -1,5 +1,9 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); 
 error_reporting(E_ERROR | E_PARSE);
+
+$user_name=$this->session->userdata('user_name');
+
+$profile_type=$this->session->userdata('profile_type');
 ?>
 <!DOCTYPE html>
 <html>
@@ -59,11 +63,19 @@ error_reporting(E_ERROR | E_PARSE);
                         <div class="col-sm-2  col-xs-4 " style="padding:3px">
                           <h5>EXPLORE</h5>
                           <ul>
+                           <?php if($profile_type=='' || $profile_type=='1'){ ?>
                             <li><a href="<?php echo base_url(); ?>project/project_listing?jm_job_type=Fixed_Price">FIXED PROJECTS</a></li>
+                            
                             <li><a href="<?php echo base_url(); ?>project/project_listing?jm_job_type=Hourly">HOURLY PROJECTS</a></li>
-                            <li><a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists?search_param=Full_Time">FULL-TIME JOBS</a></li>
-                            <li><a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists?search_param=Part_Time">PART-TIME JOBS</a></li>
+                              <?php } ?>
+                              
+                              <?php if($profile_type=='' || $profile_type=='3'){ ?>
+            				 <li><a  href="<?php echo base_url(); ?>jobseeker/jobseeker_lists?search_param=Full_Time">FULL-TIME JOBS</a></li>
+                             <li><a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists?search_param=Part_Time">PART-TIME JOBS</a></li>
+                             <?php } ?>
                             <!--  <li><a href="#">ONLINE JOBS</a></li> -->
+                        
+                          
                           </ul> 
                         </div>
                         <div class="col-sm-2  col-xs-12">
@@ -74,8 +86,8 @@ error_reporting(E_ERROR | E_PARSE);
                             <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
 
                             <a href="#" class="google"><i class="fa fa-pinterest"></i></a>
-                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+<!--                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>-->
+<!--                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>-->
                           </div>
                         </div>
                       </div>

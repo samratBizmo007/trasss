@@ -117,12 +117,13 @@ public function save_feedback_freelancer($data)
 {
 
  extract($data);
- $query="SELECT *FROM jm_freelancer_rating_table WHERE jm_project_id = '$jm_project_id'";
+ $query="SELECT * FROM jm_freelancer_rating_table WHERE jm_project_id = '$jm_project_id'";
  $result=$this->db->query($query);  
  if ($result->num_rows() > 0) 
  {
   $query_update="UPDATE jm_freelancer_rating_table SET jm_emp_id = '$jm_emp_id', jm_freelancer_id = '$jm_freelancer_id',jm_communication='$jm_communication', jm_ontimedelivery='$jm_ontimedelivery',jm_valueformoney='$jm_valueformoney',jm_expertise='$jm_expertise',jm_hire_again='$jm_hire_again',jm_feedback_comment='$jm_feedback_comment' WHERE jm_project_id = '$jm_project_id'";
-          //echo $query;die();
+          //echo $query_update;die();
+
   $result_update = $this->db->query($query_update);
         //echo $result_update;die();
   if(!$result_update) {
@@ -131,22 +132,20 @@ public function save_feedback_freelancer($data)
       'status_message' => 'Updation Failed.');
   } else {
     $demo = Post_project_model::calculate_Avg_freelancing_rating($jm_freelancer_id);
+    $Update= Post_project_model::update_status($jm_project_id);
     $response = array(
       'status' => 200,
       'status_message' => 'Details successfully updated.');
   }
-            // print_r($response);die();
-  return $response;  
 }
 else
 {
-  $query = "INSERT INTO jm_freelancer_rating_table(jm_project_id,jm_emp_id,jm_freelancer_id,jm_communication,jm_ontimedelivery,jm_valueformoney,jm_expertise,jm_hire_again,jm_feedback_comment)
+  $query_insert = "INSERT INTO jm_freelancer_rating_table(jm_project_id,jm_emp_id,jm_freelancer_id,jm_communication,jm_ontimedelivery,jm_valueformoney,jm_expertise,jm_hire_again,jm_feedback_comment)
   VALUES('$jm_project_id','$jm_emp_id','$jm_freelancer_id','$jm_communication','$jm_ontimedelivery','$jm_valueformoney','$jm_expertise','$jm_hire_again','$jm_feedback_comment')";
       //echo $query;die();
-  $result = $this->db->query($query);
-       // echo $result;die();
+  $result_insert = $this->db->query($query_insert);
 
-  if(!$result) {
+  if(!$result_insert) {
     $response = array(
       'status' => 500,
       'status_message' => 'feedback is not saved.');
@@ -155,60 +154,81 @@ else
       'status' => 200,
       'status_message' => 'feedback saved.');
   }
-     // print_r($response);die();
-  return $response;
 }
-}
+$update_where = array('jm_project_id =' => $jm_project_id);
+     $data=array('is_active'=>'0');    //2 value for bid status denotes freelancer is awarded...
+     $this->db->where($update_where);
+     $this->db->update('jm_project_list',$data);
+// ------------------close project-------------------
+
+     return $response;  
+
+   }
   //---------------------function end---------------------------------------//
 
   //-----------------------function for save feedback freelancer Employer ---------//
-public function save_feedback_freelancerEmployer($data)
+   public function save_feedback_freelancerEmployer($data)
+   {
+     extract($data);
+ //print_r($data);
+     $query="SELECT *FROM jm_employer_rating_table WHERE jm_project_id = '$jm_project_id'";
+     $result=$this->db->query($query);  
+     if ($result->num_rows() > 0) 
+     {
+      $query="UPDATE jm_employer_rating_table SET jm_employer_id = '$jm_emp_id', jm_freelance_id = '$jm_freelancer_id',jm_communication='$jm_communication', jm_payment_prompt='$jm_promptpay',jm_acc_of_requirement='$jm_reqAccuracy',jm_work_again='$jm_workAgain',jm_feedback_comment='$emp_comment' WHERE jm_project_id = '$jm_project_id'";
+        //echo $query;die();
+              $result = $this->db->query($query);
+
+      if(!$result) {
+        $response = array(
+          'status' => 500,
+          'status_message' => 'Updation Failed.');
+      } else {
+       $demo = Post_project_model::calculate_Avg_freelancerEmp_rating($jm_emp_id);
+      
+       $response = array(
+        'status' => 200,
+        'status_message' => 'Details successfully updated.');
+     }
+            // print_r($response);die();
+     return $response;
+
+   }
+   else
+   {
+
+    $query = "INSERT INTO jm_employer_rating_table(jm_project_id,jm_employer_id,jm_freelance_id,jm_communication,jm_payment_prompt,jm_acc_of_requirement,jm_work_again,jm_feedback_comment)
+    VALUES('$jm_project_id','$jm_emp_id','$jm_freelancer_id','$jm_communication','$jm_promptpay','$jm_reqAccuracy','$jm_workAgain','$emp_comment')";
+      //echo $query;die();
+    $result = $this->db->query($query);
+    if(!$result) {
+      $response = array(
+        'status' => 500,
+        'status_message' => 'feedback is not saved.');
+    } else {
+      $response = array(
+        'status' => 200,
+        'status_message' => 'feedback saved.');
+    }
+     // print_r($response);die();
+    return $response;
+  }
+}
+  //-----------function end-------------------------------------------//
+public function update_status($jm_project_id)
 {
- extract($data);
- //print_r($data);die();
- $query="SELECT *FROM jm_employer_rating_table WHERE jm_project_id = '$jm_project_id'";
- $result=$this->db->query($query);  
- if ($result->num_rows() > 0) 
- {
-  $query="UPDATE jm_employer_rating_table SET jm_employer_id = '$jm_emp_id', jm_freelance_id = '$jm_freelancer_id',jm_communication='$jm_communication', jm_payment_prompt='$jm_promptpay',jm_acc_of_requirement='$jm_reqAccuracy',jm_work_again='$jm_workAgain',jm_feedback_comment='$emp_comment' WHERE jm_project_id = '$jm_project_id'";
-  $result = $this->db->query($query);
-       // echo $result;die();
+	$query="UPDATE jm_project_list SET is_active = '0' WHERE jm_project_id='$jm_project_id'";
+	 $result=$this->db->query($query); 
   if(!$result) {
     $response = array(
       'status' => 500,
       'status_message' => 'Updation Failed.');
   } else {
-   $demo = Post_project_model::calculate_Avg_freelancerEmp_rating($jm_emp_id);
    $response = array(
     'status' => 200,
     'status_message' => 'Details successfully updated.');
- }
-            // print_r($response);die();
- return $response;
-
+ } 
 }
-else
-{
-
-  $query = "INSERT INTO jm_employer_rating_table(jm_project_id,jm_employer_id,jm_freelance_id,jm_communication,jm_payment_prompt,jm_acc_of_requirement,jm_work_again,jm_feedback_comment)
-  VALUES('$jm_project_id','$jm_emp_id','$jm_freelance_id','$jm_communication','$jm_promptpay','$jm_reqAccuracy','$jm_workAgain','$emp_comment')";
-      //echo $query;die();
-  $result = $this->db->query($query);
-  if(!$result) {
-    $response = array(
-      'status' => 500,
-      'status_message' => 'feedback is not saved.');
-  } else {
-    $response = array(
-      'status' => 200,
-      'status_message' => 'feedback saved.');
-  }
-     // print_r($response);die();
-  return $response;
-}
-}
-  //-----------function end-------------------------------------------//
-
 
 //-----------------function for calculating avg freelancing rating-------------------//
 public function calculate_Avg_freelancing_rating($jm_freelancer_id)

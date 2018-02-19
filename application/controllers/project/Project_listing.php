@@ -5,11 +5,17 @@ class Project_listing extends CI_Controller
 {
 	public function __construct(){
 		parent::__construct();
-    $this->load->helper('file');
-        $this->load->helper('download');
-		$this->load->view('pages/helper/helper');
-    $this->load->model('dashboard_model/dashboard_model');
-	}
+   $this->load->helper('file');
+   $this->load->helper('download');
+   $this->load->view('pages/helper/helper');
+   $this->load->model('dashboard_model/dashboard_model');
+   $this->load->library('pagination');
+
+		//print_r($response);die();
+		//
+
+		 //print_r($data);die();
+ }
 
 	// public function index()
 	// {
@@ -19,7 +25,7 @@ class Project_listing extends CI_Controller
  //    $this->load->model('project_model/Project_listing_model','project');
  //    $arr = array();
  //    if(isset($_GET['search_param'])){
-      
+
  //      $arr['fileds']['jm_job_type'] = $_GET['search_param'].'/=';
  //      $arr['order']['field'] = 'jm_project_id';
  //      $arr['order']['order'] = 'DESC';
@@ -48,28 +54,59 @@ class Project_listing extends CI_Controller
  // }
 
 
-public function index(){
+ public function index(){
     //echo 'sujeet';
-  if(isset($_GET)){
-      $str = $_GET;
-    }else{
-      $str = array();
-    }
+   if(isset($_GET)){
+    $str = $_GET;
+  }else{
+    $str = array();
+  }
   $user_id = $this->session->userdata('user_id');
   $this->load->database();
   $this->load->model('project_model/project_listing_model');
   $data['info']=$this->project_listing_model->project_post_model($str);
-  // print_r($data);die();
+	  // print_r($data);die();
   $data['all_skills']=Project_listing::get_allSkills();
   $data['user_details']=Project_listing::get_userDetails();
+  //$data['skill']=Project_listing::FetchSkills();
+ 
   $this->load->view('includes/header.php');
   $this->load->view('pages/project/project_listing.php',$data);
   $this->load->view('includes/footer.php',$data);
- }
+}
 
+public function FetchSkills() {
+        extract($_POST);
+       //print_r($_POST);die();
+        $path = base_url();
+        $url = $path . 'api/Project_posting_api/FetchSkills?Skills='.json_encode($Skills);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+        print_r($response_json);
+        //return $response;
+    }
+//-------------this fun is used to get the all skills which provide to that project-------------//
+    public function Get_Skills(){
+       extract($_POST);
+       //print_r($_POST);die();
+        $path = base_url();
+        $url = $path . 'api/Project_posting_api/Get_Skills?Skills='.$Skills;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+        print_r($response_json); 
+    }
+    //------------this fun is used to get the all skills which provide to that project----------//
 
  //------------Function to get all data of user------------//
- public function get_userDetails(){
+public function get_userDetails(){
 
   $user_id=$this->session->userdata('user_id');
 
@@ -90,6 +127,20 @@ public function index(){
 //------------Function to get all skills to add in user list------------//
 public function get_allSkills(){
 
+//		$config['base_url']=base_url()."project/Project_listing/index";
+//		$config['per_page'] = 5;
+//		$config['use_page_numbers'] = TRUE;
+//		$config['next_link'] = 'Next';
+//		$config['prev_link'] = 'Previous';
+//		$config['num_links'] = 1;
+//		$config['total_rows'] = $this->db->get('jm_project_list',$config['per_page'],$this->uri->segment(3))->num_rows();
+//		//print_r($config['total_rows']);die();
+//		//$data=array();
+//		$this->pagination->initialize($config);
+//		$this->pagination->create_links();
+////		$response['query']=$this->db->get('jm_project_list',$config['per_page'],$this->uri->segment(3));
+//		//print_r($response);die();
+//  		 $response["links"] = $this->pagination->create_links();
     //Connection establishment, processing of data and response from REST API
   $path=base_url();
   $url = $path.'api/Dashboard_api/get_allSkills';   
@@ -132,6 +183,28 @@ public function add_bookmark(){
   $response_json = curl_exec($ch);
   curl_close($ch);
   $response=json_decode($response_json, true);
+
+  if($response['status']==200){
+     echo '<div class="alert alert-success w3-display-topright w3-margin" style="position: fixed;"><b>Success</b><br>'.$response['status_message'].'</div>
+    <script>
+    window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+      });
+    }, 2000);
+    </script>';
+   
+  }
+  else{
+    echo '<div class="alert alert-danger w3-display-topright w3-margin" style="position: fixed;"><b>Warning !</b> Something Went Wrong.<br>'.$response['status_message'].'</div>
+    <script>
+    window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+      });
+    }, 8000);
+    </script>';
+  }
  // print_r($response_json);
 }
 //-------------------function ends----------------------//
@@ -148,7 +221,27 @@ public function del_bookmark()
   $response_json = curl_exec($ch);
   curl_close($ch);
   $response=json_decode($response_json, true);
-  print_r($response_json);
+  if($response['status']==200){
+     echo '<div class="alert alert-success w3-display-topright w3-margin" style="position: fixed;"><b>Success</b><br>'.$response['status_message'].'</div>
+    <script>
+    window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+      });
+    }, 2000);
+    </script>';
+   
+  }
+  else{
+    echo '<div class="alert alert-danger w3-display-topright w3-margin" style="position: fixed;"><b>Warning !</b> Something Went Wrong.<br>'.$response['status_message'].'</div>
+    <script>
+    window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+      });
+    }, 2000);
+    </script>';
+  }
 }
 //-------------------function ends----------------------//
 
@@ -170,9 +263,10 @@ public function sort_projectb_type()
   public function filterProject(){ 
     $this->load->model('project_model/Project_listing_model','project');
     $data = $this->input->post();
-    
+    //print_r($data);die();
     $result['result'] = $this->project->filterProject($data);
-    //echo '<pre>';print_r($result);exit;
+    $result['user_details']=Project_listing::get_userDetails();
+    //echo '<pre>';print_r($result);die();
     if($result['result'] == 'N/A'){
       echo '
       <div class="w3-col 12 w3-padding w3-margin">              
@@ -228,54 +322,54 @@ public function sort_projectb_type()
             $title="Bookmarked";
           }
         }
-       
+
         
         print_r('
           <div class="w3-col 12 w3-padding">              
-            <div class="w3-col l12 w3-border-bottom">
-            <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].')" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
-            <div class="col-lg-8">
-            <h4>'.$key['jm_project_title'].'</h4>
-            <div>
-            <p>
-            <div style="max-height:200px;overflow: hidden">
-            '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'"><span style="color:#02b28b"><i>more</i></span></a>
-            </div>
-            </p>
-            </div>
-            <div class="para_second">
-            <p>Tags & Skills: </p>
-            </div>
-            <div class="w3-col l8 w3-margin-bottom">
-            <div class="w3-col l12">
-            <div class="w3-col l3 s3 w3-padding-tiny w3-tiny"><b>'.$key['jm_job_type'].'</b></div>
-            
-            </div>
-            </div>              
-            </div>
-            <div class="col-lg-4 w3-hide-small">
-            <div class="">
-            <div class="w3-small w3-col l12 "><b class="w3-right w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
-            <div class="w3-col l12"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a></div>
-            <div class=" w3-col l12 w3-small"><span class="w3-right" style="padding-right:5px;margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
-            <div class="w3-col 12 w3-padding-tiny w3-margin-top w3-right w3-tiny w3-text-grey"><i class="w3-right">posted '.timeago($key['jm_posting_date']).'</i></div>
-            </div>
-            </div>
-            
-            <div class="col-lg-4 w3-hide-large">
-            <div class="">
-            <div class="w3-small w3-col l6 s6"><b class="w3-left w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
-            <div class="w3-col l6 s6"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a>
-                </div>
-                
-            <div class=" w3-col l12 s6 w3-small">
-                <span class="w3-right" style="padding-right:5px; margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
-                
-            <div class="w3-col l6 s6 w3-padding-tiny w3-margin-top w3-left w3-tiny w3-text-grey"><i class="w3-left">posted '.timeago($key['jm_posting_date']).'</i></div>
-            </div>
-            </div>
-            </div>             
-            </div>
+          <div class="w3-col l12 w3-border-bottom">
+          <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].')" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
+          <div class="col-lg-8">
+          <h4>'.$key['jm_project_title'].'</h4>
+          <div>
+          <p>
+          <div style="max-height:200px;overflow: hidden">
+          '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'"><span style="color:#02b28b"><i>more</i></span></a>
+          </div>
+          </p>
+          </div>
+          <div class="para_second">
+          <p>Tags & Skills: </p>
+          </div>
+          <div class="w3-col l8 w3-margin-bottom">
+          <div class="w3-col l12">
+          <div class="w3-col l3 s3 w3-padding-tiny w3-tiny"><b>'.$key['jm_job_type'].'</b></div>
+
+          </div>
+          </div>              
+          </div>
+          <div class="col-lg-4 w3-hide-small">
+          <div class="">
+          <div class="w3-small w3-col l12 "><b class="w3-right w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
+          <div class="w3-col l12"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a></div>
+          <div class=" w3-col l12 w3-small"><span class="w3-right" style="padding-right:5px;margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
+          <div class="w3-col 12 w3-padding-tiny w3-margin-top w3-right w3-tiny w3-text-grey"><i class="w3-right">posted '.timeago($key['jm_posting_date']).'</i></div>
+          </div>
+          </div>
+
+          <div class="col-lg-4 w3-hide-large">
+          <div class="">
+          <div class="w3-small w3-col l6 s6"><b class="w3-left w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
+          <div class="w3-col l6 s6"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a>
+          </div>
+
+          <div class=" w3-col l12 s6 w3-small">
+          <span class="w3-right" style="padding-right:5px; margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
+
+          <div class="w3-col l6 s6 w3-padding-tiny w3-margin-top w3-left w3-tiny w3-text-grey"><i class="w3-left">posted '.timeago($key['jm_posting_date']).'</i></div>
+          </div>
+          </div>
+          </div>             
+          </div>
           ');    
       }
     }
@@ -316,50 +410,50 @@ public function sort_projectb_type()
       }
       print_r('
         <div class="w3-col 12 w3-padding">              
-            <div class="w3-col l12 w3-border-bottom">
-            <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].')" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
-            <div class="col-lg-8">
-            <h4>'.$key['jm_project_title'].'</h4>
-            <div>
-            <p>
-            <div style="max-height:200px;overflow: hidden">
-            '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'"><span style="color:#02b28b"><i>more</i></span></a>
-            </div>
-            </p>
-            </div>
-            <div class="para_second">
-            <p>Tags & Skills: </p>
-            </div>
-            <div class="w3-col l8 w3-margin-bottom">
-            <div class="w3-col l12">
-            <div class="w3-col l3 s3 w3-padding-tiny w3-tiny"><b>'.$key['jm_job_type'].'</b></div>
-            
-            </div>
-            </div>              
-            </div>
-            <div class="col-lg-4 w3-hide-small">
-            <div class="">
-            <div class="w3-small w3-col l12 "><b class="w3-right w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
-            <div class="w3-col l12"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a></div>
-            <div class=" w3-col l12 w3-small"><span class="w3-right" style="padding-right:5px;margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
-            <div class="w3-col 12 w3-padding-tiny w3-margin-top w3-right w3-tiny w3-text-grey"><i class="w3-right">posted '.timeago($key['jm_posting_date']).'</i></div>
-            </div>
-            </div>
-            
-            <div class="col-lg-4 w3-hide-large">
-            <div class="">
-            <div class="w3-small w3-col l6 s6"><b class="w3-left w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
-            <div class="w3-col l6 s6"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a>
-                </div>
-                
-            <div class=" w3-col l12 s6 w3-small">
-                <span class="w3-right" style="padding-right:5px; margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
-                
-            <div class="w3-col l6 s6 w3-padding-tiny w3-margin-top w3-left w3-tiny w3-text-grey"><i class="w3-left">posted '.timeago($key['jm_posting_date']).'</i></div>
-            </div>
-            </div>
-            </div>             
-            </div>
+        <div class="w3-col l12 w3-border-bottom">
+        <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].')" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
+        <div class="col-lg-8">
+        <h4>'.$key['jm_project_title'].'</h4>
+        <div>
+        <p>
+        <div style="max-height:200px;overflow: hidden">
+        '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'"><span style="color:#02b28b"><i>more</i></span></a>
+        </div>
+        </p>
+        </div>
+        <div class="para_second">
+        <p>Tags & Skills: </p>
+        </div>
+        <div class="w3-col l8 w3-margin-bottom">
+        <div class="w3-col l12">
+        <div class="w3-col l3 s3 w3-padding-tiny w3-tiny"><b>'.$key['jm_job_type'].'</b></div>
+
+        </div>
+        </div>              
+        </div>
+        <div class="col-lg-4 w3-hide-small">
+        <div class="">
+        <div class="w3-small w3-col l12 "><b class="w3-right w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
+        <div class="w3-col l12"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a></div>
+        <div class=" w3-col l12 w3-small"><span class="w3-right" style="padding-right:5px;margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
+        <div class="w3-col 12 w3-padding-tiny w3-margin-top w3-right w3-tiny w3-text-grey"><i class="w3-right">posted '.timeago($key['jm_posting_date']).'</i></div>
+        </div>
+        </div>
+
+        <div class="col-lg-4 w3-hide-large">
+        <div class="">
+        <div class="w3-small w3-col l6 s6"><b class="w3-left w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
+        <div class="w3-col l6 s6"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a>
+        </div>
+
+        <div class=" w3-col l12 s6 w3-small">
+        <span class="w3-right" style="padding-right:5px; margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
+
+        <div class="w3-col l6 s6 w3-padding-tiny w3-margin-top w3-left w3-tiny w3-text-grey"><i class="w3-left">posted '.timeago($key['jm_posting_date']).'</i></div>
+        </div>
+        </div>
+        </div>             
+        </div>
         ');    
     }
   }
@@ -405,50 +499,50 @@ public function sort_projectb_type()
         
         print_r('
           <div class="w3-col 12 w3-padding">              
-            <div class="w3-col l12 w3-border-bottom">
-            <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].')" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
-            <div class="col-lg-8">
-            <h4>'.$key['jm_project_title'].'</h4>
-            <div>
-            <p>
-            <div style="max-height:200px;overflow: hidden">
-            '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'"><span style="color:#02b28b"><i>more</i></span></a>
-            </div>
-            </p>
-            </div>
-            <div class="para_second">
-            <p>Tags & Skills: </p>
-            </div>
-            <div class="w3-col l8 w3-margin-bottom">
-            <div class="w3-col l12">
-            <div class="w3-col l3 s3 w3-padding-tiny w3-tiny"><b>'.$key['jm_job_type'].'</b></div>
-            
-            </div>
-            </div>              
-            </div>
-            <div class="col-lg-4 w3-hide-small">
-            <div class="">
-            <div class="w3-small w3-col l12 "><b class="w3-right w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
-            <div class="w3-col l12"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a></div>
-            <div class=" w3-col l12 w3-small"><span class="w3-right" style="padding-right:5px;margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
-            <div class="w3-col 12 w3-padding-tiny w3-margin-top w3-right w3-tiny w3-text-grey"><i class="w3-right">posted '.timeago($key['jm_posting_date']).'</i></div>
-            </div>
-            </div>
-            
-            <div class="col-lg-4 w3-hide-large">
-            <div class="">
-            <div class="w3-small w3-col l6 s6"><b class="w3-left w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
-            <div class="w3-col l6 s6"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a>
-                </div>
-                
-            <div class=" w3-col l12 s6 w3-small">
-                <span class="w3-right" style="padding-right:5px; margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
-                
-            <div class="w3-col l6 s6 w3-padding-tiny w3-margin-top w3-left w3-tiny w3-text-grey"><i class="w3-left">posted '.timeago($key['jm_posting_date']).'</i></div>
-            </div>
-            </div>
-            </div>             
-            </div>
+          <div class="w3-col l12 w3-border-bottom">
+          <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].')" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
+          <div class="col-lg-8">
+          <h4>'.$key['jm_project_title'].'</h4>
+          <div>
+          <p>
+          <div style="max-height:200px;overflow: hidden">
+          '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'"><span style="color:#02b28b"><i>more</i></span></a>
+          </div>
+          </p>
+          </div>
+          <div class="para_second">
+          <p>Tags & Skills: </p>
+          </div>
+          <div class="w3-col l8 w3-margin-bottom">
+          <div class="w3-col l12">
+          <div class="w3-col l3 s3 w3-padding-tiny w3-tiny"><b>'.$key['jm_job_type'].'</b></div>
+
+          </div>
+          </div>              
+          </div>
+          <div class="col-lg-4 w3-hide-small">
+          <div class="">
+          <div class="w3-small w3-col l12 "><b class="w3-right w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
+          <div class="w3-col l12"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a></div>
+          <div class=" w3-col l12 w3-small"><span class="w3-right" style="padding-right:5px;margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
+          <div class="w3-col 12 w3-padding-tiny w3-margin-top w3-right w3-tiny w3-text-grey"><i class="w3-right">posted '.timeago($key['jm_posting_date']).'</i></div>
+          </div>
+          </div>
+
+          <div class="col-lg-4 w3-hide-large">
+          <div class="">
+          <div class="w3-small w3-col l6 s6"><b class="w3-left w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
+          <div class="w3-col l6 s6"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a>
+          </div>
+
+          <div class=" w3-col l12 s6 w3-small">
+          <span class="w3-right" style="padding-right:5px; margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
+
+          <div class="w3-col l6 s6 w3-padding-tiny w3-margin-top w3-left w3-tiny w3-text-grey"><i class="w3-left">posted '.timeago($key['jm_posting_date']).'</i></div>
+          </div>
+          </div>
+          </div>             
+          </div>
           ');    
       }
     }
@@ -461,82 +555,82 @@ public function sort_projectb_type()
    $post = $this->project->serchjobtype($data['str']);
    //echo'<pre>';print_r($post);die();
    $data="";
-    $user_id=$this->session->userdata('user_id');
-    if($post=='N/A'){
-      echo '
-      <div class="w3-col 12 w3-padding w3-margin">              
-      <div class="w3-col l12">
-      <div class="w3-center">
-      <img src="'.base_url().'images/desktop/NoResultsImage.jpg" width="auto" class="img"/>
-      </div>
-      </div>             
-      </div>';
+   $user_id=$this->session->userdata('user_id');
+   if($post=='N/A'){
+    echo '
+    <div class="w3-col 12 w3-padding w3-margin">              
+    <div class="w3-col l12">
+    <div class="w3-center">
+    <img src="'.base_url().'images/desktop/NoResultsImage.jpg" width="auto" class="img"/>
+    </div>
+    </div>             
+    </div>';
+  }
+  else{
+    $user_details=Project_listing::get_userDetails();
+    $userBookmark=array();
+    if($user_details['status']==200){
+      $userBookmark = json_decode($user_details['status_message'][0]['jm_userBookmark'],TRUE);
     }
-    else{
-      $user_details=Project_listing::get_userDetails();
-      $userBookmark=array();
-      if($user_details['status']==200){
-        $userBookmark = json_decode($user_details['status_message'][0]['jm_userBookmark'],TRUE);
-      }
-      foreach ($post as $key) {
-        $class="fa-bookmark-o";
-        $title="Add Bookmark";
-        if($userBookmark){
-          if(in_array($key['jm_project_id'], $userBookmark)){
-            $class="fa-bookmark";
-            $title="Bookmarked";
-          }
+    foreach ($post as $key) {
+      $class="fa-bookmark-o";
+      $title="Add Bookmark";
+      if($userBookmark){
+        if(in_array($key['jm_project_id'], $userBookmark)){
+          $class="fa-bookmark";
+          $title="Bookmarked";
         }
-        
-        print_r('
-          <div class="w3-col 12 w3-padding">              
-            <div class="w3-col l12 w3-border-bottom">
-            <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].')" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
-            <div class="col-lg-8">
-            <h4>'.$key['jm_project_title'].'</h4>
-            <div>
-            <p>
-            <div style="max-height:200px;overflow: hidden">
-            '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'"><span style="color:#02b28b"><i>more</i></span></a>
-            </div>
-            </p>
-            </div>
-            <div class="para_second">
-            <p>Tags & Skills: </p>
-            </div>
-            <div class="w3-col l8 w3-margin-bottom">
-            <div class="w3-col l12">
-            <div class="w3-col l3 s3 w3-padding-tiny w3-tiny"><b>'.$key['jm_job_type'].'</b></div>
-            
-            </div>
-            </div>              
-            </div>
-            <div class="col-lg-4 w3-hide-small">
-            <div class="">
-            <div class="w3-small w3-col l12 "><b class="w3-right w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
-            <div class="w3-col l12"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a></div>
-            <div class=" w3-col l12 w3-small"><span class="w3-right" style="padding-right:5px;margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
-            <div class="w3-col 12 w3-padding-tiny w3-margin-top w3-right w3-tiny w3-text-grey"><i class="w3-right">posted '.timeago($key['jm_posting_date']).'</i></div>
-            </div>
-            </div>
-            
-            <div class="col-lg-4 w3-hide-large">
-            <div class="">
-            <div class="w3-small w3-col l6 s6"><b class="w3-left w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
-            <div class="w3-col l6 s6"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a>
-                </div>
-                
-            <div class=" w3-col l12 s6 w3-small">
-                <span class="w3-right" style="padding-right:5px; margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
-                
-            <div class="w3-col l6 s6 w3-padding-tiny w3-margin-top w3-left w3-tiny w3-text-grey"><i class="w3-left">posted '.timeago($key['jm_posting_date']).'</i></div>
-            </div>
-            </div>
-            </div>             
-            </div>
-          ');    
       }
+
+      print_r('
+        <div class="w3-col 12 w3-padding">              
+        <div class="w3-col l12 w3-border-bottom">
+        <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].')" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
+        <div class="col-lg-8">
+        <h4>'.$key['jm_project_title'].'</h4>
+        <div>
+        <p>
+        <div style="max-height:200px;overflow: hidden">
+        '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'"><span style="color:#02b28b"><i>more</i></span></a>
+        </div>
+        </p>
+        </div>
+        <div class="para_second">
+        <p>Tags & Skills: </p>
+        </div>
+        <div class="w3-col l8 w3-margin-bottom">
+        <div class="w3-col l12">
+        <div class="w3-col l3 s3 w3-padding-tiny w3-tiny"><b>'.$key['jm_job_type'].'</b></div>
+
+        </div>
+        </div>              
+        </div>
+        <div class="col-lg-4 w3-hide-small">
+        <div class="">
+        <div class="w3-small w3-col l12 "><b class="w3-right w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
+        <div class="w3-col l12"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a></div>
+        <div class=" w3-col l12 w3-small"><span class="w3-right" style="padding-right:5px;margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
+        <div class="w3-col 12 w3-padding-tiny w3-margin-top w3-right w3-tiny w3-text-grey"><i class="w3-right">posted '.timeago($key['jm_posting_date']).'</i></div>
+        </div>
+        </div>
+
+        <div class="col-lg-4 w3-hide-large">
+        <div class="">
+        <div class="w3-small w3-col l6 s6"><b class="w3-left w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
+        <div class="w3-col l6 s6"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a>
+        </div>
+
+        <div class=" w3-col l12 s6 w3-small">
+        <span class="w3-right" style="padding-right:5px; margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
+
+        <div class="w3-col l6 s6 w3-padding-tiny w3-margin-top w3-left w3-tiny w3-text-grey"><i class="w3-left">posted '.timeago($key['jm_posting_date']).'</i></div>
+        </div>
+        </div>
+        </div>             
+        </div>
+        ');    
     }
+  }
   }//end of function
 
   // public function getAllskill(){
@@ -570,8 +664,8 @@ public function sort_projectb_type()
   public function show_bookmark()
   {
     //print_r($_POST);die();
-        $user_id='1';
-        extract($_POST);
+    $user_id='1';
+    extract($_POST);
     // // $user_id = $this->session->userdata('user_id');
     // //Connection establishment, processing of data and response from REST API
     //  $path=base_url();
@@ -594,15 +688,15 @@ public function sort_projectb_type()
     //     $a=array();
     //     foreach(json_decode($bookmark) as $key)
     //     {
-          $this->load->model('project_model/Project_listing_model','project');
-   $data = $this->input->post();
+    $this->load->model('project_model/Project_listing_model','project');
+    $data = $this->input->post();
 //print_r($data);die();
-   $user_id=$this->session->userdata('user_id');
-   $po = $this->project->fetchProjectbyskill($data['fileds'],$data['value']);
-   $data="";
+    $user_id=$this->session->userdata('user_id');
+    $po = $this->project->fetchProjectbyskill($data['fileds'],$data['value']);
+    $data="";
 //print_r($po);die();
 
-   if($po=='N/A'){
+    if($po=='N/A'){
 
       echo '
       <div class="w3-col 12 w3-padding w3-margin">              
@@ -627,64 +721,64 @@ public function sort_projectb_type()
           if(in_array($key['jm_project_id'], $userBookmark)){
             $class="fa-bookmark";
             $title="Bookmarked";
-          
-        
-        print_r('
-          <div class="w3-col 12 w3-padding">              
-            <div class="w3-col l12 w3-border-bottom">
-            <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].')" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
-            <div class="col-lg-8">
-            <h4>'.$key['jm_project_title'].'</h4>
-            <div>
-            <p>
-            <div style="max-height:200px;overflow: hidden">
-            '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'"><span style="color:#02b28b"><i>more</i></span></a>
-            </div>
-            </p>
-            </div>
-            <div class="para_second">
-            <p>Tags & Skills: </p>
-            </div>
-            <div class="w3-col l8 w3-margin-bottom">
-            <div class="w3-col l12">
-            <div class="w3-col l3 s3 w3-padding-tiny w3-tiny"><b>'.$key['jm_job_type'].'</b></div>
-            
-            </div>
-            </div>              
-            </div>
-            <div class="col-lg-4 w3-hide-small">
-            <div class="">
-            <div class="w3-small w3-col l12 "><b class="w3-right w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
-            <div class="w3-col l12"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a></div>
-            <div class=" w3-col l12 w3-small"><span class="w3-right" style="padding-right:5px;margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
-            <div class="w3-col 12 w3-padding-tiny w3-margin-top w3-right w3-tiny w3-text-grey"><i class="w3-right">posted '.timeago($key['jm_posting_date']).'</i></div>
-            </div>
-            </div>
-            
-            <div class="col-lg-4 w3-hide-large">
-            <div class="">
-            <div class="w3-small w3-col l6 s6"><b class="w3-left w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
-            <div class="w3-col l6 s6"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a>
-                </div>
-                
-            <div class=" w3-col l12 s6 w3-small">
-                <span class="w3-right" style="padding-right:5px; margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
-                
-            <div class="w3-col l6 s6 w3-padding-tiny w3-margin-top w3-left w3-tiny w3-text-grey"><i class="w3-left">posted '.timeago($key['jm_posting_date']).'</i></div>
-            </div>
-            </div>
-            </div>             
-            </div>
-          ');  
+
+
+            print_r('
+              <div class="w3-col 12 w3-padding">              
+              <div class="w3-col l12 w3-border-bottom">
+              <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].')" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
+              <div class="col-lg-8">
+              <h4>'.$key['jm_project_title'].'</h4>
+              <div>
+              <p>
+              <div style="max-height:200px;overflow: hidden">
+              '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'"><span style="color:#02b28b"><i>more</i></span></a>
+              </div>
+              </p>
+              </div>
+              <div class="para_second">
+              <p>Tags & Skills: </p>
+              </div>
+              <div class="w3-col l8 w3-margin-bottom">
+              <div class="w3-col l12">
+              <div class="w3-col l3 s3 w3-padding-tiny w3-tiny"><b>'.$key['jm_job_type'].'</b></div>
+
+              </div>
+              </div>              
+              </div>
+              <div class="col-lg-4 w3-hide-small">
+              <div class="">
+              <div class="w3-small w3-col l12 "><b class="w3-right w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
+              <div class="w3-col l12"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a></div>
+              <div class=" w3-col l12 w3-small"><span class="w3-right" style="padding-right:5px;margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
+              <div class="w3-col 12 w3-padding-tiny w3-margin-top w3-right w3-tiny w3-text-grey"><i class="w3-right">posted '.timeago($key['jm_posting_date']).'</i></div>
+              </div>
+              </div>
+
+              <div class="col-lg-4 w3-hide-large">
+              <div class="">
+              <div class="w3-small w3-col l6 s6"><b class="w3-left w3-margin-top w3-margin-bottom">'.$key['jm_projectbudget_type'].'</b></div>
+              <div class="w3-col l6 s6"><a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-black w3-right w3-round-xlarge w3-padding-tiny btn">VIEW PROJECT</a>
+              </div>
+
+              <div class=" w3-col l12 s6 w3-small">
+              <span class="w3-right" style="padding-right:5px; margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
+
+              <div class="w3-col l6 s6 w3-padding-tiny w3-margin-top w3-left w3-tiny w3-text-grey"><i class="w3-left">posted '.timeago($key['jm_posting_date']).'</i></div>
+              </div>
+              </div>
+              </div>             
+              </div>
+              ');  
           }
-       }
+        }
        //print_r($a);die();
-   }}}
+      }}}
 
 
 
    //---------------download user resume----------------------//
-    public function download($bid_id = '') {
+      public function download($bid_id = '') {
         $path = base_url();
         $url = $path . 'api/View_Project_api/download?bid_id='.$bid_id;
         $ch = curl_init($url);
@@ -696,15 +790,15 @@ public function sort_projectb_type()
         //print_r($response_json);die();
 
         $file = explode("/", $response);
-        $file_name = $file[2];
+        $file_name = $file[3];
         $file =base_url().$response;
         $data = file_get_contents($file);            
-        force_download($file_name); 
-    }
+        force_download($file_name,$data); 
+      }
     // -----------------download function ends---------------//
 
     //---------------Award Poroject function---------------------//
-    public function awardProject() {
+      public function awardProject() {
         extract($_POST);
         $path = base_url();
         $url = $path . 'api/View_Project_api/awardProject?freelancer_id='.$freelancer_id.'&project_id='.$project_id;
@@ -715,13 +809,17 @@ public function sort_projectb_type()
         $response_json = curl_exec($ch);
         curl_close($ch);
         $response = json_decode($response_json, true); 
-        print_r($response_json);die();
-        echo ($response['status_message']);   
-    }
+        //print_r($response_json);die();
+       // echo ($response['status_message']);
+       echo'<div class="alert alert-success w3-margin" style="text-align: center;">
+            <strong>' . $response['status_message'] . '</strong> 
+            </div>    
+            ';   
+      }
     // -----------------Award Poroject function---------------//
 
     //---------------cloase project permanntly function---------------------//
-    public function closeProject() {
+      public function closeProject() {
         extract($_POST);
         $path = base_url();
         $url = $path . 'api/View_Project_api/closeProject?project_id='.$project_id;
@@ -732,29 +830,29 @@ public function sort_projectb_type()
         curl_close($ch);
         $response = json_decode($response_json, true); 
         if ($response['status'] == 200) {
-            echo'
-            <h4 class="bluish-green w3-margin"><i class="fa fa-check"></i> '.$response['status_message'].'</h4>
-            <script>
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                    $(this).remove(); 
-                });
-                window.location.href="'.base_url().'project/project_listing";
-            }, 1000);
-            </script>    
-            ';
+          echo'
+          <h4 class="bluish-green w3-margin"><i class="fa fa-check"></i> '.$response['status_message'].'</h4>
+          <script>
+          window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+              $(this).remove(); 
+            });
+            window.location.href="'.base_url().'project/project_listing";
+          }, 1000);
+          </script>    
+          ';
         } else {
-            echo'<h4 class="w3-text-red w3-margin"><i class="fa fa-warning"></i> '.$response['status_message'].'</h4>
-            <script>
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                    $(this).remove(); 
-                });
-                window.location.href="'.base_url().'project/project_listing";
-            }, 1000);
-            </script>  
-            ';
+          echo'<h4 class="w3-text-red w3-margin"><i class="fa fa-warning"></i> '.$response['status_message'].'</h4>
+          <script>
+          window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+              $(this).remove(); 
+            });
+            window.location.href="'.base_url().'project/project_listing";
+          }, 1000);
+          </script>  
+          ';
         }
-    }
+      }
     // -----------------cloase project permanntly function---------------//
 }//end of class

@@ -166,6 +166,7 @@ $(document).ready(function(){
 	$('input[name="search"]').on('keyup',function(event){
 		event.preventDefault();
 		skill = $('#skills_filtered').val();
+		//alert(skill);
 		var rang = $('#myRange').val();
 		var value = 10000 * (parseInt(rang)/100);
 		var str = $('#strsearch').val();
@@ -209,6 +210,7 @@ $(document).ready(function(){
 							},
 				}).
 				done(function(data){
+					//alert(data);
 					console.log(data);
 					$('#showResult').html(data);
 				});//end of ajax
@@ -284,7 +286,7 @@ $(document).ready(function(){
 		var value = 10000 * (parseInt(rang)/100);
 		var str = $('#strsearch').val();
 		var sortby = $('#sortby').val();
-
+//alert(skill);
 
 		if(sortby){
 			if(sortby == 'lastest'){
@@ -327,6 +329,7 @@ $(document).ready(function(){
 							},
 				}).
 				done(function(data){
+					//alert(data);
 					console.log(data);
 					$('#showResult').html(data);
 				});//end of ajax
@@ -341,7 +344,7 @@ $(document).ready(function(){
 
 $('#view_bookmark').on('click',function(event){
 		event.preventDefault();
-		alert('check function');
+		//alert('check function');
 		//var str = $('#term').val();
 		skill = $('#skills_filtered').val();
 		// if(skill == ''){
@@ -369,7 +372,7 @@ $('#view_bookmark').on('click',function(event){
 			}
 		}
 		setTimeout(function(){
-			alert('check setTimeout');
+			//alert('check setTimeout');
 		$.ajax({
 
 			url :BASE_URL+'project/project_listing/show_bookmark',
@@ -556,6 +559,8 @@ function add_bookmark(user_id,project_id){
 			uri=BASE_URL+"project/Project_listing/del_bookmark";
 		}		
 		dataString='user_id='+user_id+'&project_id='+project_id;
+                   $.LoadingOverlay("show");
+
 		$.ajax({
 			type: "POST",
 			url: uri,
@@ -563,10 +568,11 @@ function add_bookmark(user_id,project_id){
 			return: false,  
 
 			success: function(data)
-			{						   
-				//location.reload(); 
-				//$('#showResult').html(data);   
-				$("#showResult").load(location.href + " #showResult>*", "");        
+			{		
+                               $.LoadingOverlay("hide");
+				$('#bookmark_msg').html(data); 
+                                location.reload(); 
+				//$("#showResult").load(location.href + " #showResult>*", "");        
 			}
 		});	
 
@@ -624,7 +630,7 @@ function delSkill(id){
 			        'mode' : 'project_list',
 			    }
 			},
-		})
+		}).
 		done(function(data){
 			console.log(data);
 			$('#showResult').html(data);

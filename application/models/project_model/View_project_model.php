@@ -4,13 +4,55 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class View_project_model extends CI_Model {
+//---------this fun is used to get the detais of freelancer employer ratings given by freelancer
+    public function getDetails_OF_FreelanceEmployerRatings($user_id, $profile_type,$project_id) {
+
+        //if ($profile_type == 1) {
+            $sqlSelect = "SELECT * FROM jm_employer_rating_table WHERE jm_freelance_id = '$user_id' AND jm_project_id = '$project_id'";
+            //echo $sqlSelect;die();
+            $result = $this->db->query($sqlSelect);
+
+            if ($result->num_rows() > 0) {
+                $response = array(
+                    'status' => 200,
+                    'status_message' => $result->result_array());
+            } else {
+                $response = array(
+                    'status' => 500,
+                    'status_message' => 'No details found !!!');
+            }
+            return $response;
+        //}
+    }
+
+//---------this fun is used to get the detais of freelancer employer ratings given by freelancer
+//---------this fun is used to get the detais of freelancer ratings given by freelancer employer
+    public function getDetails_OF_FreelancerRatings($user_id, $profile_type,$project_id) {
+        //if ($profile_type == 2) {
+            $sqlSelect = "SELECT * FROM jm_freelancer_rating_table WHERE jm_emp_id = '$user_id' AND jm_project_id = '$project_id'";
+            $result = $this->db->query($sqlSelect);
+
+            if ($result->num_rows() > 0) {
+                $response = array(
+                    'status' => 200,
+                    'status_message' => $result->result_array());
+            } else {
+                $response = array(
+                    'status' => 500,
+                    'status_message' => 'No details found !!!');
+            }
+            return $response;
+        //}
+    }
+
+//---------this fun is used to get the detais of freelancer ratings given by freelancer employer
 
     public function getProjectDetails($project_id) {
 
         $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_project_id='$project_id'";
         $result = $this->db->query($sqlSelect);
 
-        if ($result->num_rows() >= 0) {
+        if ($result->num_rows() > 0) {
             $response = array(
                 'status' => 500,
                 'status_message' => $result->result_array());
@@ -176,13 +218,21 @@ public function get_biddedList($jm_project_id)
      //-----------------------award project to freelancer-------------------------
 public function awardProject($freelancer_id,$project_id){
     //echo $freelancer_id;echo $project_id;die();
+    
+    
     $update_where = array('jm_project_id =' => $project_id);
     $data=array('jm_freelancer_user_id'=>$freelancer_id);
     $this->db->where($update_where);            
 
     if($this->db->update('jm_project_list',$data)){
 
-    //-------make all bids inactive for this project
+    //$data=array('active'=>'1');
+    $update = array('jm_project_id =' => $project_id);
+    $data=array('active'=>'1');
+    $this->db->where($update);            
+    $this->db->update('jm_project_bidding',$data);
+
+            //-------make all bids inactive for this project
      $update_whereBids = array('jm_user_id =' => $freelancer_id);
      $dataBids=array('active'=>'2');    //2 value for bid status denotes freelancer is awarded...
      $this->db->where($update_whereBids);
@@ -225,7 +275,7 @@ public function Fetch_Bidding_Info($user_id,$project_id){
 // ---------------close project fucntion--------------//
 public function closeProject($project_id){
     $update_where = array('jm_project_id =' => $project_id);
-     $data=array('is_active'=>'0');    //2 value for bid status denotes freelancer is awarded...
+     $data=array('is_active'=>'-1');    //2 value for bid status denotes freelancer is awarded...
      $this->db->where($update_where);
 
      if($this->db->update('jm_project_list',$data)) {

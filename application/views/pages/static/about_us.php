@@ -1,3 +1,7 @@
+<?php 
+$user_id=$this->session->userdata('user_id');
+$user_name=$this->session->userdata('user_name');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,7 +111,7 @@
               <span class="icon-bar"></span>
             </button>
           </div>
-
+          <?php $profile_type=$this->session->userdata('profile_type'); ?>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
             <ul class="nav navbar-nav navbar-right">
 
@@ -115,12 +119,12 @@
                 <a href="<?php echo base_url(); ?>content/about_us">About JobMandi </a></li>
 
                 <li class="scroll">
-                  <?php if($profile_type == '' || $profile_type == 3 || $profile_type == 1 || $profile_type == 4){ ?>
+                  <?php if($profile_type == '' || $profile_type == 3 ){ ?>
                   <a class="waves-effect waves-light" href="<?php echo base_url(); ?>jobseeker/jobseeker_lists">Explore Jobs</a>
                   <?php } ?></li>
 
                   <li class="scroll">
-                    <?php if($profile_type == '' || $profile_type == 2 || $profile_type == 1 ){ ?>
+                    <?php if($profile_type == '' || $profile_type == 1 ){ ?>
                     <a class="waves-effect waves-light" href="<?php echo base_url(); ?>project/project_listing">Explore Projects</a>
                     <?php } ?></li>
 
@@ -142,7 +146,7 @@
                         <li>
                           <?php 
                           if(isset($user_name) && isset($user_name)!=''){
-                            echo '<a href="'.base_url().'auth/login/logout" class="btn btn-warning btn-rounded waves-effect waves-light">Logout <i class="fa fa-sign-out"></i></a>';
+                            echo '<a href="'.base_url().'auth/login/logout" class="btn w3-black btn-warning btn-rounded ">Logout <i class="fa fa-sign-out"></i></a>';
                           }
                           else{?>
                           <div class="">
@@ -740,16 +744,27 @@
 
                        <div class="col-lg-12 copy-rigt">
                          <h5>©2018 Jobmandi.com. All rights resrved.</h5>
-                       </div>                        
-
-
+                       </div> 
                      </div><!--End row-->
                    </div><!--End container-->
                  </section><!--End how-it-work--> 
 
+                 <!--Start of Tawk.to Script-->
+                 <script type="text/javascript">
+                  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+                  (function(){
+                    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+                    s1.async=true;
+                    s1.src='https://embed.tawk.to/5a7184f4d7591465c7073e33/default';
+                    s1.charset='UTF-8';
+                    s1.setAttribute('crossorigin','*');
+                    s0.parentNode.insertBefore(s1,s0);
+                  })();
+                </script>
+                <!--End of Tawk.to Script-->
 
-                 <script src="<?php echo base_url(); ?>css/about_us/vendor/jquery/jquery.min.js"></script> 
-                 <script src="<?php echo base_url(); ?>css/about_us/vendor/bootstrap/js/bootstrap.min.js"></script>
-               </body>
+                <script src="<?php echo base_url(); ?>css/about_us/vendor/jquery/jquery.min.js"></script> 
+                <script src="<?php echo base_url(); ?>css/about_us/vendor/bootstrap/js/bootstrap.min.js"></script>
+              </body>
 
-               </html>
+              </html>

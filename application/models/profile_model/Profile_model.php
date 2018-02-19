@@ -27,8 +27,101 @@ class Profile_model extends CI_Model{
 		return $response;
 	}
 	// --------------------ADD PORTFOLIO ENDS---------------------//
+        public function getBars_PercentageValue($user_id){
+            	
+			  $percentage_budget = Profile_model::get_budget($user_id);
+			  $percentage_time = Profile_model::get_bar_Time($user_id);
+			  $percentage =Profile_model::get_projects_completed($user_id);
+		
+			  $a=array();
+			  $a=array(
+			  'percentage'=>$percentage,
+			  'percentage_budget'=>$percentage_budget,
+			  'percentage_time'=>$percentage_time			  
+			  );
+			  return $a;
+				
+        }
+        //-------------function for 3 bar rating for budget-------------------------//
+	
+    public function get_budget($user_id) {
+        $count_money = '';
+        $query = "SELECT SUM(jm_valueformoney) FROM `jm_freelancer_rating_table` where jm_freelancer_id = '$user_id'";
+        $queryNew = "SELECT count(jm_valueformoney) as money FROM `jm_freelancer_rating_table` where jm_freelancer_id = '$user_id'";
+        //echo $queryNew;
+        //echo $query;die();
+        $result = $this->db->query($query);
+        $result_new = $this->db->query($queryNew);
+        $num_rows_total = $result->num_rows();
+        //$num_rows_count=$result_new->num_rows();
+        //$Final_count=($num_rows_count*5);			
+        foreach ($result_new->result_array() as $key) {
+            $count_money = $key['money'];
+        }
+        $Final_count = '';
+        $Final_count = ($count_money * 5);
+        if ($num_rows_total == 0 || $Final_count == 0) {
+            $percentage_budget = 0;
+            //echo "IN IF".$percentage_budget;
+        } else {
+            //$Final_count=($count_money*5);
+            $percentage_budget = (($num_rows_total / $Final_count) * 100);
+            //echo "IN ELSE".$percentage_budget;
+        }
+        return $percentage_budget;
+    }
+    //---------------------function end------------------------------------------// 		
+	//---------------------function for 3 bar rating for time----------------------//	
+	//----------------function end----------------------------------//			
+     public function get_bar_Time($user_id) {
 
-	// -----------------------GET ALL SKILLS MODEL----------------------//
+        $count_delivery = '';
+        $query = "SELECT SUM(jm_ontimedelivery) FROM `jm_freelancer_rating_table` where jm_freelancer_id = '$user_id'";
+        $queryNew = "SELECT count(jm_ontimedelivery) as time FROM `jm_freelancer_rating_table` where jm_freelancer_id = '$user_id'";
+        $time = $this->db->query($query);
+        //echo $query;die();
+        $count_time = $this->db->query($queryNew);
+        //print_r($count_time);die();
+        $num_rows_total = $time->num_rows();
+
+        foreach ($count_time->result_array() as $key) {
+            $count_delivery = $key['time'];
+        }
+        $Final_count = '';
+        $Final_count = ($count_delivery * 5);
+        if ($num_rows_total == 0 || $Final_count == 0) {
+            $percentage_time = 0;
+            //echo "IN IF".$percentage;
+        } else {
+            $percentage_time = (($num_rows_total / $Final_count) * 100);
+        }
+        return $percentage_time;
+    }
+
+    public function get_projects_completed($user_id) {
+
+        $query = "SELECT * FROM jm_project_list where is_active != '1' AND jm_freelancer_user_id='$user_id'";
+        $queryNew = "SELECT * FROM jm_project_list where is_active= '0' AND jm_freelancer_user_id='$user_id'";
+        //echo $queryNew;die();
+        $total = $this->db->query($query);
+        //print_r($total);die();
+        $completed = $this->db->query($queryNew);
+        //print_r($completed);die();
+        $num_rows_total = $total->num_rows();
+        $num_rows_completed = $completed->num_rows();
+        //print_r($num_rows_completed);die();e;
+        if ($num_rows_total == 0 || $num_rows_completed == 0) {
+            $percentage = 0;
+//				echo "IN IF".$percentage;
+        } else {
+            $percentage = (($num_rows_completed / $num_rows_total) * 100);
+//				echo "IN ELSE".$percentage;
+        }
+
+        return $percentage;
+    }
+
+    // -----------------------GET ALL SKILLS MODEL----------------------//
 	//-------------------------------------------------------------//
 	public function get_allSkills(){
 
@@ -347,5 +440,217 @@ class Profile_model extends CI_Model{
 	}
 //-----------------------------------function end---------------------------------------//
 
+	//-----------------function for 3 bar rating for job completed-------------------------//
+	
+		public function get_bars_value($user_id,$profile_type)
+		{
+			
+			  $percentage_budget = Profile_model::get_bar_onbudget($user_id,$profile_type);
+			  $percentage_time = Profile_model::get_bar_onTime($user_id,$profile_type);
+			  $percentage =Profile_model::get_project_completed($user_id,$profile_type);
+			 // print_r($percentage_budget);die();
+			 // $percentage='';
+			 // $percentage_budget='';
+			 // $percentage_time='';
+			  $a=array();
+			  $a=array(
+			  'percentage'=>$percentage,
+			  'percentage_budget'=>$percentage_budget,
+			  'percentage_time'=>$percentage_time
+			  
+			  );
+			  return $a;
+		    // print_r($a);die();
+			//echo $query;die();
+			
+			
+			
+		}
+	//-----------function end---------------------------------------//
+	
+	//-------------function for 3 bar rating for budget-------------------------//
+	
+		public function get_bar_onbudget($user_id,$profile_type)
+		{
+			if($profile_type=='1')
+			{
+				$count_money = '';
+			$query ="SELECT SUM(jm_valueformoney) FROM `jm_freelancer_rating_table` where jm_freelancer_id = '$user_id'";
+			$queryNew = "SELECT count(jm_valueformoney) as money FROM `jm_freelancer_rating_table` where jm_freelancer_id = '$user_id'";
+			//echo $queryNew;
+			$result = $this->db->query($query);
+			$result_new = $this->db->query($queryNew);
+			$num_rows_total=$result->num_rows();
+			//$num_rows_count=$result_new->num_rows();
+			//$Final_count=($num_rows_count*5);
+			
+			foreach ($result_new->result_array() as $key){
+					$count_money = $key['money'];
+				}
+			
+			$Final_count='';
+			$Final_count=($count_money*5);
+				if($num_rows_total== 0 || $Final_count==0 ){
+						$percentage_budget = 0;
+						//echo "IN IF".$percentage_budget;
+					}
+					else{
+						//$Final_count=($count_money*5);
+						$percentage_budget=(($num_rows_total/$Final_count)*100);
+			   			 //echo "IN ELSE".$percentage_budget;
+						}
+			}elseif($profile_type=='2')
+			{
+				$count_payment = '';
+				$query="SELECT SUM(jm_payment_prompt) FROM `jm_employer_rating_table` WHERE jm_employer_id ='$user_id'";
+				$queryNew="SELECT count(jm_payment_prompt) as payment FROM `jm_employer_rating_table` WHERE jm_employer_id ='$user_id'";
+				$result = $this->db->query($query);
+				$result_new = $this->db->query($queryNew);
+				$num_rows_total=$result->num_rows();
+				foreach ($result_new->result_array() as $key){
+					$count_payment = $key['payment'];
+				}
+				//$num_rows_count=$result_new->num_rows();
+				$Final_count=($count_payment*4);
+				if($num_rows_total== 0 || $Final_count==0 ){
+					$percentage_budget = 0;
+				//echo "IN IF".$percentage;
+				}
+				else{
+					$percentage_budget=(($num_rows_total/$Final_count)*100);
+			    // echo "IN ELSE".$percentage;
+				}
+			}
+			
+			//print_r($percentage_budget);die();
+		 return $percentage_budget;
+		}
+		
+	//---------------------function end------------------------------------------// 
+		
+	//---------------------function for 3 bar rating for time----------------------//
+	
+	//----------------function end----------------------------------//	
+		
+     public function get_bar_onTime($user_id,$profile_type)
+		{
+			if($profile_type=='1')
+			{
+			$count_delivery = '';	
+			$query = "SELECT SUM(jm_ontimedelivery) FROM `jm_freelancer_rating_table` where jm_freelancer_id = '$user_id'";
+			$queryNew = "SELECT count(jm_ontimedelivery) as time FROM `jm_freelancer_rating_table` where jm_freelancer_id = '$user_id'";
+			$time = $this->db->query($query);
+			//echo $query;die();
+			//print_r($time);die();
+			$count_time = $this->db->query($queryNew);
+			//print_r($count_time);die();
+			$num_rows_total=$time->num_rows();
+			//print_r($num_rows_total);die();
+			//$num_rows_count=$count_time->num_rows();
+			
+			foreach ($count_time->result_array() as $key){
+					$count_delivery = $key['time'];
+				}
+			
+			//print_r($num_rows_count);die();
+			//$Final_count=($num_rows_count*5);
+			//print_r($Final_count);die();
+			$Final_count='';
+			$Final_count=($count_delivery*5);
+			if($num_rows_total == 0 || $Final_count == 0 ){
+				$percentage_time = 0;
+				//echo "IN IF".$percentage;
+			}
+			else{
+				
+				$percentage_time=(($num_rows_total/$Final_count)*100);
+			 //echo "IN ELSE".$percentage;
+			}
+			
+			}elseif($profile_type=='2')
+			{
+			$count_requirements = '';	
+			$query="SELECT SUM(jm_acc_of_requirement) FROM `jm_employer_rating_table` WHERE jm_employer_id = '$user_id'";
+
+			$queryCount="SELECT count(jm_acc_of_requirement) as requirements FROM `jm_employer_rating_table` WHERE jm_employer_id = '$user_id'";
+			$result_new= $this->db->query($query);
+			$result_Count = $this->db->query($queryCount);
+			$num_rows_total=$result_new->num_rows();
+			//$num_rows_count=$result_Count->num_rows();
+			foreach ($result_Count->result_array() as $key){
+					$count_requirements = $key['requirements'];
+				}
+			
+			$Final_count='';
+			if($num_rows_total== 0 || $count_requirements==0 ){
+				$percentage_time = 0;
+//				echo "IN IF".$percentage;
+			}
+			else{
+				$Final_count=($count_requirements*4);
+				$percentage_time=(($num_rows_total/$Final_count)*100);
+//			echo "IN ELSE".$percentage;
+			}
+			}
+			
+			//print_r($percentage_time);die();
+		 return $percentage_time;
+		}
+		
+		public function get_project_completed($user_id,$profile_type)
+		{
+			if($profile_type=='1')
+			{
+			$query = "SELECT * FROM jm_project_list where is_active != '1' AND jm_freelancer_user_id='$user_id'";
+			$queryNew = "SELECT * FROM jm_project_list where is_active= '0' AND jm_freelancer_user_id='$user_id'";
+			//echo $queryNew;die();
+			$total = $this->db->query($query);
+			//print_r($total);die();
+			$completed = $this->db->query($queryNew);
+			//print_r($completed);die();
+			$num_rows_total=$total->num_rows();
+			$num_rows_completed=$completed->num_rows();
+			//print_r($num_rows_completed);die();e;
+			if($num_rows_total== 0 || $num_rows_completed==0 ){
+				$percentage = 0;
+//				echo "IN IF".$percentage;
+			}
+			else{
+				$percentage=(($num_rows_completed/$num_rows_total)*100);
+//				echo "IN ELSE".$percentage;
+			}
+			}
+			elseif($profile_type=='2')
+			{
+			$query = "SELECT * FROM jm_project_list where jm_posted_user_id='$user_id'";
+			   $queryNew = "SELECT * FROM jm_project_list where is_active= '0' AND jm_posted_user_id='$user_id'";
+			   $total = $this->db->query($query);
+			   $completed = $this->db->query($queryNew);
+			   $num_rows_total=$total->num_rows();
+			   $num_rows_completed=$completed->num_rows();
+			if($num_rows_total== 0 || $num_rows_completed==0 ){
+				$percentage = 0;
+			}
+			else{
+				$percentage=(($num_rows_completed/$num_rows_total)*100);
+			}
+				
+				
+			}
+			//print_r($percentage);die();
+//			if ($result->num_rows() <= 0) {
+//			$response = array(
+//				'status' => 500,
+//				'status_message' => 'No Records Found.');
+//			} else {			
+//			$response = array(
+//				'status' => 200,
+//				'status_message' => $result->num_rows());
+//			}
+			//print_r($percentage);die();
+		 return $percentage;
+		
+		}
+			
 }
 ?>

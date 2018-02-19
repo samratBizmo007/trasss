@@ -21,11 +21,61 @@ class Post_jobs extends CI_Controller {
     public function index() {
         $data['all_skills'] = Post_jobs::get_allSkills();
         $data['all_categories'] = Post_jobs::get_allCategory();
+        $data['country'] = Post_jobs::get_country();
+        
+        //$data['state'] = Post_jobs::get_state();
         $this->load->view('includes/header.php');
         $this->load->view('pages/job/post_job.php', $data);
         $this->load->view('includes/footer.php');
     }
 
+        //----------------fun for getting state by country id-----------------------//
+    public function getStateby_country() {
+        extract($_POST);
+        $path = base_url();
+        $url = $path . 'api/Edit_profile_api/getStateby_country?country_id=' . $country_id;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+        print_r($response_json);
+       //return $response;
+    }
+
+    //---------------------------------this fun ends here-------------------//
+ public function get_country() {
+
+        //Connection establishment, processing of data and response from REST API
+        $path = base_url();
+        $url = $path . 'api/Edit_profile_api/get_country';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+        //print_r($response_json);die();
+        return $response;
+    }
+    //---------------------------------this fun for getting states by -------------------//
+    public function get_state() {
+
+        //Connection establishment, processing of data and response from REST API
+        $path = base_url();
+        $url = $path . 'api/Edit_profile_api/get_state';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+        //print_r($response_json);die();
+        return $response;
+    }
+
+    //---------------------------------this fun for getting states by -------------------//   
 //----------function to get skill list from database--------------------------//	
     public function get_allSkills() {
 
@@ -44,21 +94,24 @@ class Post_jobs extends CI_Controller {
     //----------function to get skill list from database--------------------------//    
     public function getSkill_byCategory() {
         extract($_POST);
+        //print_r($_POST);die();
         //Connection establishment, processing of data and response from REST API
         $path = base_url();
-        $url = $path.'api/Dashboard_api/getSkill_byCategory?jm_category_name='.$jm_category_name;
+        $url = $path.'api/Dashboard_api/getSkill_byCategory?category_id='.$category_id;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HTTPGET, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response_json = curl_exec($ch);
         curl_close($ch);
         $response = json_decode($response_json, true);
-//print_r($response_json);die();
-        if($response['status']==200){
-        foreach($response['status_message'] as $key) {
-            echo '<option value="'.$key['jm_category_name'].'"><b>'.$key['jm_category_name'].'</b></option>';
-}
-        }
+print_r($response_json);
+//        $key='';
+//        if($response['status']==200){
+//        foreach($response['status_message'] as $key) {
+//            //print_r($key['jm_skill_name']);
+//            echo '<option value="'.$key['jm_skill_name'].'"><b>'.$key['jm_skill_name'].'</b></option>';
+//}
+//        }
     }
     
 
@@ -134,5 +187,46 @@ class Post_jobs extends CI_Controller {
         }
         
     }
+
+public function getAll_BookmarkedJobs() {
+        $user_id = $this->session->userdata('user_id');
+        $path = base_url();
+        $url = $path . 'api/JobListing_api/getAll_BookmarkedJobs?user_id='.$user_id;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+        return $response;
+    }
+
+     // ---------------explore job seeker filter--------------//
+    public function filterJobs(){ 
+    $this->load->model('jobseeker_model/Jobseeker_list_model','jobs');
+    $data = $this->input->post();
+    $result['result'] = $this->jobs->filterJob($data);
+    //echo '<pre>';print_r($result);exit;
+    $result['job_bookmarks'] = Post_jobs::getAll_BookmarkedJobs();
+
+    if($result['result'] == 'N/A'){
+      echo '
+      <div class="w3-col 12 w3-padding w3-margin">              
+      <div class="w3-col l12">
+      <div class="w3-center">
+      <img src="'.base_url().'css/logos/no_data.png" width="auto" class="img"/>
+      </div>
+      </div>             
+      </div>';
+    }else{
+      
+      if($data['mode']['mode'] == 'job_list'){
+        //echo 'Demooooo';die();
+        $this->load->view('pages/job/_jobList.php',$result);
+      }
+    }
+
+  }
+  //---------------------fucntion ends--------------------//
 
 }

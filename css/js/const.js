@@ -1,1 +1,1 @@
-const BASE_URL = "http://jobmandi.in/";
+const BASE_URL = "http://localhost/jobmandi/";

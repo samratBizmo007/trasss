@@ -101,5 +101,19 @@ class ViewProfile_api extends REST_Controller
 		return $this->response($result);			
 	}
 	//---------------------DELETE USER SKILLS END------------------------------//
-
+	
+	//-----------------function for 3 bars of rating-----------------------//
+	public function get_bars_value_get(){
+		extract($_GET);
+		$profile_type=$_GET['profile_type'];
+		$user_id=$_GET['user_id'];
+		$result = $this->profile_model->get_bars_value($user_id,$profile_type);
+		return $this->response($result);			
+	}
+	//--------------------function end--------------------------------//
+        public function getBars_PercentageValue_get(){
+                $user_id=$_GET['user_id'];
+		$result = $this->profile_model->getBars_PercentageValue($user_id);
+		return $this->response($result);
+        }
 }

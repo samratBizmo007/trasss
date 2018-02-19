@@ -8,7 +8,7 @@ class Contact_model extends CI_Model{
         //$this->load->model('search_model');
 	}
 
-public function sendVerificatinEmail($username,$email,$profile_type){
+public function sendVerificatinEmail($user_name,$email,$profile_type){
 
 		$config = Array(
 			'protocol' => 'smtp',
@@ -44,3 +44,4 @@ public function sendVerificatinEmail($username,$email,$profile_type){
 		return $response;
 
 	}
+}

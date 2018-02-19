@@ -19,17 +19,32 @@ class Login_model extends CI_Model{
 				'jm_username' => $user_name,
 				'jm_password' => base64_encode($password.USER_KEY),
 				'jm_profile_type' => $profile_type,
+				'membership_package' => 'FREE',
 				'joining_date' => date('Y-m-d'),
 				'avail_bids' => '20',
+				'avail_view' => '3',
 				'total_bids' => '20',
+				'total_view' => '3',
 				'verification_code' => base64_encode($email_id),
 				'jm_email_id' => $email_id
 			);
+			// $mail_verified=Login_model::sendVerificatinEmail($user_name,$email_id,$profile_type);
+			// print_r($mail_verified);die();
 		//sql query to insert new user
 			if($this->db->insert('jm_user_tab', $data))
 			{  
 				$mail_verified=Login_model::sendVerificatinEmail($user_name,$email_id,$profile_type);
 
+			// 	$dataProfile = array(
+			// 	'jm_user_id' => $user_name,
+			// 	'jm_password' => base64_encode($password.USER_KEY),
+			// 	'jm_profile_type' => $profile_type,
+			// 	'joining_date' => date('Y-m-d'),
+			// 	'avail_bids' => '20',
+			// 	'total_bids' => '20',
+			// 	'verification_code' => base64_encode($email_id),
+			// 	'jm_email_id' => $email_id
+			// );jm_userprofile_tab
 				if($mail_verified['status']==200){
 					$response=array(
 				'status' => 200,	//---------insert db success code
@@ -39,7 +54,7 @@ class Login_model extends CI_Model{
 				else{
 					$response=array(
 				'status' => 200,	//---------insert db success code but email not send
-				'status_message' =>'Registration Successfull but Email-ID was not verified.'
+				'status_message' =>'Registration Successfull but Email-ID was not found.'
 			);
 				}
 
@@ -106,15 +121,16 @@ class Login_model extends CI_Model{
 		$this->email->subject("JOBMANDI-Email Verification");
 		$this->email->message("Dear ".$username.",\nPlease click on below URL or paste into your browser to verify your Email Address\n\n <a href='".base_url()."auth/login/verify_email/".base64_encode($email)."?profile=".$profile_type."'>".base_url()."auth/login/verify_email/".base64_encode($email)."?profile=".$profile_type."</a>\n"."\n\nThanks\nAdmin Team");
 
-		if (!$this->email->send()) {
+		if ($this->email->send()) {
 			$response=array(
-				'status' => 0,	//---------email sending failed
-				'status_message' =>'Email Sending Failed.'
+				'status' => 200,	//---------email sending succesfully 
+				'status_message' =>'Email Sent Succesfully.'
 			);
 		} else {
+			//print_r($this->email->print_debugger());die();
 			$response=array(
-				'status' => 200,	//---------email send succesfully
-				'status_message' =>'Email Sent Succesfully.'
+				'status' => 500,	//---------email send failed
+				'status_message' =>'Email Sending Failed.'
 			);
 		}
 		return $response;
@@ -143,7 +159,7 @@ class Login_model extends CI_Model{
 			}
 
 			if ($result) {
-				$sql = "UPDATE jm_user_tab SET jm_loginTime=NOW(), jm_current_status='1' WHERE jm_user_id='$user_id'";
+				$sql = "UPDATE jm_user_tab SET jm_loginTime=NOW(), jm_login_date=NOW(), jm_current_status='1' WHERE jm_user_id='$user_id'";
 				//echo $sql;die();
 				$result = $this->db->query($sql);
 
@@ -182,22 +198,6 @@ class Login_model extends CI_Model{
 	//----------------------------LOGIN END------------------------------//
 
 
-	//-----------------------function to check whether privilege level already exists------------------//
-	function checkPrivilege_exist($privilege_level)
-	{
-		$query = null;
-		$query = $this->db->get_where('roles', array(
-			'privilege_level' => $privilege_level
-		));		
-		
-		if ($query->num_rows() > 0) {
-			return 0;			
-		} else {
-			return 1;			
-		}
-	}
-//-----------------------------------function end---------------------------------------//
-
 //-----------------------function to check whether privilege level already exists------------------//
 	function logout_user($user_id)
 	{
@@ -209,7 +209,7 @@ class Login_model extends CI_Model{
 //-----------------------------------function end---------------------------------------//
 
 	//-----------------------function to check whether privilege level already exists------------------//
-	function verify_email($code,$profile_type)
+	function verifyEmail($code)
 	{
 		$sql = "UPDATE jm_user_tab SET email_verified=email_verified+1 WHERE verification_code='$code'";
 		//echo $sql;die();
@@ -219,20 +219,26 @@ class Login_model extends CI_Model{
 //-----------------------------------function end---------------------------------------//
 
 // ------------------forgot password-------------------------------//
-	public function forget_password($forget_email)
+	public function forget_password($forget_email,$forget_profile_type)
 	{
-		$query = "SELECT * FROM jm_user_tab WHERE jm_email_id='$forget_email'";
-		echo $query;die();
+		$query = "SELECT * FROM jm_user_tab WHERE jm_email_id='$forget_email' AND jm_profile_type='$forget_profile_type'";
+		//echo $query;die();
 		$result=$this->db->query($query);  
 		if ($result->num_rows() <= 0) 
 		   {
 		    $response = array(                                             
 		      'status' => 500,
-		      'status_message' => 'Email ID is not registered.');                           
+		      'status_message' => 'Email ID is not registered for this profile.');                           
 		  } else {
+		  	$password='';
+		  	foreach ($result->result_array() as $row) {
+				$password=$row['jm_password'];
+				//$user_id=$row['jm_user_id'];
+			}
+			//echo $password;die();
 		    $response = array(
 		      'status' => 200,
-		      'status_message' => $result->result_array());
+		      'status_message' => $password);
 		  }
 		  return $response;
 	 }

@@ -24,13 +24,48 @@ class View_project extends CI_Controller {
         $data['bidList'] = View_project::get_biddedList($project_id);
         $data['details'] = View_project::getProjectDetails($project_id);
         $data['Skills'] = View_project::getProjectSkills($project_id);
+        $data['EmployersRating'] = View_project::getDetails_OF_FreelanceEmployerRatings($project_id);
+        $data['FreelancerRating'] = View_project::getDetails_OF_FreelancerRatings($project_id);
         $this->load->view('includes/header.php');
         $this->load->view('pages/project/view_project', $data);
         $this->load->view('includes/footer.php');
     }
+//-----------this fun is used to get the details of the freelancer employer and freelancer ratings are given
+//----------or not given------------------------------------------------------------------------------------//    
+    public function getDetails_OF_FreelanceEmployerRatings($project_id){
+        $profile_type = $this->session->userdata('profile_type');
+        $user_id = $this->session->userdata('user_id');
+        $path = base_url();
+        $url = $path.'api/View_Project_api/getDetails_OF_FreelanceEmployerRatings?user_id='.$user_id.'&profile_type='.$profile_type.'&project_id='.$project_id;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+        return $response;
+    }
 
+//-----------this fun is used to get the details of the freelancer employer and freelancer ratings are given
+//----------or not given------------------------------------------------------------------------------------//
+//-----------this fun is used to get the details of the freelancer employer and freelancer ratings are given
+//----------or not given------------------------------------------------------------------------------------//    
+    public function getDetails_OF_FreelancerRatings($project_id){
+        $profile_type = $this->session->userdata('profile_type');
+        $user_id = $this->session->userdata('user_id');
+        $path = base_url();
+        $url = $path.'api/View_Project_api/getDetails_OF_FreelancerRatings?user_id='.$user_id.'&profile_type='.$profile_type.'&project_id='.$project_id;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+        return $response;
+    }
 
-
+//-----------this fun is used to get the details of the freelancer employer and freelancer ratings are given
+//----------or not given------------------------------------------------------------------------------------//    
     public function Fetch_Bidding_Info(){
         extract($_POST);
         $path = base_url();

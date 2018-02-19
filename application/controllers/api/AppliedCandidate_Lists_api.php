@@ -38,4 +38,9 @@ class AppliedCandidate_Lists_api extends REST_Controller {
         $result = $this->Applied_candidatelist_model->DownloadCsv($job_id);
         return $this->response($result);
     }
+    public function getShortlistedcandidates_get(){
+        extract($_GET);
+        $result = $this->Applied_candidatelist_model->getShortlistedcandidates($job_id);
+        return $this->response($result);
+    }
 }

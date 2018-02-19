@@ -67,7 +67,16 @@ class Project_posting_api extends REST_Controller {
     }
     //---------------------end function--------------------------------//  
 
-      
+ public function FetchSkills_get(){
+        extract($_GET);
+        $result = $this->Project_listing_model->FetchSkills($Skills);
+        return $this->response($result);        
+    }
+    public function Get_Skills_get(){
+        extract($_GET);
+        $result = $this->Project_listing_model->Get_Skills($Skills);
+        return $this->response($result); 
+    }
 
     public function get_project_get()
     {

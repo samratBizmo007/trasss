@@ -18,34 +18,73 @@ class Transaction extends CI_Controller
 		// }
 
 	}
-public function index() {
-    //print_r($_POST);
-    $data['txnid'] = substr(hash('sha256', mt_rand() . microtime()), 0, 20);
-    $data['email'] = $this->input->post('email');
-    $data['mobile'] = $this->input->post('mobile');
-    $data['firstName'] = $this->input->post('firstName');
-    $data['lastName'] = $this->input->post('lastName');
-    // $data['membership_package'] = $this->input->post('membership_package');
-    $data['productinfo'] = $this->input->post('productinfo');
-    $data['totalCost'] = $this->input->post('totalCost');
-    $data['hash']         = '';
-    //Below is the required format need to hash it and send it across payumoney page. UDF means User Define Fields.
-    //$hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
-    $hash_string = MERCHANT_KEY."|".$data['txnid']."|".$data['totalCost']."|".$data['productinfo']."|".$data['firstName']."|".$data['email']."||||||||||".SALT;
-    print_r($hash_string);die();
-    $data['hash'] = strtolower(hash('sha512', $hash_string));
-    $data['action'] = PAYU_BASE_URL . '/_payment';        
-    $this->load->view('pages/payment/transcation',$data);
-   
-}
+    public function index() {
+       // print_r($_POST);die();
+    // //print_r($_POST);
+    //     $data['txnid'] = substr(hash('sha256', mt_rand() . microtime()), 0, 20);
+    //     $data['email'] = $this->input->post('email');
+    //     $data['phone'] = $this->input->post('mobile');
+    //     $data['firstName'] = $this->input->post('firstName');
+    //     $data['lastName'] = $this->input->post('lastName');
+    // // $data['membership_package'] = $this->input->post('membership_package');
+    //     $data['productinfo'] = $this->input->post('productinfo');
+    //     $data['amount'] = $this->input->post('totalCost');
+    //     $data['hash']         = '';
 
-	// public function index(){
-		
- //                        $this->load->view('includes/header.php');
-	// 		$this->load->view('pages/payment/transcation.php');
- //                   	$this->load->view('includes/footer.php');
-	// }
-	
+    //     $hash_string = MERCHANT_KEY."|".$data['txnid']."|".$data['amount']."|".$data['productinfo']."|".$data['firstName']."|".$data['email']."|||||||||||".SALT;
+    // //print_r($hash_string);die();
+    //     $data['hash'] = strtolower(hash('sha512', $hash_string));
+    //     $data['action'] = PAYU_BASE_URL . '/_payment';        
+    //     $this->load->view('pages/payment/transcation',$data);
+
+        $amount =  $this->input->post('totalCost');
+        $product_info = $this->input->post('productinfo');
+        $customer_name = $this->input->post('firstName').' '.$this->input->post('lastName');
+        $customer_emial = $this->input->post('email');
+        $customer_mobile = $this->input->post('mobile');
+        $customer_address = $this->input->post('address');
+        
+            //payumoney details
+        
+        
+            $MERCHANT_KEY = "3uoXigp0"; //change  merchant with yours
+            $SALT = "j93rEBf2Ah";  //change salt with yours 
+
+            $txnid = substr(hash('sha256', mt_rand() . microtime()), 0, 20);
+            //optional udf values 
+            $udf1 = '';
+            $udf2 = '';
+            $udf3 = '';
+            $udf4 = '';
+            $udf5 = '';
+            
+             $hashstring = $MERCHANT_KEY . '|' . $txnid . '|' . $amount . '|' . $product_info . '|' . $customer_name . '|' . $customer_emial . '|' . $udf1 . '|' . $udf2 . '|' . $udf3 . '|' . $udf4 . '|' . $udf5 . '||||||' . $SALT;
+             $hash = strtolower(hash('sha512', $hashstring));
+             //print_r($hash);
+           $success = base_url() . 'payment/status';  
+            $fail = base_url() . 'payment/status';
+            $cancel = base_url() . 'payment/status';
+            
+            
+             $data = array(
+                'mkey' => $MERCHANT_KEY,
+                'tid' => $txnid,
+                'hash' => $hash,
+                'amount' => $amount,           
+                'name' => $customer_name,
+                'productinfo' => $product_info,
+                'mailid' => $customer_emial,
+                'phoneno' => $customer_mobile,
+                'address' => $customer_address,
+                'action' => "https://sandboxsecure.payu.in", //for live change action  https://secure.payu.in
+                'sucess' => $success,
+                'failure' => $fail,
+                'cancel' => $cancel            
+            );
+             $this->load->view('includes/header.php');       
+             $this->load->view('pages/payment/transaction', $data);  
+             $this->load->view('includes/footer.php');
+    }
 
 }
 

@@ -10,13 +10,13 @@ class Job_listings extends CI_Controller {
     public function __construct() {
         parent::__construct();
         //start session		
-        $user_id = $this->session->userdata('user_id');
-        $user_name = $this->session->userdata('user_name');
-        $profile_type = $this->session->userdata('profile_type');
-        //check session variable set or not, otherwise logout
-        if (($user_id == '') || ($user_name == '') || ($profile_type == '')) {
-            redirect('auth/login');
-        }
+//        $user_id = $this->session->userdata('user_id');
+//        $user_name = $this->session->userdata('user_name');
+//        $profile_type = $this->session->userdata('profile_type');
+//        //check session variable set or not, otherwise logout
+//        if (($user_id == '') || ($user_name == '') || ($profile_type == '')) {
+//            redirect('auth/login');
+//        }
     }
 
     public function index() {
@@ -47,8 +47,10 @@ class Job_listings extends CI_Controller {
     }
 
     public function getJob_Details($job_id) {
+        $user_id = $this->session->userdata('user_id'); 
+        $profile_type = $this->session->userdata('profile_type');
         $path = base_url();
-        $url = $path . 'api/JobApplications_api/getJob_Details?job_id='.$job_id;
+        $url = $path . 'api/JobApplications_api/getJob_Details?job_id='.$job_id.'&user_id='.$user_id.'&profile_type='.$profile_type;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HTTPGET, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -75,6 +77,7 @@ class Job_listings extends CI_Controller {
 
     public function FetchSkills() {
         extract($_POST);
+        //print_r($_POST);die();
         $path = base_url();
         $url = $path . 'api/JobListing_api/FetchSkills?Skills=' . $Skills;
         $ch = curl_init($url);
@@ -83,7 +86,7 @@ class Job_listings extends CI_Controller {
         $response_json = curl_exec($ch);
         curl_close($ch);
         $response = json_decode($response_json, true);
-        print_r($response_json);
+      print_r($response_json);
         //return $response;
     }
 
@@ -121,7 +124,7 @@ class Job_listings extends CI_Controller {
         if($response['status']== 200){
             foreach($response['status_message'] as $key){
             echo'<div class="w3-margin-top w3-border-bottom w3-card-2 w3-margin-bottom" id="JobList_Div">
-                        <!-------------------------------------------- div for project description------------------------------------------------>
+                        <!-------------------------------------------- div for job description------------------------------------------------>
                         <div class="row w3-margin-bottom w3-padding ">
                             <div class="w3-col l12 w3-padding-left">
                                 <button title="Close Job" class=" w3-right w3-black w3-round-xxlarge w3-padding-tiny btn" onclick="CloseJob('.$key['job_id'].');"><i class="fa fa-close"></i></button>                                   
@@ -163,7 +166,7 @@ class Job_listings extends CI_Controller {
                                 </div>
                             </div>
                         </div>
-                        <!-------------------------------------------- div for project description------------------------------------------------>                       
+                        <!-------------------------------------------- div for job description------------------------------------------------>                       
                     </div>
                     <script>
                             $(document).ready(function () {

@@ -42,7 +42,7 @@ class Auth_api extends REST_Controller
 	//---------------------USER FORGOT PASSWORD END------------------------------//
 	public function forget_password_post(){
 		extract($_POST);
-		$result = $this->login_model->forget_password($forget_email);
+		$result = $this->login_model->forget_password($forget_email,$forget_profile_type);
 		return $this->response($result);			
 	}
 
@@ -54,7 +54,11 @@ class Auth_api extends REST_Controller
 		return $this->response($result);			
 	}
 	//---------------------add  category END------------------------------//
-
-
+        public function verifyEmail_get(){
+                extract($_GET);
+		$result = $this->login_model->verifyEmail($code);
+		return $this->response($result);
+        }
+        
 
 }

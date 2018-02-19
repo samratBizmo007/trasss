@@ -62,40 +62,7 @@
     border-color: bluishGreen_bg;
 	}
 
-	/* .box{
-    width:350px;
-    height:350px;
-    border:1px solid black;
-    display:inline-block;
-    display:inline;/ For IE7*/
-   /* zoom:1;/ For IE7*/
-   /* white-space:normal;
-}*/
-/*
-#container{
-    width:100%;
-    height:400px;
-    float:left;
-    overflow-x:scroll;
-    white-space:nowrap;
-}*/
-	/*.row-fluid{
-    white-space: nowrap;
-}
-.row-fluid .col-lg-3{
-    display: inline-block;
-}*/
-
-	/*.button {
-		background-color: #24b8a0;
-		border: none;
-		color: white;
-		padding: 10px 25px;
-		text-align: center;
-		text-decoration: none;
-		font-size: 18px;
-	}*/
-
+	
 	@media only screen and (max-width: 600px) {
 		.columns {
 			width: 100%;
@@ -110,6 +77,7 @@
 	$lastName='';
 	$email='';
 	$membership_package='';
+	//print_r($all_userInfo);
 	if($all_userInfo['status']=='200'){
 		foreach ($all_userInfo['status_message'] as $key) {
 			//print_r($key);
@@ -120,12 +88,12 @@
 			$email=$key['jm_email_id'];
 			$membership_package=$key['membership_package'];
 		}
-//		echo $membership_package;
+	//echo $membership_package;
 	}
 	?>
 	<div class="w3-container">
 		<div class="col-lg-2"></div>
-		<div class="w3-hide-small w3-hide-medium w3-col l12 w3-center w3-margin-top w3-margin-bottom">
+		<div class="w3-small w3-medium w3-col l12 w3-center w3-margin-top w3-margin-bottom">
 			<div class="btn-group btn-toggle  w3-margin-bottom"> 
    			 <button class="btn btn-lg btn-default" onclick="switchVisible();">Monthly</button>
     		 <button class="btn btn-lg btn-primary w3-text-white bluishGreen_bg" onclick="switchVisible();">Yearly</button>
@@ -141,14 +109,14 @@
 						<ul class="price">
 							<li class="header" style="background-color:#c7c7c7">Free</li>
 							<li class="grey"><i class="fa fa-rupee"></i> 0<span class="w3-medium">/year</span></li>
-							<li>20 Bids per month</li>
+							<li>20 Bids / month</li>
 							<li>15 Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
 							<li>Standard Bidding priority</li>		
-                            <li>0% Commission</li>		
-                            <li>No Bids Rollover</li>		
-                            <li>Share Profile</li>
-							<li><a href="#" class="btn w3-margin-top w3-margin-bottom w3-button w3-center" style="background-color:#a5a5a5;color:#eaeaea"><?php if($membership_package=='FREE'){ echo 'Subscribed';} else{ echo 'Subscribe'; }?></a></li>		
+                                                        <li>0% Commission</li>		
+                                                        <li>No Bids Rollover</li>		
+                                                        <li>Share Profile</li>
+							<li><a href="#" class="btn w3-margin-top w3-margin-bottom w3-button w3-center" style="background-color:#a5a5a5;color:#eaeaea"><?php if($membership_package=='FREE'){ echo 'Initially Subscribed';} else{ echo 'Subscribe'; }?></a></li>		
 						</ul>		
 					</div>					
 				</div>
@@ -157,14 +125,14 @@
 						<ul class="price">
 							<li class="header" style="background-color:#24b8a0;color:#ffffff ">PREMIUM </li>
 							<li class="grey"><i class="fa fa-rupee"></i> 1200<span class="w3-medium">/year</span></li>
-							<li><b>50 Bids per month</b></li>
+							<li><b>50 Bids / month</b></li>
 							<li>Unlimited Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
-                            <li><b>Premium Bidding priority</b></li>		
-                            <li>0% Commission</li>		
-                            <li><b>Monthly Bids Rollover</b></li>		
-                            <li>Share Profile</li>
-							<li><a data-toggle="modal" data-target="#subscribeYearPlan" class="btn w3-margin-top w3-margin-bottom w3-button  w3-center" style="background-color:#24b8a0; color:#ffffff"><?php if($membership_package=='P/Y'){ echo 'Subscribed';} else{ echo 'Subscribe'; }?></a></li>
+                                                        <li><b>Premium Bidding priority</b></li>		
+                                                        <li>0% Commission</li>		
+                                                        <li><b>Monthly Bids Rollover</b></li>		
+                                                        <li>Share Profile</li>
+							<li><a data-toggle="modal" data-target="#subscribeYearPlan" class="btn w3-margin-top w3-margin-bottom w3-button  w3-center" style="background-color:#24b8a0; color:#ffffff"><?php if($membership_package=='P/Y'){ echo 'Already Subscribed';} else{ echo 'Subscribe'; }?></a></li>
 						</ul>
 					</div>
 				</div>
@@ -176,7 +144,7 @@
 						<!-- Modal content-->
 						<div class="modal-content">
 							<div class="modal-header bluishGreen_bg">
-								<button type="button" class="toggler toggler--is-active" data-dismiss="modal">&times;</button>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<div class=""><h4 class="w3-text-white">Subscribe to PREMIUM Membership</h4></div>
 							</div>
 							<div class="modal-body w3-small">
@@ -184,24 +152,24 @@
 								<form action="<?php echo base_url(); ?>payment/transaction" method="post" name="paymentForm" id="paymentForm" style="display: block">
 									<div class="w3-container">
 										<div class="w3-col l12 w3-padding-top">
-											<img src="<?php echo base_url() ?>css/logos/payumoney_logo.png" class="img" width="auto" height="auto">
+											<img src="<?php echo base_url() ?>css/logos/payumoney_logo.png" class="img" width="auto" height="auto" style="float: left">
 											<div class="w3-col l12 w3-margin-top">
 												<div class="col-lg-6">
-													<label class="w3-label">First Name:</label>
+													<label class="w3-label" style="float: left">First Name:</label>
 													<input type="text" name="firstName" class="w3-input" placeholder="Enter your First Name" value="<?php echo $firstName; ?>" required>
 												</div>
 												<div class="col-lg-6">
-													<label class="w3-label">Last Name:</label>
+													<label class="w3-label" style="float: left">Last Name:</label>
 													<input type="text" name="lastName" class="w3-input" placeholder="Enter your Last Name" value="<?php echo $lastName; ?>" required>
 												</div>
 											</div>
 											<div class="w3-col l12 w3-margin-top">
 												<div class="col-lg-6">
-													<label class="w3-label">Email-ID:</label>
+													<label class="w3-label" style="float: left">Email-ID:</label>
 													<input type="email" name="email" class="w3-input" placeholder="Enter your Email ID" value="<?php echo $email; ?>" required>
 												</div>
 												<div class="col-lg-6">
-													<label class="w3-label">Mobile No:</label>
+													<label class="w3-label" style="float: left">Mobile No:</label>
 													<input type="number" name="mobile" class="w3-input" placeholder="Enter your Mobile No." required>
 												</div>
 												<!-- <input type="hidden" name="membership_package" id="membership_package" value="P/Y"> -->
@@ -210,11 +178,14 @@
 											</div>
 											<div class="w3-col l12 w3-margin-top">
 												<div class="col-lg-6 ">
-													<h5 style="text-align: right">Subscribe to Premium Membership in<br><i class="fa fa-inr w3-large"></i>1200 /-</h5>
+													<!-- <h5 style="text-align: right">Subscribe to Premium Membership in<br><i class="fa fa-inr w3-large"></i>300 /-</h5> -->
+													<label class="w3-label" style="float: left">Address :</label>
+													<textarea name="address" class="w3-input" rows="" placeholder="Enter your current address"></textarea>
 												</div>
 												<div class="col-lg-6">
-													<label class="w3-label">Total Cost <i class="fa fa-inr w3-large"></i>:</label>
-													<input type="number" name="totalCost" class="w3-input" value="1200">
+													<label class="w3-label" style="float: left">Total Cost <i class="fa fa-inr w3-large"></i>:</label>
+													<input type="number" name="totalCost" class="w3-input" value="1200" readonly>
+													<!-- <input type="text" name="package" class="w3-input" value="P/Y" readonly> -->
 												</div>
 											</div>
 											<div class="w3-col l12 w3-margin-top w3-center ">
@@ -237,14 +208,14 @@
 						<ul class="price">
 							<li class="header" style="background-color:#c7c7c7">Free</li>
 							<li class="grey"><i class="fa fa-rupee"></i> 0<span class="w3-medium">/month</span></li>
-							<li>20 Bids per month</li>
+							<li>20 Bids / month</li>
 							<li>15 Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
 							<li>Standard Bidding priority</li>		
                             <li>0% Commission</li>		
                             <li>No Bids Rollover</li>		
                             <li>Share Profile</li>
-							<li><a href="#" class="btn w3-margin-top w3-margin-bottom w3-button w3-center" style="background-color:#a5a5a5;color:#eaeaea"><?php if($membership_package=='FREE'){ echo 'Subscribed';} else{ echo 'Subscribe'; }?></a></li>
+							<li><a href="#" class="btn w3-margin-top w3-margin-bottom w3-button w3-center" style="background-color:#a5a5a5;color:#eaeaea"><?php if($membership_package=='FREE'){ echo 'Initially Subscribed';} else{ echo 'Subscribe'; }?></a></li>
 						</ul>
 					</div>
 
@@ -254,14 +225,14 @@
 						<ul class="price">
 							<li class="header" style="background-color:#24b8a0">PREMIUM</li>
 							<li class="grey"><i class="fa fa-rupee"></i> 300<span class="w3-medium">/month</span></li>
-                            <li><b>50 Bids per month</b></li>
+                            <li><b>50 Bids / month</b></li>
 							<li>Unlimited Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
                             <li><b>Premium Bidding priority</b></li>		
                             <li>0% Commission</li>		
                             <li><b>Monthly Bids Rollover</b></li>		
                             <li>Share Profile</li>
-							<li><a data-toggle="modal" data-target="#subscribeMonthPlan" class="btn w3-margin-top w3-margin-bottom w3-button w3-center" style="background-color:#24b8a0; color:#ffffff"><?php if($membership_package=='P/M'){ echo 'Subscribed';} else{ echo 'Subscribe'; }?></a></li>
+							<li><a data-toggle="modal" data-target="#subscribeMonthPlan" class="btn w3-margin-top w3-margin-bottom w3-button w3-center" style="background-color:#24b8a0; color:#ffffff"><?php if($membership_package=='P/M'){ echo 'Already Subscribed';} else{ echo 'Subscribe'; }?></a></li>
 						</ul>
 					</div>
 					<!-- Modal -->
@@ -270,7 +241,7 @@
 					</div>
 					<div class="modal-dialog modal-md">
 						<!-- Modal content-->
-						<div class="modal-content">
+						<div class="modal-content ">
 							<div class="modal-header bluishGreen_bg">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 								<div class=""><h4 class="w3-text-white">Subscribe to PREMIUM Membership</h4></div>
@@ -279,25 +250,25 @@
 								<!-- add portfolio form -->
 								<form action="<?php echo base_url(); ?>payment/transaction" method="post" name="paymentForm" id="paymentForm" style="display: block">
 									<div class="w3-container">
-										<div class="w3-col l12 w3-padding-top">
-											<img src="<?php echo base_url() ?>css/logos/payumoney_logo.png" class="img" width="auto" height="auto">
+										<div class="w3-col l12 w3-padding-top " >
+											<img src="<?php echo base_url() ?>css/logos/payumoney_logo.png" class="img" width="auto" height="auto" style="float: left">
 											<div class="w3-col l12 w3-margin-top">
 												<div class="col-lg-6">
-													<label class="w3-label">First Name:</label>
+													<label class="w3-label" style="float: left">First Name:</label>
 													<input type="text" name="firstName" class="w3-input" placeholder="Enter your First Name" value="<?php echo $firstName; ?>" required>
 												</div>
 												<div class="col-lg-6">
-													<label class="w3-label">Last Name:</label>
+													<label class="w3-label" style="float: left">Last Name:</label>
 													<input type="text" name="lastName" class="w3-input" placeholder="Enter your Last Name" value="<?php echo $lastName; ?>" required>
 												</div>
 											</div>
 											<div class="w3-col l12 w3-margin-top">
 												<div class="col-lg-6">
-													<label class="w3-label">Email-ID:</label>
+													<label class="w3-label" style="float: left">Email-ID:</label>
 													<input type="email" name="email" class="w3-input" placeholder="Enter your Email ID" value="<?php echo $email; ?>" required>
 												</div>
 												<div class="col-lg-6">
-													<label class="w3-label">Mobile No:</label>
+													<label class="w3-label" style="float: left">Mobile No:</label>
 													<input type="number" name="mobile" class="w3-input" placeholder="Enter your Mobile No." required>
 												</div>
 												<!-- <input type="hidden" name="membership_package" id="membership_package" value="P/M"> -->
@@ -306,11 +277,14 @@
 											</div>
 											<div class="w3-col l12 w3-margin-top">
 												<div class="col-lg-6 ">
-													<h5 style="text-align: right">Subscribe to Premium Membership in<br><i class="fa fa-inr w3-large"></i>300 /-</h5>
+													<!-- <h5 style="text-align: right">Subscribe to Premium Membership in<br><i class="fa fa-inr w3-large"></i>300 /-</h5> -->
+													<label class="w3-label" style="float: left">Address :</label>
+													<textarea name="address" class="w3-input" rows="3" placeholder="Enter your current address"></textarea>
 												</div>
 												<div class="col-lg-6">
-													<label class="w3-label">Total Cost <i class="fa fa-inr w3-large"></i>:</label>
-													<input type="number" name="totalCost" class="w3-input" value="300">
+													<label class="w3-label" style="float: left">Total Cost <i class="fa fa-inr w3-large"></i>:</label>
+													<input type="number" name="totalCost" class="w3-input" value="300" readonly>
+													<!-- <input type="text" name="package" class="w3-input" value="P/M" readonly> -->
 												</div>
 											</div>
 											<div class="w3-col l12 w3-margin-top w3-center ">
@@ -340,7 +314,7 @@
 <!-- =================================================MOBILE VERSION CODE FOR THE PLANS=================================-->
 	
 	  
-  <div class="span11 w3-center w3-hide-large  scroll_mob" style="overflow: auto;">
+  <div class="span11 w3-center w3-hide-large w3-hide-small scroll_mob" style="overflow: auto;">
            <div class="row-fluid"> 
             <div class="horizontal">
         
@@ -357,7 +331,7 @@
 						<ul class="price">
 							<li class="header" style="background-color:#c7c7c7">Free</li>
 							<li class="grey"><i class="fa fa-rupee"></i> 0<span class="w3-medium">/year</span></li>
-							<li>20 Bids per month</li>
+							<li>20 Bids / month</li>
 							<li>15 Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
 							<li>Standard Bidding priority</li>		

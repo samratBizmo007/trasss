@@ -32,7 +32,7 @@ class Dashboard_api extends REST_Controller
 	//-------------------------------------------------------------//
 	public function getSkill_byCategory_get(){
 		extract($_GET);
-		$result = $this->dashboard_model->getSkill_byCategory($jm_category_name);
+		$result = $this->dashboard_model->getSkill_byCategory($category_id);
 		return $this->response($result);			
 	}
 	//---------------------ALL SKILLS END------------------------------//
@@ -142,9 +142,16 @@ class Dashboard_api extends REST_Controller
 		$result = $this->dashboard_model->get_userDetails($user_id);
 		return $this->response($result);
 	}
+//-------------this fun is used to get the feedbacks of freelancer---------------------//
+        public function getTestomonials_get(){
+                $user_id=$_GET['user_id'];
+                $profile_type=$_GET['profile_type'];
+		$result = $this->dashboard_model->getTestomonials($user_id,$profile_type);
+		return $this->response($result);
+        }
+//-------------this fun is used to get the feedbacks of freelancer---------------------//
 
-
-        // ---------------	FREELANCER LIVE PROJECTS--------------------//
+    // ---------------	FREELANCER LIVE PROJECTS--------------------//
 	public function freelanceLive_Projects_get(){
 		$user_id=$_GET['user_id'];
 		$result = $this->dashboard_model->freelanceLive_Projects($user_id);
@@ -159,5 +166,19 @@ class Dashboard_api extends REST_Controller
 		return $this->response($result);
 	}
         //	-------------------------ENDS--------------------------------//
-
+        //-----------------this fun gets the average rating of freelancer-------------//
+        public function getAverageRatingsOf_Freelancer_get(){
+                $user_id=$_GET['user_id'];
+		$result = $this->dashboard_model->getAverageRatingsOf_Freelancer($user_id);
+		return $this->response($result);
+        }
+        //-----------------this fun gets the average rating of freelancer-------------//
+        //-----------------this fun gets the average rating of freelancer employer-------------//
+        public function getAverageRatingsOf_FreelancEmployer_get(){
+                $user_id=$_GET['user_id'];
+		$result = $this->dashboard_model->getAverageRatingsOf_FreelancEmployer($user_id);
+		return $this->response($result);
+        }
+        //-----------------this fun gets the average rating of freelancer employer-------------//
+        
 }

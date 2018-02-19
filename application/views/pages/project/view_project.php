@@ -34,8 +34,17 @@ $profile_type = $this->session->userdata('profile_type');
 
 </head>
 <?php
-
+//print_r($EmployersRating);
+//print_r($FreelancerRating);
+$freelance_id = $EmployersRating['status_message'][0]['jm_freelance_id'];
+$employerProject_Id = $EmployersRating['status_message'][0]['jm_project_id'];
+$employer_id = $FreelancerRating['status_message'][0]['jm_emp_id'];
+$frelancerProject_Id = $FreelancerRating['status_message'][0]['jm_project_id'];
+//echo $employerProject_Id;
+//echo $frelancerProject_Id;
 $user_id = $this->session->userdata('user_id');
+
+//echo $user_id;
 $user_name = $this->session->userdata('user_name');
 $project_Title = $details['status_message'][0]['jm_project_title'];
 $project_Description = $details['status_message'][0]['jm_project_description'];
@@ -45,21 +54,13 @@ $budget = $details['status_message'][0]['jm_projectbudget_type'];
 $freelancer_id = $details['status_message'][0]['jm_freelancer_user_id'];
 $emp_id = $details['status_message'][0]['jm_posted_user_id'];
 $is_closed = $details['status_message'][0]['is_active'];
+//echo $employerProject_Id;
 
 $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
 
-//echo '<pre>';print_r($details['status_message']);exit;
-
-
-// foreach ($details['status_message'] as $key) {
-//     $project_Title = $key['jm_project_title'];
-//     $project_Description = $key['jm_project_description'];
-//     $project_Id = $key['jm_project_id'];
-//     $project_type = $key['jm_job_type'];
-//     $budget = $key['jm_projectbudget_type'];
-// }
 ?>
 <script>
+    
     $(document).ready(function () {
      var user_id = '<?php echo $user_id ; ?>';
      var project_Id = '<?php echo $project_Id; ?>'; 
@@ -120,20 +121,27 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
                                 <p><b>Project Description:&nbsp;&nbsp;</b><?php echo $project_Description; ?></p> 
                             </div>
                             <div class=" w3-padding">                                    
-                                <p><b>Skills:-&nbsp;&nbsp;</b><b style="color: #585454;"><?php foreach ($Skills['status_message'] as $row) { ?><?php echo $row['jm_skill_name'] . ' ,'; ?><?php } ?></b></p>                                    
+                                <p><b>Skills :-&nbsp;&nbsp;</b><b style="color: #585454;">
+                                    <?php foreach ($Skills['status_message'] as $row) { ?>
+                                    <span  class="w3-padding-small w3-light-grey w3-round" style="display:inline-block; margin-top:5px; margin-right: 5px; font-size:10px;"><?php echo $row['jm_skill_name']; ?></span>                                        
+                                        <?php //echo $row['jm_skill_name'] . ' ,'; ?>
+                                    <?php } ?>
+                                </b></p>                                    
                             </div>
                             <div class="w3-padding ">
                                 <div>
                                     <p><b>Project ID:-</b>&nbsp;&nbsp;#PID0<?php echo $project_Id; ?></p>
 
-                                    <?php 
-                                    if($is_closed==0){
-                                        echo '<a class="btn w3-right" data-toggle="modal" data-target="#rateEmp"><span class="w3-margin-top w3-margin-bottom w3-padding-small w3-padding-left w3-padding-right w3-round-xxlarge  w3-text-white" style=" background-color: #00B59D;"><b>Rate Employer!</b></span></a>';
+                                    <?php                                    
+                                    if ($is_closed == 0) {
+                                        if ($freelance_id == $user_id && $employerProject_Id == $project_Id) {
+                                            echo '<a class="btn w3-right" data-target="#"><span class="w3-margin-top w3-margin-bottom w3-padding-small w3-padding-left w3-padding-right w3-round-xxlarge  w3-text-white" style=" background-color: #00B59D;"><b>Rating Submited.!</b></span></a>';
+                                        } else {
+                                            echo '<a class="btn w3-right" data-toggle="modal" data-target="#rateEmp"><span class="w3-margin-top w3-margin-bottom w3-padding-small w3-padding-left w3-padding-right w3-round-xxlarge  w3-text-white" style=" background-color: #00B59D;"><b>Rate Employer!</b></span></a>';
+                                        }
+                                    } else {
+                                        echo '<span id="bid_id" class="w3-margin-top w3-margin-bottom w3-padding-small w3-padding-left w3-padding-right w3-round-xxlarge w3-right w3-text-white" style=" background-color: #00B59D; display: none;"><b>Bid Submitted !</b></span>';
                                     }
-                                    else{
-                                    echo '<span id="bid_id" class="w3-margin-top w3-margin-bottom w3-padding-small w3-padding-left w3-padding-right w3-round-xxlarge w3-right w3-text-white" style=" background-color: #00B59D; display: none;"><b>Bid Submitted !</b></span>';
-                                    }
-                                    
                                     ?>
                                 </div>                                   
                             </div>
@@ -150,7 +158,7 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
                                 <div class="w3-container w3-margin-bottom">
                                     <form class="form-horizontal" id="emp_rateForm" name="emp_rateForm" role="form" method="post" enctype="multipart/form-data">
                                         <div class="w3-col l12 w3-center">
-                                            <h5>Give Feedback to Freelancer</h5>
+                                            <h5>Give Feedback to Freelance Employer</h5>
                                             <input type="hidden" class="" value="<?php echo $project_Id; ?>" id="emp_project_id"  name="emp_project_id">
                                             <input type="hidden" class="" value="<?php echo $emp_id; ?>" id="emp_id"  name="emp_id">
                                             <div class="w3-col l12  w3-small">
@@ -347,7 +355,7 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
                     <!-------------------------------------------- div for project description------------------------------------------------>
                     <!-------------------------------------------- div for project bid------------------------------------------------>
 
-                    <?php if($bypost_user_id != $user_id) { ?>
+                    <?php if($bypost_user_id != $user_id && $is_closed != 0) { ?>
                     <?php if($profile_type != 4){ ?>
                     <div class="w3-padding w3-margin-bottom" id="Bidding_Div">
                         <form id="Bidding_Form" name="Bidding_Form" enctype="multipart/form-data">
@@ -357,7 +365,7 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
                             <div class="row">
                                 <div class="w3-col l12">
                                     <div class="w3-padding row w3-col l12">
-                                        <div class="w3-col l2 w3-padding-left">
+                                        <div class="w3-col l2 ">
                                             <label>Your Bid For Project.</label>
                                             <div class="input-group">
                                                 <input type="number" class="form-control input-md" name="Project_Bid" id="Project_Bid" required>
@@ -371,14 +379,14 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="w3-padding-left">
+                                <div class="">
                                     <h5 ><b>Additional Information</b></h5>
                                 </div>
-                                <div class="w3-col l12 w3-padding">
+                                <div class="w3-col l12 ">
                                     <label>Cover Letter (optional):</label>
                                     <textarea class="form-control" rows="6" cols="80" name="Cover_Letter" id="Cover_Letter" style=" resize: none;"></textarea>
                                 </div>
-                                <div class="w3-col l12 w3-padding">
+                                <div class="w3-col l12 ">
                                     <div class="w3-margin-top">
                                         <label>Attachment (optional)</label>
                                     </div>                                        
@@ -410,7 +418,12 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
                     </div>
                     <div class="w3-col l6 w3-margin-bottom">
                         <button class="w3-button w3-right w3-light-red" onclick="closeProject(<?php echo $project_Id; ?>)" id="closeCurrent_project">Close Project</button>
-                        <button class="w3-button w3-text-white w3-right" data-toggle="modal" data-target="#finishModal" id="finishCurrent_project" style="background-color: #<?php echo THEME_COLOR; ?>">Finish & Close Project</button>
+                        <?php if($employer_id == $user_id && $frelancerProject_Id == $project_Id){
+                                        echo '<button class="w3-button w3-text-white w3-right" data-toggle="modal" data-target="#" id="finishCurrent_project" style="background-color: #'.THEME_COLOR.'">Finish & Close Project</button>'; 
+                                        }else{
+                                        echo '<button class="w3-button w3-text-white w3-right" data-toggle="modal" data-target="#finishModal" id="finishCurrent_project" style="background-color: #'.THEME_COLOR.'">Finish & Close Project</button>'; 
+                                        }?>
+                       <!--<button class="w3-button w3-text-white w3-right" data-toggle="modal" data-target="#finishModal" id="finishCurrent_project" style="background-color: #<?php echo THEME_COLOR; ?>">Finish & Close Project</button>--> 
 
                         <!-- Modal -->
                         <div id="finishModal" class="modal fade" role="dialog"><!--  modal for vshow portfolio information -->
@@ -508,7 +521,7 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
                         return: false, //stop the actual form post !important!
                         success: function (data){ 
                             $.alert(data);
-                            closeProject(<?php echo $project_Id; ?>);
+                            //closeProject(<?php echo $project_Id; ?>);
                         }
                     });
          return false;  //stop the actual form post !important!
@@ -688,7 +701,7 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
             }
 
             ?>
-            <tr>
+            <tr id="divID" onclick="slidedownn('<?php echo $value['jm_user_id']; ?>');">
                 <td class="text-center" style="vertical-align: middle;"><?php echo $i.'.'; ?></td>
                 <td class="text-center" style="vertical-align: middle;"><i class="fa fa-trophy <?php if($freelancer_id!=$value['jm_user_id']){echo 'w3-hide'; } ?> w3-xlarge" title="Awarded" style="color:<?php echo '#'.THEME_COLOR; ?>"></i></td>
                 <td class="text-center" style="vertical-align: middle;"><?php if($value['jm_user_name']!='') {echo $value['jm_user_name'];}else{ echo '<b>Not Available</b>';} ?></td>
@@ -704,10 +717,12 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
                 ';
                 ?>
             </tr> 
-            <tr><td colspan="8"><b>User Message: </b><?php if($value['jm_project_bidding_coverletter']){echo $value['jm_project_bidding_coverletter'];}else{echo '<b>Not Available</b>';} ?></td>
-                
-        </tr>
-        <tr><td colspan="8"><b>Attachments: </b>
+        <tr id="slideDIV_<?php echo $value['jm_user_id']; ?>" style=" display: none;">
+                <td colspan="4" class="text-left" style="vertical-align: middle;">
+                    <b>User Message: </b>
+                    <?php if($value['jm_project_bidding_coverletter']){echo $value['jm_project_bidding_coverletter'];}else{echo '<b>Not Available</b>';} ?></td>
+                <td colspan="4" class="text-left" style="vertical-align: middle;">
+                  <b>Attachments: </b>
                <?php 
                if($value['jm_project_bidding_coverletter_file']!=''){
                    echo '<a class="btn w3-medium" title="Download Resume" href="'.base_url().'project/project_listing/download/'.$value['project_bid_id'].'"><i class="fa fa-download"></i> File</a>';
@@ -716,7 +731,8 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
                 echo '<b>No File</b>';
             }
             ?>
-        </td>
+        </td>  
+        </tr>
     </tr>
 
     <?php $i++; } 
@@ -738,6 +754,11 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
 </body>
 </html>
 <script>
+function slidedownn(user_id){
+    $("#slideDIV_"+user_id).slideToggle("slow");
+    $("#slideDIVnew_"+user_id).slideToggle("slow");
+    }
+ 
     //-----this script is used to save the bidding and upload file for project cover letter-----------------// 
     $(function () {
         $("#Bidding_Form").submit(function (e) {

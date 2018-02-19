@@ -44,6 +44,9 @@
             .page-title{
                 font-size: 15px;
                 color:#00B59D;
+            }  
+            .bluishGreen_txt{
+                color:#00B59D;
             }
             
         </style>
@@ -65,6 +68,8 @@
         $posted_time = '';
         $posted_date = '';
         $isActive = '';
+        //print_r($jobDetails);
+        //echo $user_id;
         foreach ($jobDetails['status_message'] as $key) {
             $job_id = $key['jm_jobpost_id'];
             $Postedby = $key['jm_user_id'];
@@ -81,114 +86,116 @@
             $posted_date = $key['jm_posted_date'];
             $posted_time = $key['jm_posted_time'];
             $isActive = $key['is_active'];
+            $selected_candidates = json_decode($key['selected_candidates']);
         }
+        //print_r($jobDetails);
         ?>
     </head>
-<script>
-// jQuery(document).ready(function($) {
-//
-//      if (window.history && window.history.pushState) {
-//
-//        $(window).on('popstate', function() {
-//          var hashLocation = location.hash;
-//          var hashSplit = hashLocation.split("#!/");
-//          var hashName = hashSplit[1];
-//
-//          if (hashName !== '') {
-//            var hash = window.location.hash;
-//            if (hash === '') {
-//              //alert('Back button was pressed.');
-//                window.location='<?php echo base_url(); ?>jobseeker/Jobseeker_lists';
-//                return false;
-//            }
-//          }
-//        });
-//
-//        window.history.pushState('forward', null, './#forward');
-//      }
-//
-//    });
-</script>
+
     
     <body>
-        <div class="w3-col l12 " style="padding-left:10px" >
+        <div class="w3-col l12" style="padding-left:10px" >
             <a class="btn w3-round-jumbo w3-margin-top w3-text-black" title="Back To Job List" href="<?php echo base_url(); ?>jobseeker/Jobseeker_lists"><i class="fa fa-backward"> Back</i></a>            
         </div>
-        <div class="container w3-margin-bottom w3-padding-bottom bind-main">
 
-                    <div class="w3-margin-top w3-padding" id="JobList_Div">
-                       
-                            
-                               
-                                    <div class="w3-col l12 w3-margin-top ">
-                                        <span class="w3-margin-right page-title" ><b><?php echo $job_name; ?></b></span>
+        <div class=" col-lg-2"></div>
+        <div class="">
+      
+        <div class="container w3-border w3-margin-top w3-margin-bottom w3-padding-bottom bind-main">
+<!--        <div class=" w3-col l12 w3-padding-small">
+          <span><h5 class="" style=" color: black;">Job Details</h5></span>
+        </div>-->
+<?php
+         if($jobDetails['status'] == 500){
+            echo '<div class="w3-col l12 container">              
+      <div class="w3-center">
+      <span><strong></strong>'.$jobDetails['status_message'].'</span>
+          <a href="'.base_url().'profile/membership_control">View Plan..!</a>
+      </div>
+      </div>';
+        }else{
+?>
+            <div class="w3-padding w3-padding-left" id="JobList_Div">
+                    <div class="row w3-margin-bottom">
+                        <div class="w3-col l12 s12 m12">
+                            <div class=" w3-col l12">                                                
+                                <div class="w3-col l12" style=" font-size: 20px;">
+                                        <span class="w3-margin-right bluishGreen_txt" style=" ;font-size:29px;"><b><?php echo $job_name; ?></b></span>
                                     </div> 
-                                
-                                <div class="w3-col l12 inner-text-content w3-margin-top ">
-                                        <span ><b><?php echo $company_name; ?></b></span>                                               
-                                </div>
-                                                        
-                                                  
-                              
-                                    <div class="w3-col l6 inner-text-content">
-                                        <span><b>Salary : &nbsp;&nbsp;&nbsp;</b><?php echo $salary_range; ?></span>
+
+                                    <div class=" w3-col l12 inner-text-content ">
+                                        <span style="font-size:20px"><?php echo $company_name; ?></span>                                               
                                     </div>
-                                    <div class="w3-col l6 inner-text-content">
-                                        <span><b>Positions : &nbsp;&nbsp;&nbsp;</b><?php echo $positions; ?></span>
+
+                                    <div class=" w3-col l12 inner-text-content">
+                                        <div class="w3-col l3 inner-text-content">
+                                            <span style="font-size:15px"><b>Salary : &nbsp;&nbsp;&nbsp;</b><?php echo $salary_range; ?></span>
+                                        </div>
+                                        <div class="w3-col l3 inner-text-content">
+                                            <span style="font-size:15px"><b>Positions : &nbsp;&nbsp;&nbsp;</b><?php echo $positions; ?></span>
+                                        </div>
+                                        <div class="w3-col l3 inner-text-content">
+                                            <span style="font-size:15px"><b>Job Type :&nbsp;&nbsp;&nbsp;</b><?php echo $job_type; ?></span>
+                                        </div>
+                                        <div class="w3-col l3 inner-text-content">
+                                            <span class="w3-left" style="font-size:15px"><b>Posted Date : &nbsp;&nbsp;&nbsp;</b><?php echo $posted_date; ?></span>
+                                        </div>
                                     </div>
-                              
-                               
-                                    <div class="w3-col l6 inner-text-content">
-                                        <span><b>Job Type :&nbsp;&nbsp;&nbsp;</b><?php echo $job_type; ?></span>
-                                    </div>
-                                    
-                               
+
+                                    <div class=" w3-col l12 w3-margin-top" style="font-size:15px">
+                                        <div class="w3-col l10">
+                                            <span class="" style="font-size:20px"><b>Job Description :&nbsp;&nbsp;&nbsp;</b></span>
+                                        <div>
+                                            <span class=""><b>Responsibility:</b> <?php if($responsibility == ''){ echo 'Description Not Available'; }else{ echo $responsibility ;}?></span><br>                                            
+                                            <span class=""><b>Qualifications:</b> <?php if($qualification == ''){echo 'Description Not Available'; }else{ echo $qualification ;}?></span><br>                          
+                                            <span class=""><b>Date & Venue Address:</b> <?php if($address == ''){echo 'Description Not Available'; }else{ echo $address ;} ?></span>
+                                        </div>
+                                        </div>
+                                    </div>                                    
                         
-                               
-                                    
-                                        <span class="inner-text-content"><b>Job Description :&nbsp;&nbsp;&nbsp;</b></span><br><br>
-                                        <div class="w3-col l12 inner-text-content ">
-                                            <p class="w3-left"><b>Responsibility:</b>&nbsp;&nbsp;<?php if($responsibility == ''){ echo 'Description Not Available'; }else{ echo $responsibility ;}?></p>                                            
-                                        </div>
-                                        <div class="w3-col l12 inner-text-content">
-                                            <p class="w3-left"><b>Qualifications:</b>&nbsp;&nbsp;<?php if($qualification == ''){echo 'Description Not Available'; }else{ echo $qualification ;}?></p>
-                                        </div>
-                                        <div class="w3-col l12 inner-text-content">
-                                            <p class="w3-left"><b>Date & Venue Address:</b>&nbsp;&nbsp;<?php if($address == ''){echo 'Description Not Available'; }else{ echo $address ;} ?></p>
-                                        </div>
-                                    
-                        
-                        <div class="inner-text-content">
-                                <div class=" w3-col l12 " style="align-vertical:inline"  id="SkillId_<?php echo $job_id; ?>">
-                                        <label style="margin-bottom:-5px"> Job Skills: </label>
+                            <div class=" w3-col l12 w3-margin-top">
+                                <div class=" w3-col l12 " style=" align-vertical: inline; font-size: 15px;"  id="SkillId_<?php echo $job_id; ?>">
+                                  <label style="margin-bottom:-5px">Skills: </label>
                                 </div>
                             </div>
-                                       
-                                    
-                              
-                          
-                            <div class="w3-col l12 ">
-                                <div class=" w3-col l6 w3-right" id="DisplayDiv" style=" display: none;">
-                                   <span class="w3-right w3-medium w3-padding-small bluishGreen_bg w3-round-xxlarge w3-text-white">Already Applied!</span>
+                                                                                                                                   
+                            <div class=" w3-col l12 ">
+                                <?php if($selected_candidates){
+                                if(in_array($user_id, $selected_candidates)){
+                                echo '<div class=" w3-col l6 w3-right <?php echo $hide; ?>" id="" style="">
+                                   <span class="w3-right w3-medium w3-padding-small bluishGreen_bg w3-round-xxlarge w3-text-white">Closed..!</span>
+                                </div>';
+                                }else{
+                                echo '<div class=" w3-col l6 w3-right <?php echo $hide; ?>" id="" style="">
+                                   <span class="w3-right w3-medium w3-padding-small bluishGreen_bg w3-round-xxlarge w3-text-white">Positions Filled..!</span>
+                                </div>';
+                                }
+                                } 
+                                if($selected_candidates == ''){
+                                echo'<div class=" w3-col l6 w3-right" id="DisplayDiv" style=" display: none;">
+                                   <span class="w3-right w3-large w3-padding-small bluishGreen_bg w3-round-xxlarge w3-text-white">Already Applied..!</span>
                                 </div>
                                 <div class="w3-col l6 w3-right" id="ApplyBtn">
-                                    <a class="btn w3-right w3-medium w3-padding-small show_modal bluishGreen_bg w3-round-xxlarge w3-text-white" title="Add Details" data-toggle="modal" data-target="#Add_detailsModal">Apply</a>
-                                </div> 
-                                <div class="w3-col l6 inner-text-content w3-left">
-                                        <span class="w3-left" style="font-size:9px"><b>Posted Date : &nbsp;&nbsp;&nbsp;</b><?php echo $posted_date; ?></span>
-                                    </div>
+                                   <a class="btn w3-right w3-large w3-padding-small show_modal bluishGreen_bg w3-round-xxlarge w3-text-white" title="Apply Job" data-toggle="modal" data-target="#Add_detailsModal">Apply</a>
+                                </div>';
+                                }
+                                    ?>                                                                                               
+                                </div>
+                              </div>
                             </div>
-                       
-                        <!-------------------------------------------- div for project description------------------------------------------------>                       
-                   
-                </div>
-            
+                         </div>
+             <!-------------------------------------------- div for job description------------------------------------------------>                                          
+                    </div>
+             <?php } ?>
         </div>
+        </div>
+        <div class=" col-lg-2"></div>
         <script>
             $(document).ready(function () {
                 checkAlreadyApplied('<?php echo $job_id; ?>','<?php echo $user_id ;?>');
             });
         </script>
+
         <!-- Modal -->
         <div class="modal fade" id="Add_detailsModal">
             <div class="modal-dialog">
@@ -218,7 +225,7 @@
                             <div class="row w3-col l12 ">
                                 <div class="w3-col l5 w3-left">
                                     <label>Contact No(optional) :</label>
-                                    <input type="number" name="contact_no" id="contact_no" class="form-control" placeholder="Contact Number">
+                                    <input type="tel" name="contact_no" maxlength="10" id="contact_no" class="form-control" placeholder="Contact Number">
                                 </div>
                                 <div class="w3-col l5 w3-right ">
                                     <label>Message(optional) :</label>
@@ -246,7 +253,11 @@
         </div>
     </body>
     <script>
+        $(document).ready(function(){
+            $('[data-toggle="modal"]').tooltip();   
+        });
         $(document).ready(function () {
+            
             FetchSkills('<?php echo $job_id; ?>', '<?php echo $skills; ?>');
         });
     </script>

@@ -47,9 +47,7 @@ switch ($profile_type) {
   }
 
 </style>
-<style>
 
-</style>
 </head>
 <?php 
 $hide_Job="";
@@ -148,7 +146,7 @@ switch ($profile_type) {
                 </span>&nbsp;PROFILE
               </a>
               
-              <a href="<?php echo base_url(); ?>project/project_listing" class="btn <?php echo $hide_work; ?> w3-padding-tiny w3-margin-left  w3-text-white">
+              <a href="<?php echo base_url(); ?>project/project_listing" class="btn <?php echo $hide_work; ?> w3-padding-tiny w3-margin-left w3-text-white">
                 <span class="fa-stack fa-lg">
                   <i class="fa fa-circle fa-stack-2x"></i>
                   <i class="fa fa-search fa-stack-1x " style="color:#000000"></i>
@@ -199,7 +197,7 @@ switch ($profile_type) {
         </div>
 
         <!-- desktop grid scroll view -->
-        <div class="w3-col l12 <?php echo $hide_Div; ?> w3-hide-small">
+        <div class="w3-col l12 <?php echo $hide_Div; ?> w3-hide-small ">
           <div class="w3-col l12 w3-margin-top w3-padding-top w3-margin-bottom">
             <div class="">
 
@@ -215,7 +213,7 @@ switch ($profile_type) {
                       <center><div class=""><img src="<?php echo base_url(); ?>images/desktop/image25.png" style="margin-top:-26px;"></div></center>
                     </center>
                   </div>
-                  <div class="w3-col l12 w3-center scrollyClass skill" id="style-2" style="height: 80px;overflow-y: scroll">
+                  <div class="w3-col l12 w3-center  scrollyClass skill" id="style-2" style="height: 80px;overflow-y: scroll">
                    <?php 
 
                    if($all_userSkills['status']!=200){
@@ -256,256 +254,383 @@ switch ($profile_type) {
              </div>
            </div>
            <!-- skills tab end -->
+<?php //print_r($freelancer_ratings);
+$communication = '';
+$Delivery = '';
+$money = '';
+$expert = '';
+$hire = '';
+foreach($freelancer_ratings['status_message'] as $key){
+        //print_r($key);
+  $communication = $key['communication'];
+  $comm = explode(".", $communication);
+  if ($comm[1] == 0) {
+   $communication = round($communication);
+ }else{
+  $communication = number_format($key['communication'], 1, '.', '');                
+}
 
-           <!-- feedback tab start -->
-           <div class="w3-col l3 w3-padding-tiny <?php echo $hide_rating; ?>">
-            <div class="col-lg-12 dashboard_blocks w3-white w3-round">
-              <div class="w3-col l12">
-                <center>
-                  <h6><b>My Feedback</b></h6>
-                  <center> <div class=""><img src="<?php echo base_url(); ?>images/desktop/image25.png" style="margin-top:-26px;"></div></center>
-                </center>
-
-                <div class="w3-col l12 w3-center" style="margin-top: 5px">
-                  <div class="w3-col l12 <?php echo $hide_freeRating; ?>">
-                    <div class="w3-col l12" style="">
-                      <div class="w3-col l6 s6 w3-small">
-                        <span class="w3-left"><b>Communication:</b></span>
-                      </div>
-                      <div class="w3-col l6 s6" style="padding-left:10px;">
-                        <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
-                      </div>
-                    </div>
-                    <div class="w3-col l12" style="">
-                      <div class="w3-col l6 s6 w3-small">
-                        <span class="w3-left"><b>On Time:</b></span>
-                      </div>
-                      <div class="w3-col l6 s6" style="padding-left:10px;">
-                        <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
-                      </div>
-                    </div>
-                    <div class="w3-col l12" style="">
-                      <div class="w3-col l6 s6 w3-small">
-                        <span class="w3-left"><b>Value money:</b></span>
-                      </div>
-                      <div class="w3-col l6 s6" style="padding-left:10px;">
-                        <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
-                      </div>
-                    </div>
-                    <div class="w3-col l12" style="">
-                      <div class="w3-col l6 s6 w3-small">
-                        <span class="w3-left"><b>Expertise:</b></span>
-                      </div>
-                      <div class="w3-col l6 s6" style="padding-left:10px;">
-                        <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
-                      </div>
-                    </div>
-                    <div class="w3-col l12" style="">
-                      <div class="w3-col l6 s6 w3-small">
-                        <span class="w3-left"><b>Hire Again?:</b></span>
-                      </div>
-                      <div class="w3-col l6 s6" style="padding-left:10px;">
-                        <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
-                      </div>
-                    </div>
-                  </div>
+$Delivery = $key['delivery'];
+$DEl = explode(".", $Delivery);
+if($DEl[1] == 0){
+  $Delivery = round($Delivery);  
+}else{
+  $Delivery = number_format($key['delivery'], 1, '.', '');
+}
 
 
-                  <!-- freelance employer rating div -->
-                  <div class="w3-col l12 <?php echo $hide_empRating; ?>">
-                    <div class="w3-col l12" style="">
-                      <div class="w3-col l6 s6 w3-small">
-                        <span class="w3-left"><b>Communication:</b></span>
-                      </div>
-                      <div class="w3-col l6 s6" style="padding-left:10.5px;">
-                        <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
-                      </div>
-                    </div>
-                    <div class="w3-col l12" style="">
-                      <div class="w3-col l6 s6 w3-small">
-                        <span class="w3-left"><b>Payment:</b></span>
-                      </div>
-                      <div class="w3-col l6 s6" style="padding-left:10.5px;">
-                        <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
-                      </div>
-                    </div>
-                    <div class="w3-col l12" style="">
-                      <div class="w3-col l6 s6 w3-small">
-                        <span class="w3-left"><b>Requirement:</b></span>
-                      </div>
-                      <div class="w3-col l6 s6" style="padding-left:10.5px;">
-                        <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
-                      </div>
-                    </div>
-                    <div class="w3-col l12" style="">
-                      <div class="w3-col l6 s6 w3-small">
-                        <span class="w3-left"><b>Work Again?:</b></span>
-                      </div>
-                      <div class="w3-col l6 s6" style="padding-left:10.5px;">
-                        <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
-                      </div>
-                    </div>              
-                  </div>
-                  <!-- end -->
+$money = $key['money'];
+$mon = explode(".", $money);
+if($mon[1] == 0){
+ $money = round($money); 
+}else{
+  $money = number_format($key['money'], 1, '.', '');
+}
 
-                  <!-- <span class="stars" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span><br> -->
+$expert = $key['expert'];
+$exp = explode(".",$expert);
+if($exp[1] == 0){
+  $expert = round($expert);  
+}else{
+  $expert = number_format($key['expert'], 1, '.', '');
+}
 
-                  <!-- script to dispaly stars -->
-                  <script>
-                    $.fn.stars = function() {
-                      return $(this).each(function() {
-                        var rating = $(this).data("rating");
-                        var numStars = $(this).data("numStars");
-                        var fullStar = new Array(Math.floor(rating + 1)).join('<i class="fa fa-star" style="margin-right:2px"></i>');
-                        var halfStar = ((rating%1) !== 0) ? '<i class="fa fa-star-half-empty" style="margin-right:2px"></i>': '';
-                        var noStar = new Array(Math.floor(numStars + 1 - rating)).join('<i class="fa fa-star-o" style="margin-right:2px"></i>');
-                        $(this).html(fullStar + halfStar + noStar);
-                      });
-                    }
-                    $('.stars').stars();
-                  </script>                          
-                </div>
-              </div>
+$hire = $key['hire'];
+$hi = explode(".", $hire);
+if($hi[1] == 0){
+  $hire = round($hire);
+}else{
+  $hire = number_format($key['hire'], 1, '.', '');
+}
+}
+?>
+<!-- feedback tab start -->
+<div class="w3-col l3  w3-padding-tiny <?php echo $hide_rating; ?>">
+  <div class="col-lg-12  dashboard_blocks w3-white w3-round">
+    <div class="w3-col l12 ">
+      <center>
+        <h6><b>My Feedback</b></h6>
+        <center> <div class=""><img src="<?php echo base_url(); ?>images/desktop/image25.png" style="margin-top:-26px;"></div></center>
+      </center>
 
+      <div class="w3-col l12 w3-center" style="margin-top: 5px">
+        <div class="w3-col l12 <?php echo $hide_freeRating; ?>">
+          <div class="w3-col l12" style="">
+            <div class="w3-col l6 s6  w3-small">
+              <span class="w3-left"><b>Communication:</b></span>
+            </div>
+            <div class="w3-col l6 s6" style="padding-left:10px;">
+              <span class="stars w3-left" data-rating="<?php if($communication){ echo $communication; }else{ echo 0; }?>" data-num-stars="5" ></span>
             </div>
           </div>
-          <!-- feedback ends -->
-
-          <!-- funds start -->
-          <div class="w3-col l3 w3-padding-tiny <?php echo $hide_funds; ?>">
-            <div class="col-lg-12 dashboard_blocks w3-white w3-round ">
-              <div class="w3-col l12" >
-                <center>
-                  <h6><b>My Funds</b></h6>
-                  <center><img src="<?php echo base_url(); ?>images/desktop/image25.png" style="margin-top:-26px;"></center>
-                </center>
-                <div class="w3-col l12 " >
-                  <center><table class="" style="height: 85px;">
-                    <tbody>
-                      <?php                    
-                      $paid_thisMonth='0.00';
-                      $paid_toDate='0.00';
-                      $earn_thisMonth='0.00';
-                      $earn_toDate='0.00';
-                      if($all_userTransaction['status']=='200'){
-                        foreach ($all_userTransaction['status_message'] as $key) {
-                          $paid_thisMonth=$key['paid_thisMonth'];
-                          $paid_toDate=$key['paid_toDate'];
-                          $earn_thisMonth=$key['earn_thisMonth'];
-                          $earn_toDate=$key['earn_toDate'];
-                        }
-                      }
-                      ?>
-                      <tr>
-                        <td class="text-left">Paid this month</td>
-                        <td class="text-right">&nbsp;&nbsp;<b><i class="fa fa-rupee"></i>  <?php echo $paid_thisMonth; ?></b></td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">Paid to date</td>
-                        <td class="text-right">&nbsp;&nbsp;<b><i class="fa fa-rupee"></i>  <?php echo $paid_toDate; ?></b></td>
-                      </tr>
-                      <tr class="<?php echo $hide_earnings; ?>">
-                        <td class="text-left">Earned this month</td>
-                        <td class="text-right">&nbsp;&nbsp;<b><i class="fa fa-rupee"></i>  <?php echo $earn_thisMonth; ?></b></td>
-                      </tr>
-                      <tr class="<?php echo $hide_earnings; ?>">
-                        <td class="text-left">Earned to date</td>
-                        <td class="text-right">&nbsp;&nbsp;<b><i class="fa fa-rupee"></i>  <?php echo $earn_toDate; ?></b></td>
-                      </tr>                     
-                    </tbody>
-                  </table></center>
-
-                  <div class="w3-center w3-col l12 w3-margin-top w3-hide" >
-                   <a href="" class="btn w3-medium w3-text-black" style="padding:0"><i class="fa fa-money"></i> <b>Financial Dashboard</b></a>   
-                 </div>                 
-               </div>
-             </div>
-
-           </div>
-         </div>
-         <!-- funds ends -->
-
-         <!-- membership start -->
-         <div class="w3-col l3 w3-padding-tiny <?php echo $hide_bid; ?>" >
-          <div class="col-lg-12 dashboard_blocks w3-white w3-round">
-            <div class="w3-col l12 w3-padding " >
-              <?php                    
-              $membership_package='FREE';
-              $total_bids='0';
-              $avail_bids='0';          
-
-              if($all_userInfo['status']=='200'){
-                foreach ($all_userInfo['status_message'] as $key) {
-                  $membership_package=$key['membership_package'];
-                  $total_bids=$key['total_bids'];
-                  $avail_bids=$key['avail_bids'];
-                }
-
-              }          
-              ?>
-              <div class="w3-col l12" style="height: 118px;">
-                <center class="w3-margin-bottom ">
-                  <h6 class="" style="color:#00b59e;margin:0px;margin-bottom:17px" ><b>Available Bids</b></h6>
-                  <span class="w3-black w3-round-xxlarge w3-medium " style="padding:10px 30px 10px 30px"><?php echo $avail_bids; ?> / <?php echo $total_bids; ?></span>
-                </center>
-
-                <center class="w3-margin-bottom" style="margin-top:20px;">
-                  <h6 class="" style="color:#00b59e;margin:0px;margin-bottom:15px" style="margin-bottom:20px"><b>Membership</b></h6>
-                  <span class="w3-card w3-round-xxlarge w3-medium " style="padding:8px 25px 8px 25px"><i class="fa fa-certificate"></i> <?php echo $membership_package; ?></span>
-                </center>
-              </div>
+          <div class="w3-col l12" style="">
+            <div class="w3-col l6 s6 w3-small">
+              <span class="w3-left"><b>On Time:</b></span>
             </div>
-            <div class="w3-col l12 <?php echo $hideView_plans; ?>">
-              <center class="w3-margin-top ">
-                <a href="<?php echo base_url(); ?>profile/membership_control" class="btn w3-medium w3-text-black">  <b>View Plans</b></a><br>                  
-              </center>
+            <div class="w3-col l6 s6" style="padding-left:10px;">
+              <span class="stars w3-left" data-rating="<?php if($Delivery != ''){ echo $Delivery; }else{ echo 0; }?>" data-num-stars="5" ></span>
             </div>
-
+          </div>
+          <div class="w3-col l12" style="">
+            <div class="w3-col l6 s6 w3-small">
+              <span class="w3-left"><b>Value money:</b></span>
+            </div>
+            <div class="w3-col l6 s6" style="padding-left:10px;">
+              <span class="stars w3-left" data-rating="<?php if($money != ''){ echo $money; }else{ echo 0; }?>" data-num-stars="5" ></span>
+            </div>
+          </div>
+          <div class="w3-col l12" style="">
+            <div class="w3-col l6 s6 w3-small">
+              <span class="w3-left"><b>Expertise:</b></span>
+            </div>
+            <div class="w3-col l6 s6" style="padding-left:10px;">
+              <span class="stars w3-left" data-rating="<?php if($expert != ''){ echo $expert; }else{ echo 0; }?>" data-num-stars="5" ></span>
+            </div>
+          </div>
+          <div class="w3-col l12" style="">
+            <div class="w3-col l6 s6 w3-small">
+              <span class="w3-left"><b>Hire Again?:</b></span>
+            </div>
+            <div class="w3-col l6 s6" style="padding-left:10px;">
+              <span class="stars w3-left" data-rating="<?php if($hire != ''){ echo $hire; }else{ echo 0; }?>" data-num-stars="5" ></span>
+            </div>
           </div>
         </div>
-        <!-- membership ends -->
 
-        <!-- membership start -->
-        <div class="w3-col l3 w3-padding-small <?php echo $hide_mem; ?>" >
-          <div class="col-lg-12 dashboard_blocks w3-white w3-round">
-            <div class="w3-col l12 w3-padding " >
-              <?php                    
-              $membership_package='FREE';
-              $hide='';
+<?php //print_r($FreelancEmployer_ratings); 
 
-              if($all_userInfo['status']=='200'){
-                foreach ($all_userInfo['status_message'] as $key) {
-                  $membership_package=$key['membership_package'];
-                }
+$communicationemployer = '';
+$payment = '';
+$requirements = '';
+$working = '';
+foreach($FreelancEmployer_ratings['status_message'] as $key){
+
+  $communicationemployer = $key['communicationemployer'];
+  $commEmploy = explode(".", $communicationemployer);
+  if($commEmploy[1] == 0){
+    $communicationemployer = round($communicationemployer);
+  }else{
+    $communicationemployer = number_format($key['communicationemployer'], 1, '.', '');
+  }
+
+  $payment = $key['payment'];
+  $pay = explode(".", $payment);
+  if($pay[1] == 0){
+    $payment = round($payment);
+  }else{
+    $payment = number_format($key['payment'], 1, '.', '');
+  }
+
+  $requirements = $key['requirements'];
+  $requir = explode(".", $requirements);
+  if($requir[1] == 0){
+    $requirements = round($requirements);
+  }else{
+    $requirements = number_format($key['requirements'], 1, '.', '');
+  }
+
+  $working = $key['working'];
+  $work = explode(".", $working);
+  if($work[1] == 0){
+    $working = round($working);
+  }else{
+    $working = number_format($key['working'], 1, '.', '');
+  }
+
+
+//        $payment = number_format($key['payment'], 1, '.', '');
+//        $requirements = number_format($key['requirements'], 1, '.', '');
+//        $working = number_format($key['working'], 1, '.', '');
+}
+//echo $communicationemployer;
+//echo $payment;
+//echo $requirements;
+//echo $working;
+?>
+<!-- freelance employer rating div -->
+<div class="w3-col l12 <?php echo $hide_empRating; ?>">
+  <div class="w3-col l12" style="">
+    <div class="w3-col l6 s6 w3-small">
+      <span class="w3-left"><b>Communication:</b></span>
+    </div>
+    <div class="w3-col l6 s6" style="padding-left:10.5px;">
+      <span class="stars w3-left" data-rating="<?php if($communicationemployer != ''){ echo $communicationemployer; }else{ echo 0; }?>" data-num-stars="5" ></span>
+    </div>
+  </div>
+  <div class="w3-col l12" style="">
+    <div class="w3-col l6 s6 w3-small">
+      <span class="w3-left"><b>Payment:</b></span>
+    </div>
+    <div class="w3-col l6 s6" style="padding-left:10.5px;">
+      <span class="stars w3-left" data-rating="<?php if($payment != ''){ echo $payment; }else{ echo 0; }?>" data-num-stars="5" ></span>
+    </div>
+  </div>
+  <div class="w3-col l12" style="">
+    <div class="w3-col l6 s6 w3-small">
+      <span class="w3-left"><b>Requirement:</b></span>
+    </div>
+    <div class="w3-col l6 s6" style="padding-left:10.5px;">
+      <span class="stars w3-left" data-rating="<?php if($requirements != ''){ echo $requirements; }else{ echo 0; }?>" data-num-stars="5" ></span>
+    </div>
+  </div>
+  <div class="w3-col l12" style="">
+    <div class="w3-col l6 s6 w3-small">
+      <span class="w3-left"><b>Work Again?:</b></span>
+    </div>
+    <div class="w3-col l6 s6" style="padding-left:10.5px;">
+      <span class="stars w3-left" data-rating="<?php if($working != ''){ echo $working; }else{ echo 0; }?>" data-num-stars="5" ></span>
+    </div>
+  </div>              
+</div>
+<!-- end -->
+
+<!-- <span class="stars" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span><br> -->
+
+<!-- script to dispaly stars -->
+<script>
+  $.fn.stars = function() {
+    return $(this).each(function() {
+      var rating = $(this).data("rating");
+      var numStars = $(this).data("numStars");
+      var fullStar = new Array(Math.floor(rating + 1)).join('<i class="fa fa-star-o" style="margin-right:2px"></i>');
+      var halfStar = ((rating%1) !== 0) ? '<i class="fa fa-star-half-empty" style="margin-right:2px"></i>': '';
+      var noStar = new Array(Math.floor(numStars + 1 - rating)).join('<i class="fa fa-star-o" style="margin-right:2px"></i>');
+      $(this).html(fullStar + halfStar + noStar);
+    });
+  }
+  $('.stars').stars();
+</script>                          
+</div>
+</div>
+
+</div>
+</div>
+<!-- feedback ends -->
+
+<!-- funds start -->
+<div class="w3-col l3 w3-padding-tiny <?php echo $hide_funds; ?>">
+  <div class="col-lg-12 dashboard_blocks w3-white w3-round ">
+    <div class="w3-col l12" >
+      <center>
+        <h6><b>My Funds</b></h6>
+        <center><img src="<?php echo base_url(); ?>images/desktop/image25.png" style="margin-top:-26px;"></center>
+      </center>
+      <div class="w3-col l12 " >
+        <center><table class="" style="height: 85px;">
+          <tbody>
+            <?php                    
+            $paid_thisMonth='0.00';
+            $paid_toDate='0.00';
+            $earn_thisMonth='0.00';
+            $earn_toDate='0.00';
+            if($all_userTransaction['status']=='200'){
+              foreach ($all_userTransaction['status_message'] as $key) {
+                $paid_thisMonth=$key['paid_thisMonth'];
+                $paid_toDate=$key['paid_toDate'];
+                $earn_thisMonth=$key['earn_thisMonth'];
+                $earn_toDate=$key['earn_toDate'];
               }
-              if($total_bids==0){
-                $hide='w3-hide';
-              }
-              ?>
-              <div class="w3-col l12" style="height: 118px;">         
+            }
+            ?>
+            <tr>
+              <td class="text-left">Paid this month</td>
+              <td class="text-right">&nbsp;&nbsp;<b><i class="fa fa-rupee"></i>  <?php echo $paid_thisMonth; ?></b></td>
+            </tr>
+            <tr>
+              <td class="text-left">Paid to date</td>
+              <td class="text-right">&nbsp;&nbsp;<b><i class="fa fa-rupee"></i>  <?php echo $paid_toDate; ?></b></td>
+            </tr>
+            <tr class="<?php echo $hide_earnings; ?>">
+              <td class="text-left">Earned this month</td>
+              <td class="text-right">&nbsp;&nbsp;<b><i class="fa fa-rupee"></i>  <?php echo $earn_thisMonth; ?></b></td>
+            </tr>
+            <tr class="<?php echo $hide_earnings; ?>">
+              <td class="text-left">Earned to date</td>
+              <td class="text-right">&nbsp;&nbsp;<b><i class="fa fa-rupee"></i>  <?php echo $earn_toDate; ?></b></td>
+            </tr>                     
+          </tbody>
+        </table></center>
 
-                <center class="w3-margin-bottom">
-                  <h6 class="w3-text-light-blue"><b>Membership</b></h6>
-                  <span class="w3-card w3-round-xxlarge w3-padding-small w3-large "><i class="fa fa-certificate"></i> <?php echo $membership_package; ?></span>
-                </center>
-              </div>
-            </div>
-            <div class="w3-col l12 <?php echo $hideView_plans; ?>">
-              <center class="w3-margin-top">
-               <a href="<?php echo base_url(); ?>profile/membership_control" class="btn w3-medium w3-text-black"><i class="fa fa-eye"></i>  <b>View Plans</b></a><br>                  
-             </center>
-           </div>
-
-         </div>
-       </div>
-       <!-- membership ends -->
+        <div class="w3-center w3-col l12 w3-margin-top w3-hide" >
+         <a href="" class="btn w3-medium w3-text-black" style="padding:0"><i class="fa fa-money"></i> <b>Financial Dashboard</b></a>   
+       </div>                 
      </div>
-   </div>        
- </div>
- <!-- desktop grid view ends -->
+   </div>
 
- <!-- mobile grid scroll view -->
- <div class="w3-col l12 span11 w3-mobile <?php echo $hide_Div; ?> scroll_mob w3-hide-large " style="overflow: auto;">
+ </div>
+</div>
+<!-- funds ends -->
+
+<!-- membership start -->
+<div class="w3-col l3 w3-padding-tiny <?php echo $hide_bid; ?>" >
+  <div class="col-lg-12 dashboard_blocks w3-white w3-round">
+    <div class="w3-col l12 w3-padding " >
+      <?php                    
+      $membership_package='FREE';
+      $total_bids='0';
+      $avail_bids='0';          
+
+      if($all_userInfo['status']=='200'){
+        foreach ($all_userInfo['status_message'] as $key) {
+          switch ($key['membership_package']) {
+            case 'FREE':
+            $membership_package=$key['membership_package'];
+            break;
+
+            case 'P/M':
+            $membership_package='PREMIUM<b class="w3-large">/</b>M';
+            break;
+
+            case 'P/Y':
+            $membership_package='PREMIUM<b class="w3-large">/</b>Y';
+            break;
+          }
+          $total_bids=$key['total_bids'];
+          $avail_bids=$key['avail_bids'];
+
+          $total_view=$key['total_view'];
+          $avail_view=$key['avail_view'];
+        }
+
+      }          
+      ?>
+      <div class="w3-col l12" style="height: 118px;">
+        <center class="w3-margin-bottom ">
+          <h6 class="" style="color:#00b59e;margin:0px;margin-bottom:17px" ><b>Available Bids</b></h6>
+          <span class="w3-black w3-round-xxlarge w3-medium " style="padding:10px 30px 10px 30px"><?php echo $avail_bids; ?> / <?php echo $total_bids; ?></span>
+        </center>
+
+        <center class="w3-margin-bottom" style="margin-top:20px;">
+          <h6 class="" style="color:#00b59e;margin:0px;margin-bottom:15px" style="margin-bottom:20px"><b>Membership</b></h6>
+          <span class="w3-card w3-round-xxlarge w3-medium " style="padding:8px 16px 8px 16px"><i class="fa fa-certificate"></i> <?php
+
+          echo $membership_package; ?></span>
+        </center>
+      </div>
+    </div>
+    <div class="w3-col l12 <?php echo $hideView_plans; ?>">
+      <center class="w3-padding-top ">
+        <a href="<?php echo base_url(); ?>profile/membership_control" class="btn w3-medium w3-center w3-text-black">  <b>view plans</b></a><br>                  
+      </center>
+    </div>
+
+  </div>
+</div>
+<!-- membership ends -->
+
+<!-- membership start -->
+<div class="w3-col l3 w3-padding-small <?php echo $hide_mem; ?>" >
+  <div class="col-lg-12 dashboard_blocks w3-white w3-round">
+    <div class="w3-col l12 w3-padding " >
+      <?php                    
+      $membership_package='FREE';
+      $hide='';
+
+      if($all_userInfo['status']=='200'){
+        foreach ($all_userInfo['status_message'] as $key) {
+          switch ($key['membership_package']) {
+            case 'FREE':
+            $membership_package=$key['membership_package'];
+            break;
+
+            case 'P/M':
+            $membership_package='PREMIUM<b class="w3-large">/</b>M';
+            break;
+
+            case 'P/Y':
+            $membership_package='PREMIUM<b class="w3-large">/</b>Y';
+            break;
+          }
+        }
+      }
+      if($total_bids==0){
+        $hide='w3-hide';
+      }
+      ?>
+      <div class="w3-col l12" style="height: 118px;">         
+
+        <center class="w3-margin-bottom">
+          <h6 class="w3-text-bluishGreen"><b>Membership</b></h6>
+          <span class="w3-card w3-round-xxlarge w3-padding-small w3-large "><i class="fa fa-certificate"></i> <?php echo $membership_package; ?></span>
+        </center>
+      </div>
+    </div>
+    <div class="w3-col l12 <?php echo $hideView_plans; ?>">
+      <center class="w3-margin-top">
+       <a href="<?php echo base_url(); ?>profile/membership_control" class="btn w3-medium w3-text-black"><b>View Plans</b></a><br>                  
+     </center>
+   </div>
+
+ </div>
+</div>
+<!-- membership ends -->
+</div>
+</div>        
+</div>
+<!-- desktop grid view ends -->
+
+<!-- mobile grid scroll view -->
+<div class="w3-col l12 span11 w3-mobile <?php echo $hide_Div; ?> scroll_mob w3-hide-large " style="overflow: auto;">
   <div class="w3-col l12 w3-margin-top w3-padding-top w3-margin-bottom">
     <div class="row-fluid">
 
@@ -581,7 +706,7 @@ switch ($profile_type) {
                   <span class="w3-right"><b>Communication:</b></span>
                 </div>
                 <div class="w3-col l6 s6" style="padding-left:10px;">
-                  <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
+                  <span class="stars w3-left" data-rating="<?php if($communication != ''){ echo $communication; }else{ echo 0; }?>" data-num-stars="5" ></span>
                 </div>
               </div>
               <div class="w3-col l12" style="">
@@ -589,7 +714,7 @@ switch ($profile_type) {
                   <span class="w3-right"><b>On Time:</b></span>
                 </div>
                 <div class="w3-col l6 s6" style="padding-left:10px;">
-                  <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
+                  <span class="stars w3-left" data-rating="<?php if($Delivery != ''){ echo $Delivery; }else{ echo 0; }?>" data-num-stars="5" ></span>
                 </div>
               </div>
               <div class="w3-col l12" style="">
@@ -597,7 +722,7 @@ switch ($profile_type) {
                   <span class="w3-right"><b>Value money:</b></span>
                 </div>
                 <div class="w3-col l6 s6" style="padding-left:10px;">
-                  <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
+                  <span class="stars w3-left" data-rating="<?php if($money != ''){ echo $money; }else{ echo 0; }?>" data-num-stars="5" ></span>
                 </div>
               </div>
               <div class="w3-col l12" style="">
@@ -605,7 +730,7 @@ switch ($profile_type) {
                   <span class="w3-right"><b>Expertise:</b></span>
                 </div>
                 <div class="w3-col l6 s6" style="padding-left:10px;">
-                  <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
+                  <span class="stars w3-left" data-rating="<?php if($expert != ''){ echo $expert; }else{ echo 0; }?>" data-num-stars="5" ></span>
                 </div>
               </div>
               <div class="w3-col l12" style="x">
@@ -613,7 +738,7 @@ switch ($profile_type) {
                   <span class="w3-right"><b>Hire Again?:</b></span>
                 </div>
                 <div class="w3-col l6 s6" style="padding-left:10px;">
-                  <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
+                  <span class="stars w3-left" data-rating="<?php if($hire != ''){ echo $hire; }else{ echo 0; }?>" data-num-stars="5" ></span>
                 </div>
               </div>
             </div>
@@ -626,7 +751,7 @@ switch ($profile_type) {
                   <span class="w3-right"><b>Communication:</b></span>
                 </div>
                 <div class="w3-col l6 s6" style="padding-left:10.5px;">
-                  <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
+                  <span class="stars w3-left" data-rating="<?php if($communicationemployer != ''){ echo $communicationemployer; }else{ echo 0; }?>" data-num-stars="5" ></span>
                 </div>
               </div>
               <div class="w3-col l12" style="">
@@ -634,7 +759,7 @@ switch ($profile_type) {
                   <span class="w3-right"><b>Payment:</b></span>
                 </div>
                 <div class="w3-col l6 s6" style="padding-left:10.5px;">
-                  <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
+                  <span class="stars w3-left" data-rating="<?php if($payment !=''){ echo $payment; }else{ echo 0; } ?>" data-num-stars="5" ></span>
                 </div>
               </div>
               <div class="w3-col l12" style="">
@@ -642,7 +767,7 @@ switch ($profile_type) {
                   <span class="w3-right"><b>Requirement:</b></span>
                 </div>
                 <div class="w3-col l6 s6" style="padding-left:10.5px;">
-                  <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
+                  <span class="stars w3-left" data-rating="<?php if($requirements != ''){ echo $requirements; }else{ echo 0; } ?>" data-num-stars="5" ></span>
                 </div>
               </div>
               <div class="w3-col l12" style="">
@@ -650,7 +775,7 @@ switch ($profile_type) {
                   <span class="w3-right"><b>Work Again?:</b></span>
                 </div>
                 <div class="w3-col l6 s6" style="padding-left:10.5px;">
-                  <span class="stars w3-left" data-rating="<?php echo $avg_rating; ?>" data-num-stars="5" ></span>
+                  <span class="stars w3-left" data-rating="<?php if($working != ''){ echo $working; }else{ echo 0; }?>" data-num-stars="5" ></span>
                 </div>
               </div>              
             </div>
@@ -748,7 +873,19 @@ switch ($profile_type) {
 
         if($all_userInfo['status']=='200'){
           foreach ($all_userInfo['status_message'] as $key) {
-            $membership_package=$key['membership_package'];
+            switch ($key['membership_package']) {
+              case 'FREE':
+              $membership_package=$key['membership_package'];
+              break;
+
+              case 'P/M':
+              $membership_package='PREMIUM<b class="w3-large">/</b>M';
+              break;
+
+              case 'P/Y':
+              $membership_package='PREMIUM<b class="w3-large">/</b>Y';
+              break;
+            }
             $total_bids=$key['total_bids'];
             $avail_bids=$key['avail_bids'];
           }
@@ -787,7 +924,19 @@ switch ($profile_type) {
 
       if($all_userInfo['status']=='200'){
         foreach ($all_userInfo['status_message'] as $key) {
-          $membership_package=$key['membership_package'];
+          switch ($key['membership_package']) {
+            case 'FREE':
+            $membership_package=$key['membership_package'];
+            break;
+
+            case 'P/M':
+            $membership_package='PREMIUM<b class="w3-large">/</b>M';
+            break;
+
+            case 'P/Y':
+            $membership_package='PREMIUM<b class="w3-large">/</b>Y';
+            break;
+          }
         }
       }
       if($total_bids==0){
@@ -834,7 +983,7 @@ switch ($profile_type) {
       </div>
       <div class="w3-col l12  w3-center">
         <span>
-          <a href="#" class="btn w3-text-white w3-left">
+          <a href="<?php echo base_url(); ?>message/pm" class="btn w3-text-white w3-left">
             <span class="inbox" ><i class="fa fa-inbox w3-hover-black w3-circle w3-large"></i>&nbsp;INBOX</span>
           </a>
         </span>
@@ -856,14 +1005,14 @@ switch ($profile_type) {
 <div class="w3-row w3-margin-top">
   <div class="col-lg-1"></div>
   <div class="w3-col l10">
-    <div class="col-lg-12 w3-round-xlarge w3-padding-bottom ">
-      <span class="w3-large w3-padding-left"><b>Welcome</b> <?php echo $user_name; ?>,</span>
+    <div class="col-lg-12 w3-round-xlarge  ">
+      <span class="w3-large w3-padding-small "><b>Welcome</b> <?php echo $user_name; ?></span>
     </div>
 
     <div class="col-lg-12 w3-hide-small <?php echo $myjob; ?>" id="profileWise_data" >
-      <h3 class="w3-padding-left"><b>My Jobs</b></h3>
-      <div class="w3-col l6 w3-margin-bottom w3-padding-small" id="JobList_Div" style="padding-right: 5px;">
-        <label class="" style=" padding-left: 7px;">Applied Jobs</label>
+      <h3 class="w3-padding-small"><b>My Jobs</b></h3>
+      <div class="w3-col l6 w3-margin-bottom w3-padding-small " id="JobList_Div" style="">
+        <label class="" style="">Applied Jobs</label>
         <?php
         $K = 0;
         if ($jobsApplied['status'] == 200) {
@@ -898,13 +1047,13 @@ switch ($profile_type) {
       } else {
         ?>     
         <div class="w3-col l12 w3-card" id="">
-          <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>You haven't applied any job yet.</b></div>
+          <div class=" w3-light-grey w3-text-grey w3-padding-small w3-small bluishGreen_bg" style ="text-align: center;"><b>You haven't applied any job yet.</b></div>
         </div>
         <?php } ?>
       </div>  
           <!------------------------ div for previous jobs ----------------------------------------------->                                            
-       <div class="w3-col l6 w3-padding-small" id="JobList_Div" style="padding-left: 5px;">
-           <label class="w3-left">Previous Jobs</label>              
+       <div class="w3-col l6 w3-padding-small" id="JobList_Div" style=" padding-left: 5px;">
+           <label class="">Previous Jobs</label>              
       <?php
       if ($previousJobs['status'] == 200) {
           ?>
@@ -924,11 +1073,15 @@ switch ($profile_type) {
                                           <label class="w3-tiny w3-text-grey">Salary</label><br>                
                                           <label class="w3-small"><b><?php echo $key['jm_salary_range'] ?></b></label>
                                       </div>
-                                      <div class="col-lg-3 lineinfo" >
-                                          <label class="w3-tiny w3-text-grey">Positions</label><br>                
-                                          <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
-
-                                      </div>
+                                      <div class="col-lg-3 m3 s3 lineinfo" >
+                                         <div class="w3-col l6 m6 s6">
+                                             <label class="w3-tiny w3-text-grey">Positions</label><br>                
+                                             <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
+                                         </div>
+                                         <div class="w3-col l6 m6 s6  w3-margin-top">
+                                             <a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View</a>
+                                         </div>
+                                     </div>
                                   </div>                  
                        <?php 
                      }
@@ -953,7 +1106,7 @@ switch ($profile_type) {
                 <div class="col-lg-12 w3-hide-large <?php echo $myjob; ?>" id="profileWise_data" >
                   <h3 class="w3-padding-left"><b>My Jobs</b></h3>
                   <div class="w3-col l6 w3-margin-bottom w3-padding-small" id="JobList_Div" style="padding-right: 5px;">
-                    <label class="" style=" padding-left: 7px;">Applied Jobs</label>
+                    <label class="" style="">Applied Jobs</label>
                     <?php
                     $K = 0;
                     if ($jobsApplied['status'] == 200) {
@@ -1022,20 +1175,20 @@ switch ($profile_type) {
           <?php foreach ($previousJobs['status_message'] as $key) {
               //print_r($key);
               ?>                      
-                         <div class="w3-col l12 w3-card w3-col l12 w3-card w3-center w3-padding" style=" height: 65px;">
-                          <div class="col-lg-3 w3-center lineinfo" style="">
-                                          <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
-                                          <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
-                                      </div>
-                                      <div class="col-lg-3 lineinfo">
+                         <div class="w3-col l12 s12 m12 w3-card w3-center w3-padding" style=" height: 70px;">
+                             <div class="smallview w3-col l3 m3 s3 w3-center " style="">
+                                         <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
+                                         <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
+                                     </div>
+                                      <div class="w3-col l3 s3 m3 smallview">
                                           <label class="w3-tiny w3-text-grey">Job Type</label><br>
                                           <label class="w3-small"><b><?php echo $key['jm_job_type'] ?></b></label>
                                       </div>
-                                      <div class="col-lg-3 lineinfo">
+                                      <div class="w3-col l3 s3 m3 smallview">
                                           <label class="w3-tiny w3-text-grey">Salary</label><br>                
                                           <label class="w3-small"><b><?php echo $key['jm_salary_range'] ?></b></label>
                                       </div>
-                                      <div class="col-lg-3 lineinfo" >
+                                      <div class="w3-col l3 s3 m3 smallview" >
                                           <label class="w3-tiny w3-text-grey">Positions</label><br>                
                                           <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
 
@@ -1067,57 +1220,60 @@ switch ($profile_type) {
             if($profile_type == 4 ){
                 //print_r($postedjobs);              
               ?>
-              <div class="w3-row w3-hide-small">
+              <div class="w3-row">
                 <div class="col-lg-1"></div>
                 <div class="w3-col l10">
                   <!-------------------------------------Div for showing the posted jobs -------------------------------------------------------->
-                  <div class="col-lg-12 " id="JobDescription">
+                  <div class="col-lg-12  w3-hide-small" id="JobDescription">
 
-                    <h5 class="" style=" padding-left: 15px;"><b>My Jobs</b></h5>
-                    <div class="w3-col l6 w3-padding-small" style=" height: 350px; overflow: auto;">
-                      <label class="" style=" padding-left: 8px;">Posted Jobs</label>
+                    <h3 class="w3-padding-small" style=""><b>My Jobs</b></h3>
+                   
+                    <div class="w3-col l6 " >
+                       <label class="w3-padding-small" style="">Posted Jobs</label>
+                       <div class="w3-padding-small" style=" height: 350px; overflow: auto;">
                       <?php
                       if ($postedjobs['status'] == 200) {
                         foreach ($postedjobs['status_message'] as $key) {
                           ?>
 
                           <div class="w3-col l12 w3-card w3-col l12 w3-card w3-center w3-padding" style="padding-top: 4px; padding-bottom: 4px; height: 65px;">
-                            <div class="col-lg-3 w3-center lineinfo" style="">
+                            <div class="col-lg-2 w3-center lineinfo" style="">
                               <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
                               <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
                             </div>
                             <div class="col-lg-3 lineinfo">
                               <label class="w3-tiny w3-text-grey">Job Type</label><br>
-                              <label class="w3-small"><b><?php echo $key['jm_job_type'] ?></b></label>
+                              <label class="w3-small"><b><?php echo $key['jm_job_type']; ?></b></label>
                             </div>
-                            <div class="col-lg-3 lineinfo">
+                            <div class="col-lg-2 lineinfo">
                               <label class="w3-tiny w3-text-grey">Salary</label><br>                
-                              <label class="w3-small"><b><?php echo $key['jm_salary_range'] ?></b></label>
+                              <label class="w3-small"><b><?php echo $key['jm_salary_range']; ?></b></label>
                             </div>
-                            <div class="col-lg-3 lineinfo" >
-                              <div class="w3-col l6">
+                            <div class="col-lg-2 lineinfo" >
                                 <label class="w3-tiny w3-text-grey">Positions</label><br>                
-                                <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
+                                <label class="w3-small"><b><?php echo $key['jm_positions']; ?></b></label>
+                             </div>
+                              <div class="col-lg-3 w3-margin-top">
+                                <a href="<?php echo base_url(); ?>job/job_listings/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View Details</a>
+                              </div>   
                               </div>
-                              <div class="w3-col l6 w3-margin-top">
-                                <a href="<?php echo base_url(); ?>job/job_listings/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View</a></div>   
-                              </div>
-                            </div>
+                      
 
                             <?php
                           }
                         } else { ?>
 
                         <div class="w3-col l12 w3-card" id="">
-                          <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>There are no jobs Posted.</b></div>
+                          <div class=" w3-light-grey w3-text-grey w3-small  bluishGreen_bg" style ="text-align: center;"><b>There are no jobs Posted.</b></div>
                         </div> 
                         <?php } ?>
                       </div>
-
+                          </div>
                       <!-----------------------------------------div for showing closed jobs-------------------------------------------------------->                    
 
-                      <div class="w3-col l6 w3-padding-small" style=" height: 350px; overflow: auto; padding-left: 5px;">
-                       <label class="" style=" padding-left: 8px;">Previous Jobs</label> 
+                      <div class="w3-col l6 " >
+                       <label class="w3-padding-small" style="">Previous Jobs</label> 
+                       <div class="w3-padding-small" style=" height: 350px; overflow: auto; padding-left: 5px;"> 
                        <?php
                        if ($previousjobs['status'] == 200) {
                         foreach ($previousjobs['status_message'] as $key) {
@@ -1130,41 +1286,47 @@ switch ($profile_type) {
                             </div>
                             <div class="col-lg-3 lineinfo">
                               <label class="w3-tiny w3-text-grey">Job Type</label><br>
-                              <label class="w3-small"><b><?php echo $key['jm_job_type'] ?></b></label>
+                              <label class="w3-small"><b><?php echo $key['jm_job_type']; ?></b></label>
                             </div>
                             <div class="col-lg-3 lineinfo">
                               <label class="w3-tiny w3-text-grey">Salary</label><br>                
-                              <label class="w3-small"><b><?php echo $key['jm_salary_range'] ?></b></label>
+                              <label class="w3-small"><b><?php echo $key['jm_salary_range']; ?></b></label>
                             </div>
                             <div class="col-lg-3 lineinfo" >
-                              <label class="w3-tiny w3-text-grey">Positions</label><br>                
-                              <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
-                            </div>
-                          </div>                                   
-                          <?php
-                        }
-                      } else { ?>
-                      <div class="w3-col l12 w3-card" id="">
-                       <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>There are no previous jobs .</b></div>
-                     </div> 
-                     <?php } ?>
-                     <!-----------------------------------------div for show ing closed jobs-------------------------------------------------------->                                                               
-                   </div>
-                   <!-----------------End Div for showing the posted jobs ------------------------------------>
+                              <div class="w3-col l6">
+                                <label class="w3-tiny w3-text-grey">Positions</label><br>                
+                                <label class="w3-small"><b><?php echo $key['jm_positions']; ?></b></label>
+                              </div>
+                              <div class="w3-col l6 w3-margin-top">
+                                <a href="<?php echo base_url(); ?>job/job_listings/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View</a></div>   
+                              </div>
+                                
+                            </div>                                   
+                            <?php
+                          }
+                        } else { ?>
+                        <div class="w3-col l12 w3-card" id="">
+                         <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>There are no previous jobs .</b></div>
+                       </div> 
+                       <?php } ?>
+                       <!-----------------------------------------div for showing closed jobs-------------------------------------------------------->                                                               
+                       </div>
+                      </div>
+                     <!-----------------End Div for showing the posted jobs ------------------------------------>
 
-                 </div>                 
+                   </div>                 
 
-                 <div class="col-lg-1"></div>      
+                   <div class="col-lg-1"></div>      
+                 </div>
                </div>
-             </div>
 
                   <!----------------------------------Posted Jobs by job employer For Mobile view ----------------------------------------------->
                   <div class="w3-row w3-hide-large">
                     <div class="col-lg-1"></div>
                      <div class="w3-col l10">
-                  <div class="col-lg-12 " id="JobDescription">
-                   <div class="w3-col l6 w3-padding-small" style=" height: 350px; overflow: auto;">
-                      <label class="" style=" padding-left: 8px;">Posted Jobs</label>
+                  <div class="col-lg-12 w3-hide-small " id="JobDescription">
+                   <div class="w3-col l6 " style=" height: 350px; overflow: auto;">
+                      <label class="" style="">Posted Jobs</label>
                       <?php
                       if ($postedjobs['status'] == 200) {
                         foreach ($postedjobs['status_message'] as $key) {
@@ -1248,29 +1410,72 @@ switch ($profile_type) {
                             <?php } ?>
 <!----------------------------- Div for showing posted projects and previous projects ----------------------------------------->
 <!-- Div For Showing The Posted Jobs -->
+
 <!-- Div for showing the posted projects and previous projects for freelancer-->
 <?php
-if ($profile_type == 2) {
+if ($profile_type == 1) {
   ?>
   <script>
     $(document).ready(function () {
       Show_Live_Projects('<?php echo $user_id; ?>');
-      Show_Previous_Projects('<?php echo $user_id; ?>')
+      Show_Previous_Projects('<?php echo $user_id; ?>');
     });
   </script>
-  <div class="w3-row w3-hide-small" >
+  <div class="w3-row" >
     <div class="col-lg-1"></div>
     <div class="w3-col l10">
       <div class="col-lg-12 " id="projectsDescription">          
-        <h5><b class="w3-padding-left">My Projects</b></h5>
-        <div class="w3-col l6" style=" height: 350px; overflow: auto;">
-          <label class="" style=" padding-left: 15px;">Posted Projects</label>
-          <div class="w3-col l12 w3-card w3-padding-small" id="postedProjects" style="padding-right: 5px;">
+        <h5><b class="w3-padding-small">My Posted Projects</b></h5>
+        <div class="w3-col l6 w3-padding-small" >
+          <label class="" style="">Posted Projects</label>
+          <div class="" style=" height: 350px; overflow: auto;">
+          <div class="w3-col l12 w3-card w3-padding-small" id="postedProjects">
           </div>
         </div>
-        <div class="w3-col l6" style=" height: 350px;  overflow: auto;">
-         <label class="" style=" padding-left: 8px;">Previous Projects</label>
-         <div class="w3-col l12 w3-card w3-padding-small" id="previousProjects" style="padding-left: 5px;">
+        </div>
+        <div class="w3-col l6 w3-padding-small" style="">
+         <label class="" style="">Previous Projects</label>
+         <div class="" style=" height: 350px;padding-right: 5px; overflow: auto;">
+         <div class="w3-col l12 w3-card w3-padding-small" id="previousProjects" style"">
+         </div>
+       </div>
+       </div>
+     </div>
+   </div>
+   <div class="col-lg-1"></div>
+ </div>
+ 
+ <?php } ?>
+ <!-- Div for showing the posted projects and previous projects -->
+
+
+ <!-- Div for showing the posted projects and previous projects for freelancer-->
+ <?php
+ if ($profile_type == 2) {
+  ?>
+  <script>
+    $(document).ready(function () {
+      Show_Live_Projects('<?php echo $user_id; ?>');
+      Show_Previous_Projects('<?php echo $user_id; ?>');
+    });
+  </script>
+  <div class="w3-row" >
+    <div class="col-lg-1"></div>
+    <div class="w3-col l10">
+      <div class="col-lg-12 " id="projectsDescription">          
+        <h5><b class="w3-padding-small">My Posted Projects</b></h5>
+        <div class="w3-col l6 w3-padding-small" style=" ">
+          <label class="" style="">Posted Projects</label>
+          <div class="" style="height: 350px; overflow: auto;">
+          <div class="w3-col l12 w3-card w3-padding-small" id="postedProjects" style="">
+          </div>
+          </div>
+        </div>
+        <div class="w3-col l6 w3-padding-small" style="">
+         <label class="" style="">Previous Projects</label>
+          <div class="" style="height: 350px; overflow: auto;">
+         <div class="w3-col l12 w3-card  w3-padding-small" id="previousProjects" style="">
+         </div>
          </div>
        </div>
      </div>
@@ -1293,19 +1498,23 @@ if ($profile_type == 2) {
       freelancePrevious_Projects('<?php echo $user_id; ?>')
     });
   </script>
-  <div class="w3-row w3-hide-small" >
+  <div class="w3-row" >
     <div class="col-lg-1"></div>
     <div class="w3-col l10">
       <div class="col-lg-12 " id="freelanceProject_desc">          
-        <h5><b class="w3-padding-left">My Projects</b></h5>
-        <div class="w3-col l6" style=" height: 350px; overflow: auto;">
-          <label class="" style=" padding-left: 15px;">Awarded Projects</label>
-          <div class="w3-col l12 w3-card w3-padding-small" id="freelance_liveProjects" style="padding-right: 5px;">
+        <h5><b class="w3-padding-small">My Awarded Projects</b></h5>
+        <div class="w3-col l6 w3-padding-small" >
+          <label class="" style="">Awarded Projects</label>
+          <div class="" style=" height: 350px; overflow: auto; padding-right: 5px;">
+          <div class="w3-col l12 w3-card w3-padding-small" id="freelance_liveProjects" >
+          </div>
           </div>
         </div>
-        <div class="w3-col l6" style=" height: 350px;  overflow: auto;">
-         <label class="" style=" padding-left: 8px;">Previous Projects</label>
-         <div class="w3-col l12 w3-card w3-padding-small" id="freelance_previousProjects" style="padding-left: 5px;">
+        <div class="w3-col l6 w3-padding-small " >
+        <div class="" style=" height: 350px; overflow: auto; padding-right: 5px;">
+         <label class="" style="">Previous Projects</label>
+         <div class="w3-col l12 w3-card w3-padding-small" id="freelance_previousProjects" style="">
+         </div>
          </div>
        </div>
      </div>
@@ -1333,15 +1542,16 @@ if ($profile_type == 2) {
     <div class="col-lg-12 " id="JobDescription">
 
       <!-------------------------------------Div for showing the posted jobs -------------------------------------------------------->
-      <h5 class="" style=" padding-left: 15px;"><b>My Jobs</b></h5>
-      <div class="w3-col l6 w3-padding-small" style=" height: 350px; overflow: auto;">
-        <label class="" style=" padding-left: 8px;">Posted Jobs</label>
+      <h3 class="w3-padding-small" style=""><b>My Jobs</b></h3>
+      <div class="w3-col l6" style=" height: 350px; overflow: auto;">
+        <label class="w3-padding-small" style="">Posted Jobs</label>
+        <div class="w3-padding-small">
         <?php
         if ($postedjobs['status'] == 200) {
           foreach ($postedjobs['status_message'] as $key) {
             ?>
 
-            <div class="w3-col l12 m12 s12 w3-card w3-card w3-center w3-padding-left w3-padding-right" style=" height: 65px;">
+            <div class="w3-col l12 m12 s12  w3-card w3-card  w3-center w3-padding-left w3-padding-right" style="">
              <div class="smallview w3-col l3 m3 s3 w3-center " style="">
               <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
               <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
@@ -1357,8 +1567,9 @@ if ($profile_type == 2) {
             <div class="w3-col l3 m3 s3 smallview" >
               <label class="w3-tiny w3-text-grey">Positions</label><br>                
               <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
+              
             </div>
-            <div></div>
+            <div class="w3-col l12 w3-margin-bottom"><a href="<?php echo base_url(); ?>job/job_listings/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge  w3-padding-tiny ">View Details</a></div>
           </div>
 
           <?php
@@ -1368,6 +1579,7 @@ if ($profile_type == 2) {
         <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>There are no jobs Posted.</b></div>
       </div>
       <?php } ?>
+      </div>
     </div>
 
     <!-----------------------------------------div for showing closed jobs-------------------------------------------------------->                    
@@ -1394,7 +1606,7 @@ if ($profile_type == 2) {
         <div class="w3-col l3 m3 s3" >
           <label class="w3-tiny w3-text-grey">Positions</label><br>                
           <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
-          <div><a href="'<?php base_url();?>'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny ">View</a></div>
+          <div class="w3-col l12"><a href="<?php echo base_url(); ?>job/job_listings/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny ">View Details</a></div>
         </div>
       </div>
 
@@ -1433,7 +1645,7 @@ if ($profile_type == 2) {
   <div class="w3-row w3-hide-large" >
     <div class="col-lg-1"></div>
     <div class="w3-col l10">
-      <div class="col-lg-12 w3-hide-large" id="JobDescription">
+      <div class="col-lg-12 w3-hide-large w3-hide-small" id="JobDescription">
         <h5><b class="w3-padding-left">My Projects</b></h5>
         <div class="w3-col l6" style=" height: 350px; overflow: auto;">
           <label class="" style=" padding-left: 15px;">Posted Projects</label>
@@ -1454,13 +1666,19 @@ if ($profile_type == 2) {
   <?php } ?>
   <!-----------------------------------this div for showing the projects list for freelancer list -->
   <!-----------------------------------this div for show bookmark project list -->
-  <div class="w3-container" style="height:400px;">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8">
-      <?php 
+  <div class="w3-row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10" id="myBookmark_div" >
+        <?php if($profile_type==1){?>
+            
+        
+      <h4>Bookmark Project</h4>
+     <?php } ?>
+      <div class="" style=" height:350px; overflow: auto;">
+   <?php 
       if($view_bookmark)
         {?>
-         <h4>Bookmark Project</h4>
+        
          <?php   
          $count=1;
                  //  print_r( $view_bookmark['status_message'][0]);die();
@@ -1471,39 +1689,43 @@ if ($profile_type == 2) {
             foreach ($val as $book) {
 
               ?>
-              <div class="w3-col l12 w3-card w3-margin-bottom">
-
-                <div class="col-lg-6 ">
-                  <label>Project Name</label>
-                  <p><?php echo $book['jm_project_title'];?></p>
+              <div class="w3-col l12  w3-card " >
+                <div class="col-lg-2 col-xs-3">
+                    <label class="w3-tiny w3-text-grey">Project Name</label>
+                    <p><b><?php echo $book['jm_project_title'];?></b></p>
+                </div>
+                
+                <div class="col-lg-2 col-xs-3 w3-center">
+                    <label class="w3-tiny w3-text-grey">Project Amount</label>
+                  <p><b><?php echo $book['jm_project_price'];?></b></p>
 
                 </div>
-                          <!-- <div class="col-lg-3">
-                            <p><?php echo $book['jm_project_description'];?><span style="color:#02b28b"><i>More</i></span></p>
-                          <hr>
-                        </div> -->
-                        <div class="col-lg-3 w3-center">
-                          <label>Budget type</label>
-                          <p><?php echo $book['jm_projectbudget_type'];?></p>
-                          
-                        </div>
 
-                        <div class="col-lg-3 w3-center">
-                          <label>Project Bid</label>
-                          <p><?php echo $book['jm_project_bid'];?></p>
+                <div class="col-lg-2 col-xs-3 w3-center">
+                    <label class="w3-tiny w3-text-grey">Posted time</label>
+                  <p><b><?php echo "posted ".timeago($book['jm_posting_date']);?></b></p>
 
-                        </div>
-                      </div>
-                      <?php
+                </div>
+                <div class="col-lg-3 col-xs-3 w3-center">
+                    <label class="w3-tiny w3-text-grey">Project Bid</label>
+                  <p><b><?php echo $book['jm_project_bid'];?></b></p>
+
+                </div>
+                <div class="col-lg-2 col-xs-12 w3-center w3-margin-bottom">
+                  <a href="<?php echo base_url();?>project/view_project/<?php echo base64_encode($book['jm_project_id']);?>" class="w3-small w3-right w3-black w3-round-xlarge w3-margin-top w3-padding-tiny btn">View Details</a>
+                </div>
+              </div>
+              <?php
           # code...
-                    }
-                  }
-                }$count++;
-              }
-              ?> 
-            </div>
-            <div class="col-lg-2"></div>
-          </div>
+            }
+          }
+        }$count++;
+      }
+      ?> 
+      </div>
+    </div>
+    <div class="col-lg-1"></div>
+  </div>
 <!--  <div class="w3-container ">
    <div class="col-lg-1"></div>
    <div class="col-lg-8 "> -->
@@ -1578,9 +1800,15 @@ if ($profile_type == 2) {
 
 
  <!----------------- End div for show bookmark project list--------------------------------------->
- 
- 
- 
+ <?php         
+ $user_id = $this->session->userdata('user_id');
+ ?>
+ <script>
+ $(document).ready(function(){
+     //getTestomonials(<?php echo $user_id; ?>);
+ });
+ </script>
+ <?php if ($profile_type == 1 || $profile_type == 2) {?>
                        <!--------------------------------------- mobile view ends here --------------------------------------------------------------
                          <!-- customer review div -->
                          <div class="container">
@@ -1596,105 +1824,61 @@ if ($profile_type == 2) {
                                     <!-- Bottom Carousel Indicators -->
                                     <ol class="carousel-indicators w3-margin-bottom">
                                       <li data-target="#quote-carousel" data-slide-to="0" class="active"></li>
-                                      <li data-target="#quote-carousel" data-slide-to="1"></li>
+                                      <?php
+                                        //echo count($Testimonials_For_Freellancer['status_message']);
+                                      for ($i = 1; $i <= count($Testimonials_For_Freellancer['status_message']); $i++) {
+                                        ?>
+                                        <li data-target="#quote-carousel" data-slide-to="<?php echo $i; ?>" class=""></li>
+                                        <?php } ?>
+<!--                                      <li data-target="#quote-carousel" data-slide-to="1"></li>
                                       <li data-target="#quote-carousel" data-slide-to="3"></li>
                                       <li data-target="#quote-carousel" data-slide-to="4"></li>
-                                      <li data-target="#quote-carousel" data-slide-to="5"></li>
+                                      <li data-target="#quote-carousel" data-slide-to="5"></li>-->
                                     </ol>
-
-                                    <!-- Carousel Slides / Quotes -->
-                                    <div class="carousel-inner " role="listbox">
+                                    <div class="carousel-inner " role="listbox" id="showFeedback">
                                       <div class="item active">
                                         <blockquote>
                                           <div class="row">
-                                            <div class="col-sm-3 text-center">
-                                              <img class="img-circle" src="<?php echo base_url(); ?>images/desktop/image10.png" style="width: 100px;height:100px;">
-                                              <!-- <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;"> -->
-                                            </div>
-                                            <div class="col-sm-7">
-                                              <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit!</p>
-                                              <small style="color:#02b28b">Erik Allbest</small>
-                                              <small style="color:#02b28b">CEO & Founder,Chess.com</small>
-                                            </div>
+                                           <div class="col-sm-12 text-center">
+                                            <h3>Testimonials</h3>
                                           </div>
-                                        </blockquote>
-                                      </div>
+                                        </div>
+                                      </blockquote>
+                                    </div>                                        
+                                    <?php //print_r($Testimonials_For_Freellancer);
+                                    if($Testimonials_For_Freellancer['status'] == 200){
+                                      foreach ($Testimonials_For_Freellancer['status_message'] as $key){
+                                        ?>
+                                        <!-- Carousel Slides / Quotes -->
+                                        <div class="item">
+                                          <blockquote>
+                                            <div class="col-lg-12 w3-margin-left" >
+                                              <div class="w3-col l2 w3-center text-center">
+                                                <img class="img-circle" src="<?php echo base_url(); ?><?php echo $key['UserImage']; ?>" style="width: 100px;height:100px;" onerror="this.src='<?php echo base_url()?>css/logos/default_noimage.jpg'">
+                                                <!-- <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;"> -->
+                                              </div>
+                                              <div class="w3-col l10" style="overflow-wrap:break-word;">
+                                                <p><?php if($key['comments'] != ''){ echo $key['comments']; } else{ echo 'N/A'; } ?>!</p>
+                                                <small style="color:#02b28b"><?php if($key['username'] != ''){ echo $key['username']; } else{ echo 'N/A'; }?></small>
+                                                <small style="color:#02b28b"><?php if($key['designation'] != ''){ echo $key['designation']; } else { echo 'N/A'; } ?></small>
+                                              </div>
+                                            </div>
+                                          </blockquote>
+                                        </div>
+                                        <?php } }?>
+                                      </div> 
 
-                                      <div class="item">
-                                        <blockquote>
-                                          <div class="row">
-                                            <div class="col-sm-3 text-center">
-                                              <img class="img-circle" src="<?php echo base_url(); ?>images/desktop/image10.png" style="width: 100px;height:100px;">
-                                              <!-- <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;"> -->
-                                            </div>
-                                            <div class="col-sm-7">
-                                              <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit!</p>
-                                              <small style="color:#02b28b">Erik Allbest</small>
-                                              <small style="color:#02b28b">CEO & Founder,Chess.com</small>
-                                            </div>
-                                          </div>
-                                        </blockquote>
-                                      </div>
-
-                                      <div class="item">
-                                        <blockquote>
-                                          <div class="row">
-                                            <div class="col-sm-3 text-center">
-                                              <img class="img-circle" src="<?php echo base_url(); ?>images/desktop/image10.png" style="width: 100px;height:100px;">
-                                              <!-- <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;"> -->
-                                            </div>
-                                            <div class="col-sm-7">
-                                              <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit!</p>
-                                              <small style="color:#02b28b">Erik Allbest</small>
-                                              <small style="color:#02b28b">CEO & Founder,Chess.com</small>
-                                            </div>
-                                          </div>
-                                        </blockquote>
-                                      </div>
-
-                                      <div class="item">
-                                        <blockquote>
-                                          <div class="row">
-                                            <div class="col-sm-3 text-center">
-                                              <img class="img-circle" src="<?php echo base_url(); ?>images/desktop/image10.png" style="width: 100px;height:100px;">
-                                              <!-- <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;"> -->
-                                            </div>
-                                            <div class="col-sm-7">
-                                              <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit!</p>
-                                              <small style="color:#02b28b">Erik Allbest</small>
-                                              <small style="color:#02b28b">CEO & Founder,Chess.com</small>
-                                            </div>
-                                          </div>
-                                        </blockquote>
-                                      </div>
-
-                                      <div class="item">
-                                        <blockquote>
-                                          <div class="row">
-                                            <div class="col-sm-3 text-center">
-                                              <img class="img-circle" src="<?php echo base_url(); ?>images/desktop/image10.png" style="width: 100px;height:100px;">
-                                              <!-- <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;"> -->
-                                            </div>
-                                            <div class="col-sm-7">
-                                              <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit!</p>
-                                              <small style="color:#02b28b">Erik Allbest</small>
-                                              <small style="color:#02b28b">CEO & Founder,Chess.com</small>
-                                            </div>
-                                          </div>
-                                        </blockquote>
-                                      </div>                
-                                    </div> 
-
-                                    <!-- Carousel Buttons Next/Prev  -->
-                                    <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
-                                    <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a>
-                                  </div>                          
+                                      <!-- Carousel Buttons Next/Prev  -->
+                                      <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i class="fa fa-chevron-left"></i></a>
+                                      <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i class="fa fa-chevron-right"></i></a>
+                                    </div>                          
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <br><br>
+                          <?php }?>
+                          <br><br>
             <!-- carosel
             <!-- <div id="myCarousel" class="carousel slide hidden-md col-xs-12" data-ride="carousel">
               <!-- Indicators -->
@@ -1740,34 +1924,51 @@ if ($profile_type == 2) {
                 </div>
               </div>-->
               <!-- carousel ends -->
-
               <script>
-                $('.inbox').tipso({
-                  position: 'top',
-                  width: 200,
-                  titleContent: 'Chat Application is in progress. Soon you will be connected to each other!',
-                  background        : '#c6c6c6',
-                  titleBackground   : '#F8F8F8',
-                  color             : '#000000',
-                  titleColor        : '#00B59D'
-                });
-              </script>
-              <!-- customer review div ends -->  
-              <script>
-               function Show_Live_Projects(user_id){
+                function getTestomonials(user_id){
                  $.ajax({
                   type: "POST",
-                  url: "<?php echo base_url(); ?>profile/dashboard/Show_Live_Projects",
+                  url: "<?php echo base_url(); ?>profile/dashboard/getTestomonials",
                   dataType: 'text',
                   data: {
                     user_id: user_id
                   },
                   cache: false,
                   success: function(data) {
-                    $("#postedProjects").html(data);
-                    $("#postedProjectsSmall").html(data);
+                    $.alert(data);
+                    $("#showFeedback").html(data);
                   }
                 });
+            return false;  //stop the actual form post !important!
+          }
+        </script>
+        <script>
+          $('.inbox').tipso({
+            position: 'top',
+            width: 200,
+            titleContent: 'Chat Application is in progress. Soon you will be connected to each other!',
+            background        : '#c6c6c6',
+            titleBackground   : '#F8F8F8',
+            color             : '#000000',
+            titleColor        : '#00B59D'
+          });
+        </script>
+        <!-- customer review div ends -->  
+        <script>
+         function Show_Live_Projects(user_id){
+           $.ajax({
+            type: "POST",
+            url: "<?php echo base_url(); ?>profile/dashboard/Show_Live_Projects",
+            dataType: 'text',
+            data: {
+              user_id: user_id
+            },
+            cache: false,
+            success: function(data) {
+              $("#postedProjects").html(data);
+              $("#postedProjectsSmall").html(data);
+            }
+          });
             return false;  //stop the actual form post !important!
           }
 
@@ -1791,17 +1992,17 @@ if ($profile_type == 2) {
 //----------------script to show employer projects----------------------//
 
 //----------------script to show employer projects----------------------//
-          function freelanceLive_Projects(user_id){
-           $.ajax({
-            type: "POST",
-            url: "<?php echo base_url(); ?>profile/dashboard/freelanceLive_Projects",
-            dataType: 'text',
-            data: {
-              user_id: user_id
-            },
-            cache: false,
-            success: function(data) {
-              $("#freelance_liveProjects").html(data);
+function freelanceLive_Projects(user_id){
+ $.ajax({
+  type: "POST",
+  url: "<?php echo base_url(); ?>profile/dashboard/freelanceLive_Projects",
+  dataType: 'text',
+  data: {
+    user_id: user_id
+  },
+  cache: false,
+  success: function(data) {
+    $("#freelance_liveProjects").html(data);
               //$("#freelance_previousProjects").html(data);
             }
           });
@@ -1810,17 +2011,17 @@ if ($profile_type == 2) {
 //----------------script to show employer projects----------------------//
 
 //----------------script to show employer projects----------------------//
-          function freelancePrevious_Projects(user_id){
-           $.ajax({
-            type: "POST",
-            url: "<?php echo base_url(); ?>profile/dashboard/freelancePrevious_Projects",
-            dataType: 'text',
-            data: {
-              user_id: user_id
-            },
-            cache: false,
-            success: function(data) {
-              $("#freelance_previousProjects").html(data);
+function freelancePrevious_Projects(user_id){
+ $.ajax({
+  type: "POST",
+  url: "<?php echo base_url(); ?>profile/dashboard/freelancePrevious_Projects",
+  dataType: 'text',
+  data: {
+    user_id: user_id
+  },
+  cache: false,
+  success: function(data) {
+    $("#freelance_previousProjects").html(data);
               //$("#freelance_previousProjects").html(data);
             }
           });
@@ -1828,7 +2029,7 @@ if ($profile_type == 2) {
  }
 //----------------script to show employer projects----------------------//
 
- function FetchSkills(job_id,Skills){
+function FetchSkills(job_id,Skills){
   $.ajax({
     type: "POST",
     url: "<?php echo base_url(); ?>job/Job_listings/FetchSkills",

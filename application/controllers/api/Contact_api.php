@@ -9,3 +9,4 @@ class Contact_api extends REST_Controller
 		$this->load->model('models/contact_model');
 		
 	}
+}

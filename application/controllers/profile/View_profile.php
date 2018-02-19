@@ -26,6 +26,7 @@ class View_profile extends CI_Controller
 		$data['all_userTransaction']=View_profile::get_userTransaction();
 		$data['all_userDetails']=View_profile::get_userDetails();
 		$data['all_userPortfolio']=View_profile::get_userPortfolio();
+		$data['percentage']=View_profile::get_bars_value();
 		$this->load->view('includes/header.php');
 		$this->load->view('pages/profile/view_profile',$data);
 		$this->load->view('includes/footer.php');	
@@ -260,7 +261,7 @@ class View_profile extends CI_Controller
 	//------------Function to get all data of user------------//
 		public function get_userDetails(){
 			$user_id=$this->session->userdata('user_id');
-
+			$profile_type=$this->session->userdata('profile_type');
     //Connection establishment, processing of data and response from REST API
 			$path=base_url();
 			$url = $path.'api/Project_posting_api/get_userDetails?user_id='.$user_id; 
@@ -278,7 +279,7 @@ class View_profile extends CI_Controller
 		public function get_userTransaction(){
 
 			$user_id=$this->session->userdata('user_id');
-
+			
 		//Connection establishment, processing of data and response from REST API
 			$path=base_url();
 			$url = $path.'api/Dashboard_api/get_userTransaction?user_id='.$user_id;	
@@ -315,6 +316,30 @@ class View_profile extends CI_Controller
 			return $response;	
 		}
 // ---------------------function ends----------------------------------//
+
+	//----------------function for 3 bars of rating--------------------------//
+	
+	public function get_bars_value()
+	{
+		//$user_id='24';
+		$user_id=$this->session->userdata('user_id');
+		$profile_type=$this->session->userdata('profile_type');
+			//print_r($user_id);
+			//print_r($profile_type);
+		    $path=base_url();
+			$url = $path.'api/ViewProfile_api/get_bars_value?user_id='.$user_id.'&profile_type='.$profile_type;	
+			$ch = curl_init($url);
+			curl_setopt($ch, CURLOPT_HTTPGET, true);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$response_json = curl_exec($ch);
+			curl_close($ch);
+			$response=json_decode($response_json, true);
+			//print_r($response_json);die();
+			//echo $response;
+			return $response;
+		
+	}
+	//----------------------function ends-------------------------------------//
 
 
 	}

@@ -71,9 +71,10 @@ h6 {
   -moz-columns: 2 110px;
   columns: 2 110px;
 }
+
 li {
   margin-bottom: 1px;
-  text-align: justify;
+  text-align: left;
 }
 .mid_divProfile{
   height:190px;

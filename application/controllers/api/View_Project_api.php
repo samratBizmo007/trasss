@@ -64,4 +64,18 @@ class View_Project_api extends REST_Controller {
         return $this->response($result);
     }
     //---------------------end function--------------------------------//  
+    //----------this fun is used to get the details of freelancer and freelancer employer
+    public function getDetails_OF_FreelanceEmployerRatings_get(){
+        extract($_GET);
+        $result = $this->View_project_model->getDetails_OF_FreelanceEmployerRatings($user_id,$profile_type,$project_id);
+        return $this->response($result);
+    }
+    //----------this fun is used to get the details of the freelancer and freelancer employer
+    //----------this fun is used to get the details of freelancer and freelancer
+    public function getDetails_OF_FreelancerRatings_get(){
+        extract($_GET);
+        $result = $this->View_project_model->getDetails_OF_FreelancerRatings($user_id,$profile_type,$project_id);
+        return $this->response($result);
+    }
+//----------this fun is used to get the details of freelancer and freelancer    
 }

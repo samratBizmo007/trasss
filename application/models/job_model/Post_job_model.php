@@ -36,7 +36,7 @@ class Post_job_model extends CI_Model {
                 . "values('$user_id','$profile_type','$select_jobType','$jobpost_name',"
                 . "'$Company_name','$Requirements','$Responsibility',"
                 . "'$skill','$Address','$Salary_range','$Positions',"
-                . "'$user_id',now(),now(),'1','$job_country','$job_state','$Job_Location','$categories')";
+                . "'$user_id',now(),now(),'1','$user_country','$user_state','$Job_Location','$categories')";
         //echo $query; die();
         $result = $this->db->query($query);
         if (!$result) {

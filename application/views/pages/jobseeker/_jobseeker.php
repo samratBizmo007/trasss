@@ -57,8 +57,8 @@
                                            ?>                                
                                      </div>
                                </div> 
-                               <div class="w3-col l12 w3-white w3-round w3-padding">
-                                    <div class="w3-col l6 w3-padding">
+                               <div class="w3-col l12 w3-white w3-round">
+                                    <div class="w3-col l6 w3-padding-small">
                                         <div class="w3-col l12"><label class="w3-medium">About Me</label></div>
                                         <div class="w3-col l12 w3-text-grey">
                                             <p>
@@ -74,7 +74,7 @@
                                         </p>
                                   </div>
                             </div>
-                            <div class="w3-col l6 w3-padding">
+                            <div class="w3-col l6 w3-padding-small">
                               <div class="w3-col l12"><label class="w3-medium">My Aspirations</label></div>
                               <div class="w3-col l12 w3-text-grey">
                                   <p>
@@ -91,36 +91,42 @@
                   </div>
             </div> 
 
-            <div class="w3-col l12 ">
-              <hr>
-              <div class="w3-col l6 w3-padding-small">
-                  <label>Educational Details:</label>
-                  <?php 
-                                  //print_r($value['jm_education']);
-                  if($value['jm_education']!='' || $value['jm_education']!='[]'){
-                      foreach (json_decode($value['jm_education'],TRUE) as $key) {
-                        echo '<li class="w3-text-grey"><b>'.$key['jm_course'].'</b> from <b>'.$key['jm_university'].'</b> passing year <b>'.$key['jm_passing_year'].'</b></li>';
-                  }
-            }
-            else{
-                echo '<b>Not Available</b>';
-          }
-          ?>
-    </div>
-    <div class="w3-col l6 w3-padding-small">
-          <label>Experience Details:</label>
-          <?php 
-          if($value['jm_experience']!='' || $value['jm_experience']!='[]'){
-              foreach (json_decode($value['jm_experience'],TRUE) as $key) {
-                echo '<li class="w3-text-grey"><b>'.$key['jm_designation'].'</b> at <b>'.$key['jm_organisation'].'</b> till <b>'.$key['jm_worked_till'].'</b></li>';
-          }
-    }
-    else{
-        echo '<b>Not Available</b>';
-  }
-  ?>
-</div>
-</div>                        
+      <div class="w3-col l12 ">
+                        <div class="w3-col l6 w3-padding-small">
+                          <label>Educational Details:</label>
+                          <?php 
+                                 //print_r($value['jm_education']);
+                          if($value['jm_education']!='' || $value['jm_education']!='[]'){
+                            foreach (json_decode($value['jm_education'],TRUE) as $key) {
+                            	//echo $key['jm_course'];
+                              echo '<li class="w3-text-grey"><b>'.$key['jm_course'].'</b> from <b>'.$key['jm_university'].'</b> passing year <b>'.$key['jm_passing_year'].'</b></li>';
+                            }
+                          }
+                          else{
+                            echo '<b>Not Available</b>';
+                          }
+                          ?>
+                        </div>
+                        <div class="w3-col l6 w3-padding-small">
+                          <label>Experience Details:</label>
+                          <?php 
+                          //	print_r($value['jm_experience']);
+                          if($value['jm_experience']!='' || $value['jm_experience']!=''){
+                          	//echo "check if";
+                            foreach (json_decode($value['jm_experience'],TRUE) as $key) {
+                            	//echo($key);die();
+                           // echo $key['jm_worked_till'];
+                              echo '<li class="w3-text-grey"><b>'.$key['jm_designation'].'</b> at <b>'.$key['jm_organisation'].'</b> till <b>'.$key['jm_worked_till'].'</b></li>';
+                            }
+                          }
+                          else{
+                          	//echo "check else";
+                            echo '<b>Not Available</b>';
+                          }
+                          ?>
+
+                        </div>
+                      </div>                          
 </div>
 </div>  
 </div>

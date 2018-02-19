@@ -7,10 +7,156 @@ class Dashboard_model extends CI_Model{
 		parent::__construct();
     //$this->load->model('search_model');
 	}
-        //------------this fun is used to get the the applied jobs------------------------//
-        
-	public function getAppliedJobs_ByUser($user_id) {
-		$sqlSelect = "SELECT * FROM jm_applied_candidates as can JOIN jm_post_job as job ON (can.jm_job_id = job.jm_jobpost_id) WHERE can.jm_applieduser_id ='$user_id' AND job.is_active = '1'";
+        //-------this fun is used to get the feed back of freelancer and freelancer employer------------//
+        public function getTestomonials($user_id,$profile_type){
+            
+            if ($profile_type == 1) {
+            $sqlSelect = "SELECT * FROM jm_freelancer_rating_table WHERE jm_freelancer_id= '$user_id' AND jm_feedback_comment != ''";
+            //echo $sqlSelect;die();
+            $result = $this->db->query($sqlSelect);
+            $Emp_id = '';
+            $username = '';
+            $designation = '';
+            $comments = '';
+            $UserImage = '';
+            $arr = '';
+            $val = '';
+            $extra = array();
+            if ($result->num_rows() <= 0) {
+                $response = array(
+                    'status' => 500,
+                    'status_message' => 'No Record Found.');
+            } else {
+
+                foreach ($result->result_array() as $row) {
+                    $Emp_id = $row['jm_emp_id'];  //---getting the employ ids
+                    $comments = $row['jm_feedback_comment'];  //----getting the comments of freelancer employer
+                    //$arr[] = $comments;
+//----------------get the infor of freelancer employer from user profile table-------------------//
+
+                    $SELECT = "SELECT * FROM jm_userprofile_tab WHERE jm_user_id = '$Emp_id'";
+                    $output = $this->db->query($SELECT);
+
+                    foreach ($output->result_array() as $row) {
+                        $designation = $row['jm_userDesignation'];
+                        $UserImage = $row['jm_profile_image'];
+                        $username = $row['jm_user_name'];
+                    }
+
+                    $extra[] = array(
+                        'designation' => $designation,
+                        'UserImage' => $UserImage,
+                        'username' => $username,
+                        'comments' => $comments
+                    );
+                }
+//----------------get the infor of freelancer employer from user profile table-------------------//
+
+                $response = array(
+                    'status' => 200,
+                    'status_message' => $extra);
+            }
+            //-------if profile type == freelancer employer then the feedbacks of freelancer employer comments are here------//
+        } elseif ($profile_type == 2) {
+            $sqlSelect = "SELECT * FROM jm_employer_rating_table WHERE jm_employer_id= '$user_id' AND jm_feedback_comment != ''";
+            //echo $sqlSelect;die();
+            $result = $this->db->query($sqlSelect);
+            $Emp_id = '';
+            $username = '';
+            $designation = '';
+            $comments = '';
+            $UserImage = '';
+            $arr = '';
+            $val = '';
+            $extra = array();
+            if ($result->num_rows() <= 0) {
+                $response = array(
+                    'status' => 500,
+                    'status_message' => 'No Record Found.');
+            } else {
+
+                foreach ($result->result_array() as $row) {
+                    $Freelance_id = $row['jm_freelance_id']; //----getting the frrelance ids
+                    $comments = $row['jm_feedback_comment']; //---getting the freelancer comments by the freelancer 
+                    //$arr[] = $comments;
+//----------------get the infor of freelancer from user profile table-------------------//
+                    $SELECT = "SELECT * FROM jm_userprofile_tab WHERE jm_user_id = '$Freelance_id'";
+                    $output = $this->db->query($SELECT);
+
+                    foreach ($output->result_array() as $row) {
+                        $designation = $row['jm_userDesignation'];
+                        $UserImage = $row['jm_profile_image'];
+                        $username = $row['jm_user_name'];
+                    }
+
+                    $extra[] = array(
+                        'designation' => $designation,
+                        'UserImage' => $UserImage,
+                        'username' => $username,
+                        'comments' => $comments
+                    );
+                }
+//----------------get the infor of freelancer from user profile table-------------------//
+
+                $response = array(
+                    'status' => 200,
+                    'status_message' => $extra);
+            }
+        }
+        return $response;
+    }
+
+    //-------this fun is used to get the feed back of freelancer and freelancer employer------------//
+
+        //------------this fun is used to get freelancer Average ratings------------------------//
+        public function getAverageRatingsOf_Freelancer($user_id){
+                $sql = "SELECT AVG(jm_communication) as communication,"
+                        . "AVG(jm_ontimedelivery) as delivery,"
+                        . "AVG(jm_valueformoney) as money,"
+                        . "AVG(jm_expertise) as expert,"
+                        . "AVG(jm_hire_again) as hire,"
+                        . "jm_project_id,jm_emp_id FROM jm_freelancer_rating_table "
+                        . "WHERE jm_freelancer_id ='$user_id'";
+//echo $sql;die();
+		$result = $this->db->query($sql);
+		if ($result->num_rows() > 0) {
+			$response = array(
+				'status' => 200,
+				'status_message' => $result->result_array());
+		} else {
+			$response = array(
+				'status' => 500,
+				'status_message' => 'Ratings Not Found.');
+		}
+		return $response; 
+		           
+        }
+
+        //------------this fun is used to get freelancer Average ratings------------------------//
+       //--------this fun is used to get the frelancer employer average ratings-----------//
+
+        public function getAverageRatingsOf_FreelancEmployer($user_id){
+                 $sql = "SELECT AVG(jm_communication) as communicationemployer,"
+                         . "AVG(jm_payment_prompt) as payment,"
+                         . "AVG(jm_acc_of_requirement) as requirements,"
+                         . "AVG(jm_work_again) as working,"
+                         . "jm_project_id,jm_freelance_id FROM jm_employer_rating_table "
+                         . "WHERE jm_employer_id='$user_id'";
+		$result = $this->db->query($sql);
+		if ($result->num_rows() > 0) {
+			$response = array(
+				'status' => 200,
+				'status_message' => $result->result_array());
+		} else {
+			$response = array(
+				'status' => 500,
+				'status_message' => 'Ratings Not Found.');
+		}
+		return $response;            
+        }
+        //--------this fun is used to get the frelancer employer average ratings-----------//
+        public function getAppliedJobs_ByUser($user_id) {
+		$sqlSelect = "SELECT * FROM jm_applied_candidates as can JOIN jm_post_job as job ON (can.jm_job_id = job.jm_jobpost_id) WHERE can.jm_applieduser_id ='$user_id' AND job.is_active = '1' ORDER BY DESC";
 		$result = $this->db->query($sqlSelect);
 		if ($result->num_rows() > 0) {
 			$response = array(
@@ -26,7 +172,7 @@ class Dashboard_model extends CI_Model{
         //------------this fun is used to get the the applied jobs------------------------//
     //------------this fun is used to get the the previous jobs------------------------//
     public function getPostedJobs_ByUser($user_id) {
-        $sqlSelect = "SELECT * FROM jm_applied_candidates as can JOIN jm_post_job as job ON (can.jm_job_id = job.jm_jobpost_id) WHERE can.jm_applieduser_id ='$user_id' AND job.is_active = '0'";
+        $sqlSelect = "SELECT * FROM jm_applied_candidates as can JOIN jm_post_job as job ON (can.jm_job_id = job.jm_jobpost_id) WHERE can.jm_applieduser_id ='$user_id' AND job.is_active = '0' ORDER BY DESC";
         $result = $this->db->query($sqlSelect);
         if ($result->num_rows() > 0) {
             $response = array(
@@ -59,7 +205,7 @@ class Dashboard_model extends CI_Model{
     //------------this fun is used to get the the posted jobs by job employer------------------------//
     
     public function getPrevious_JobsByJobEmployer($user_id){
-      $sqlSelect = "SELECT * FROM jm_post_job WHERE jm_user_id='$user_id' AND is_active='0'";
+      $sqlSelect = "SELECT * FROM jm_post_job WHERE jm_user_id='$user_id' AND is_active='0' ORDER BY DESC";
         $result = $this->db->query($sqlSelect);
         if ($result->num_rows() > 0) {
             $response = array(
@@ -91,7 +237,7 @@ class Dashboard_model extends CI_Model{
 
     // ----------freelancer live projects-------------------//
     public function freelanceLive_Projects($user_id){
-        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_freelancer_user_id='$user_id' AND is_active='1'";
+        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_freelancer_user_id='$user_id' AND is_active='1' ORDER BY DESC";
         $result = $this->db->query($sqlSelect);
         if ($result->num_rows() > 0) {
             $response = array(
@@ -108,7 +254,7 @@ class Dashboard_model extends CI_Model{
 
     // ----------freelancer previous projects-------------------//
     public function freelancePrevious_Projects($user_id){
-        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_freelancer_user_id='$user_id' AND is_active='0'";
+        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_freelancer_user_id='$user_id' AND is_active!='1' ORDER BY DESC";
         $result = $this->db->query($sqlSelect);
         if ($result->num_rows() > 0) {
             $response = array(
@@ -189,8 +335,9 @@ class Dashboard_model extends CI_Model{
 
 	// -----------------------GET ALL SKILLS  BY CATEGORY MODEL----------------------//
 	//-------------------------------------------------------------//
-	public function getSkill_byCategory($jm_category_name){
-		$query = "SELECT * FROM jm_skills_tab ";
+	public function getSkill_byCategory($category_id){
+		$query = "SELECT * FROM jm_skills_tab WHERE category_id = '$category_id'";
+                //echo $query;die();
 		$result = $this->db->query($query);
 
 		if ($result->num_rows() <= 0) {
@@ -211,7 +358,7 @@ class Dashboard_model extends CI_Model{
 	//-------------------------------------------------------------//
 	public function get_allCategory(){
 
-		$query = "SELECT DISTINCT jm_category_name FROM jm_skills_tab ORDER BY jm_category_name ASC";
+		$query = "SELECT DISTINCT jm_category_name,category_id FROM jm_skills_tab ORDER BY jm_category_name ASC";
 
 		$result = $this->db->query($query);
 
@@ -464,21 +611,6 @@ class Dashboard_model extends CI_Model{
 	//----------------------------USER SKILLS END------------------------------//
 
 
-	//-----------------------function to check whether privilege level already exists------------------//
-	function checkPrivilege_exist($privilege_level)
-	{
-		$query = null;
-		$query = $this->db->get_where('roles', array(
-			'privilege_level' => $privilege_level
-		));		
-
-		if ($query->num_rows() > 0) {
-			return 0;			
-		} else {
-			return 1;			
-		}
-	}
-//-----------------------------------function end---------------------------------------//
-
+	
 }
 ?>

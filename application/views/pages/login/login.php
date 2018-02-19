@@ -155,8 +155,8 @@ if((isset($_GET['payload'])=='ApplyJob') && ($_GET['payload'] !='') && ($_GET['v
 	.btn-login:hover,
 	.btn-login:focus {
 		color: #fff;
-		background-color: #53A3CD;
-		border-color: #53A3CD;
+		background-color: #1fbea9;
+		border-color: #1fbea9;
 	}
 	.forgot-password {
 		text-decoration: underline;
@@ -182,8 +182,8 @@ if((isset($_GET['payload'])=='ApplyJob') && ($_GET['payload'] !='') && ($_GET['v
 	.btn-register:hover,
 	.btn-register:focus {
 		color: #fff;
-		background-color: #1CA347;
-		border-color: #1CA347;
+		background-color: #1fbea9;
+		border-color: #1fbea9;
 	}
 	
 	@media only screen and (max-width: 377px) {
@@ -228,13 +228,12 @@ if((isset($_GET['payload'])=='ApplyJob') && ($_GET['payload'] !='') && ($_GET['v
 						</div>
 						<div class="row">
 							<div class="col-xs-6">
-								<a href="#" class="active" id="login_form-link">Login</a>
+								<a href="#" class="active" id="login_form-link"><i class="fa fa-unlock-alt"></i> Login</a>
 							</div>
 							<div class="col-xs-6">
-								<a href="#" id="register_form-link">Register</a>
+								<a href="#" id="register_form-link"><i class="fa fa-sign-in"></i> Register</a>
 							</div>
 						</div>
-						<hr>
 					</div>
 					<div class="panel-body">
 						<div class="row">
@@ -251,19 +250,21 @@ if((isset($_GET['payload'])=='ApplyJob') && ($_GET['payload'] !='') && ($_GET['v
 										</select>
 									</div>
 									<div class="form-group">
-										<input type="text" name="login_username" id="login_username" tabindex="2" class="form-control" placeholder="Username" value="" required>
+										<input type="text" name="login_username" id="login_username" tabindex="2" class="form-control" placeholder="Username" value="<?php
+echo $_COOKIE['remember_me']; ?>" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="login_password" id="login_password" tabindex="3" class="form-control" placeholder="Password" required>
+										<input type="password" name="login_password" id="login_password" tabindex="3" class="form-control" placeholder="Password" value="<?php
+echo $_COOKIE['remember_me']; ?>" required>
 									</div>
 									<div class="form-group text-center">
-										<input type="checkbox" tabindex="4" class="" name="login_remember" id="login_remember">
-										<label for="remember"> Remember Me</label>
+										<input type="checkbox" tabindex="4" class="" name="login_remember"  id="login_remember">
+										<label for="remember" style="margin-bottom: -5px"> Remember Me</label>
 									</div>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="login_login_submit" id="login_login_submit" tabindex="5" class="form-control w3-blue btn btn-login" value="Log In">
+												<input type="submit" name="login_login_submit" id="login_login_submit" tabindex="5" class="form-control btn btn-login bluishGreen_bg" value="Log In">
 											</div>
 										</div>
 									</div>
@@ -278,7 +279,15 @@ if((isset($_GET['payload'])=='ApplyJob') && ($_GET['payload'] !='') && ($_GET['v
 									</div>
 								</form>
 								<form id="forget_password" action="" method="post" role="form" style="display: none;">
-									<div class="w3-left"><label> <i class="fa fa-unlock"></i> Forgot Password</label></div>
+									<div class="form-group">
+										<select name="forget_profile_type" id="forget_profile_type" tabindex="1" class="form-control">
+											<option class="w3-light-grey" selected value="0">Select profile type</option>
+											<option class="" value="1">Freelancer</option>
+											<option class="" value="2">Freelance Employer</option>
+											<option class="" value="3">Job Seeker</option>
+											<option class="" value="4">Job Employer</option>
+										</select>
+									</div>
 									<div class="form-group">
 										<input type="email" name="forget_email" id="femail" tabindex="1" class="form-control" placeholder="Enter your Email Address" value="" required>
 									</div>
@@ -290,7 +299,7 @@ if((isset($_GET['payload'])=='ApplyJob') && ($_GET['payload'] !='') && ($_GET['v
 									<div class="w3-col l12 " id="registration_err"></div>
 									<div class="form-group">
 										<select name="register_profile_type" id="register_profile_type" tabindex="1" class="form-control">
-											<option class="w3-red" selected <?php if($this->uri->segment(2)=='') echo 'selected'; ?> value="0">Select profile type</option>
+											<option class="w3-light-grey" selected <?php if($this->uri->segment(2)=='') echo 'selected'; ?> value="0">Select profile type</option>
 											<option value="1" <?php if($this->input->get('profile', TRUE)==1) echo 'selected'; ?>>Freelancer</option>
 											<option value="2" <?php if($this->input->get('profile', TRUE)==2) echo 'selected'; ?>>Freelance Employer</option>
 											<option value="3" <?php if($this->input->get('profile', TRUE)==3) echo 'selected'; ?>>Job Seeker</option>
@@ -304,16 +313,16 @@ if((isset($_GET['payload'])=='ApplyJob') && ($_GET['payload'] !='') && ($_GET['v
 										<input type="email" name="register_email" id="register_email" tabindex="4" class="form-control" placeholder="Email address" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="register_password" id="register_password" tabindex="4" class="form-control" placeholder="Password" required>
+										<input type="password" name="register_password" id="register_password" tabindex="4" class="form-control" placeholder="Password" maxlength="8" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="register_confirm_password" id="register_confirm_password" tabindex="5" onkeyup="checkPassword();" class="form-control" placeholder="Confirm Password" required>
+										<input type="password" name="register_confirm_password" id="register_confirm_password" tabindex="5" onkeyup="checkPassword();" class="form-control" maxlength="8" placeholder="Confirm Password" required>
 									</div>
 									<div id="message"></div>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="register_register_submit" id="register_register_submit" tabindex="5" class="form-control w3-blue btn btn-register" value="Register Now">
+												<input type="submit" name="register_register_submit" id="register_register_submit" tabindex="5" class="form-control  btn btn-register bluishGreen_bg" value="Register Now">
 											</div>
 										</div>
 									</div>
@@ -347,6 +356,8 @@ if((isset($_GET['payload'])=='ApplyJob') && ($_GET['payload'] !='') && ($_GET['v
 			$('#forget_link').click(function(e) {
 				$("#forget_password").delay(100).fadeIn(100);
 				$("#login_form").fadeOut(100);
+				$('#login_form-link').html('<i class="fa fa-unlock"></i> Forget Password');
+				$('#register_form-link').html('');
 				$('#login_form-link').removeClass('active');
 				$(this).addClass('active');
 				e.preventDefault();
@@ -355,27 +366,44 @@ if((isset($_GET['payload'])=='ApplyJob') && ($_GET['payload'] !='') && ($_GET['v
 		});
 
 	</script>
-	<!-- <script>
-	$(function () {
-	    $("#forget_password").submit(function (e) {
-		    e.preventDefault();
-	        dataString = $("#forget_password").serialize();
-	       alert(dataString);
+	<script>
+		$(function () {
+			$("#forget_password").submit(function (e) {
+				e.preventDefault();
+				dataString = $("#forget_password").serialize();
 
-	        $.ajax({
-	            type: "POST",
-	            url: BASE_URL + "auth/login/get_forget_password",
-	            data: dataString,
+				$("#spinnerDiv").html('<center><img width="70%" height="auto" src="'+BASE_URL+'css/logos/reg.gif"/></center>');
+				$.ajax({
+					type: "POST",
+					url: BASE_URL+"auth/login/get_forget_password",
+					dataType : 'text',
+					data: dataString,
 	            return: false, //stop the actual form post !important!
 	            success: function (data)
 	            {
-	                alert(data);
+	            	//alert(data);
+	            	var key=JSON.parse(data);
+	            	if(key.status == 200){                    
+	            		$('#Login_RegisterDiv').load(location.href + " #Login_RegisterDiv>*", ""); 
+	            		$("#spinnerDiv").html('');
+	            		$("#messageDiv").html('<div class="alert alert-success" style="margin-bottom:5px"><strong>'+key.status_message+'</strong></div><div class="col-lg-12 alert alert-info alert-dismissable fade in"><a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a><span><strong><i class="fa fa-warning"></i></strong>Please Check your Email... We have sent your password on your Registered Email-ID..!</span></div>');
+	            		window.setTimeout(
+	            			function(){
+	            				location.reload(true)
+	            			},
+	            			3000
+	            			);
+
+	            	}else{ 
+	            		$("#spinnerDiv").html('');               
+	            		$("#messageDiv").html('<div class="alert alert-danger" style="margin-bottom:5px"><strong>'+key.status_message+'</strong></div>');
+	            	}
 	            }
 	        });
 	        return false;  //stop the actual form post !important!
 	    });
-	});
-</script> -->
+		});
+	</script>
 </body>
 </html>
 

@@ -54,6 +54,7 @@ class Job_applications extends CI_Controller {
             $File_path='';
         }
         $data['File_path'] = $File_path;
+        $data['profile_type'] = $this->session->userdata('profile_type');
        //print_r($data);die(); 
         $path = base_url();
         $url = $path . 'api/JobApplications_api/saveApplication';
@@ -109,4 +110,7 @@ class Job_applications extends CI_Controller {
             echo 'FALSE';
         }
     }
+    
+ 	
+ 
 }

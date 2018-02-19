@@ -24,10 +24,21 @@ $profile_type=$this->session->userdata('profile_type');
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/header/header_overlay.css">
 <!--   <link rel="stylesheet" href="<?php echo base_url(); ?>css/w3.css">
 -->
+</head>
+
+ <!-- Material Design Bootstrap -->
+<!--   <link href="<?php echo base_url() ?>css/home_page/css/mdb.css" rel="stylesheet">
+ -->  <link href="<?php echo base_url() ?>css/home_page/css/style.css" rel="stylesheet">
 <script type="text/javascript" src="<?php echo base_url(); ?>css/bootstrap/jquery-3.1.1.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>css/bootstrap/bootstrap.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>css/alert/jquery-confirm.js"></script>
 <style>
+.header_div{
+  -webkit-box-shadow: 0 4px 10px -6px #222;
+  -moz-box-shadow: 0 4px 10px -6px #222;
+  box-shadow: 0 4px 10px -6px #222;
+}
+
 .btn {
   display: inline-block;
   padding: 6px 12px;
@@ -91,25 +102,25 @@ $profile_type=$this->session->userdata('profile_type');
 </style>
 </head>
 <body id="home" class="homepage">
-
+ 
   <div class="alert alert-success do-suc" role="alert" style="display: none">
     <span id="suc-msg"></span>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="mainHeader">
+  <div class="mainHeader" >
 
-    <header id="header">
+    <header id="header" style="padding: 0">
       <div class="alert alert-danger do-err" role="alert" style="display: none;">
         <span id="err-msg"></span>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <nav id="main-menu" class="navbar navbar-default top-nav-collapse navbar-jobmandi" role="banner">
-        <div class="container">
-          <div class="col-lg-3 col-xs-12 col-sm-12">
+      <nav id="main-menu" class="navbar top-nav-collapse header_div navbar-jobmandi" role="banner">
+        <div class="col-lg-offset-1">
+          <div class="col-lg-3 col-xs-12 col-sm-12 w3-padding-left">
             <!-- <div class="w3-col l12 s10">
               <img class="w3-border" src="<?php echo base_url(); ?>images/desktop/logo-main.png">
             </div>
@@ -125,7 +136,7 @@ $profile_type=$this->session->userdata('profile_type');
                 echo '<a href="'.base_url().'"><img class="img" src="'.base_url().'images/desktop/logo-main.png" alt="JobMandi Logo"></a>';
               }
               ?>    
-              <button type="button" class="navbar-toggle" onclick="openNav()" style="margin-top:15px">
+              <button type="button" class="navbar-toggle w3-right" onclick="openNav()" style="margin-top:15px">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -169,9 +180,9 @@ $profile_type=$this->session->userdata('profile_type');
             }
             else{ ?>
             <div class="ui-group-buttons">
-              <a href="<?php echo base_url().'auth/login'; ?>" style="background: #ff7725;color:#fff" class="btn ">Log in</a>
+              <a href="<?php echo base_url().'auth/login'; ?>" style="" class="btn w3-border-right ">Log in</a>
 
-              <a href="<?php echo base_url().'auth/login'; ?>" style="background: #ff9657;color:#fff" class="btn ">Sign up</a>
+              <a href="<?php echo base_url().'auth/login'; ?>" style="" class="btn w3-border-left">Sign up</a>
             </div>
             <!-- echo '<a class="btn w3-left" href="'.base_url().'auth/login" >Login | Sign Up</a>'; -->
             <?php }
@@ -223,13 +234,13 @@ $profile_type=$this->session->userdata('profile_type');
             </div>
           </div>
           <div class="col-lg-2 col-sm-2 w3-hide-small">
-           <div class="w3-right ">
+           <div class="w3-left ">
             <?php 
             if(isset($user_name) && isset($user_name)!=''){
               echo '<a href="'.base_url().'auth/login/logout" class="btn w3-margin-top w3-black w3-round-xlarge w3-text-white">Logout <i class="fa fa-sign-out"></i></a>';
             }
             else{
-              echo '<a class="btn w3-round-xlarge w3-padding-left w3-margin-left w3-margin-top w3-text-white" href="'.base_url().'auth/login" style="background-color:#00B59D;">Login | Sign Up</a>';
+              echo '<a href="'.base_url().'auth/login" class="btn w3-margin-top w3-orange w3-round-xlarge w3-text-white"><b>Login &nbsp;/&nbsp;SignUp</b> <i class="fa fa-sign-in"></i></a>';
             }
             ?>                        
           </div>

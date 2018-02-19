@@ -13,7 +13,7 @@ class JobApplications_api extends REST_Controller {
     }
     public function getJob_Details_get(){
         extract($_GET);
-        $result = $this->Jobapplication_model->getJob_Details($job_id);
+        $result = $this->Jobapplication_model->getJob_Details($job_id,$user_id,$profile_type);
         return $this->response($result);
     
     }
@@ -27,4 +27,6 @@ class JobApplications_api extends REST_Controller {
         $result = $this->Jobapplication_model->checkAlreadyApplied($job_id,$user_id);
         return $this->response($result);
     }
+    
+	
 }

@@ -56,7 +56,7 @@ switch ($selected_profile_type) {
   <script type="text/javascript" src="<?php echo base_url(); ?>css/js/profile/edit_profile.js"></script>
   <script type="text/javascript" src="<?php echo base_url(); ?>css/js/selectize.js"></script>
   <!-- <script type="text/javascript" src="<?php echo base_url();?>dist/editor.js"></script> -->
-  <script type="text/javascript" src="<?php echo base_url(); ?>css/js/country2.js"></script>
+<!--  <script type="text/javascript" src="<?php echo base_url(); ?>css/js/country2.js"></script>-->
 
 
  
@@ -99,7 +99,17 @@ switch ($selected_profile_type) {
       $jm_userAspiration=$key['jm_userAspiration'];
       $jm_education=$key['jm_education'];
       $jm_experience=$key['jm_experience'];
+      $jm_total_experience = $key['jm_total_experience'];
     }
+    $password = '';
+    $pass = '';
+    //print_r($userInfo);
+    foreach ($userInfo['status_message'] as $value){
+       $pass = base64_decode($value['jm_password']); 
+    }
+    $passw = explode("|", $pass);
+    $password = $passw[0];
+        //echo $password;
 
     ?>
     <!-- div for about details of user and it's score row -->
@@ -142,7 +152,7 @@ switch ($selected_profile_type) {
       <div class="w3-col l12">
         <div class="w3-col l8 ">
          <h2 class="bluishGreen_txt"><b>Edit Profile</b></h2>
-         <hr>
+         
        </div>
        <div class="w3-col l4 w3-padding">
         <div class="text-center profile_portfolio ">
@@ -155,7 +165,8 @@ switch ($selected_profile_type) {
         </div>
       </div>
     </div>
-
+ 
+         
     <div class ="w3-col l12" id="full_name">
       <h5 class="w3-col l12 w3-padding-tiny w3-text-black  w3-round w3-margin-bottom" style="padding-left:20px;"><b>Personal Details:</b></h5>
       <div class="w3-col l6 w3-padding">
@@ -174,45 +185,61 @@ switch ($selected_profile_type) {
       <div class="w3-col l6 w3-padding">
         <label class="control-label">Designation:</label>
         <span class="w3-text-red">*</span>
-        <input class="w3-input" type="text" name="jm_userDesignation" value="<?php echo $jm_userDesignation; ?>" placeholder="Php Developer" required>
+        <input class="w3-input" type="text" name="jm_userDesignation" value="<?php echo $jm_userDesignation; ?>" placeholder="Php Developer">
       </div>
 
-      <div class="w3-col l6 w3-padding">
+      <div class="w3-col l6 w3-padding <?php if($profile_type==1){echo '';} else{ echo 'w3-hide';} ?>">
         <label class="control-label">Rate/Hour:</label>
         <input class="w3-input" type="number" placeholder="Rate/Hour" name="jm_rateHr" value="<?php echo $jm_ratePerHr; ?>">
       </div>
     </div>
 
-    <div class="w3-col l12 scrolly" id="user_description" style="padding-right: 5px;max-height: 350px;overflow: scroll;">
+    <div class="w3-col l12  w3-padding" id="user_description" style="padding-right: 5px;max-height: 350px;">
      <label class="control-label">Description:</label>
-     <textarea id="txtEditor-new" name="jm_userDescription" class="content" rows="7" placeholder="Describe you here..." ><?php echo $jm_userDescription; ?></textarea> 
+     <textarea class="" id="txtEditor-new" name="jm_userDescription" class="content" rows="7" placeholder="Describe you here..."><?php echo $jm_userDescription; ?></textarea> 
      <span class="help-block"></span>
    </div>
-
-   <div class="w3-col l12 w3-margin-top" id="location">
-    <div class="col-lg-4">
+         <!--added country by country table-->
+<?php// print_r($country);?>
+   <div class="w3-col l12  w3-margin-top" id="location">
+    <div class="col-lg-4 w3-margin-top">
       <label class="control-label">Country:</label>
       <span class="w3-text-red">*</span>
       <!--         	<span id = "countrydata" name = "countrydata" style = "color:red; display: block;">&nbsp;</span>-->
-      <select class="w3-input"  id="user_country" name="user_country"  onchange="print_state('user_state', this.selectedIndex);" required>
-        <option value="<?php echo $jm_userCountry ?>" <?php if($jm_userCountry == 'Angola'){echo'selected=selected';} ?>><?php echo $jm_userCountry ?></option>
+      <select class="w3-input"  id="user_country" name="user_country" required>
+         <option value="">Select Country</option>
+          <?php 
+          foreach ($country['status_message'] as $key){?>
+             <option value="<?php echo $key['id']; ?>"  <?php if($jm_userCountry == $key['id']){ echo 'selected=selected'; } ?> ><?php echo $key['name']; ?></option>
+         <?php }
+          ?>
+<!--        <option value="<?php //echo $jm_userCountry ?>" <?php //if($jm_userCountry == 'Angola'){echo'selected=selected';} ?>><?php echo $jm_userCountry ?></option>-->
       </select>
     </div>
+         <!--added country by country table-->
+         <!--added country by state by country id from state table-->
 
-    <div class="col-lg-4">
+    <div class="col-lg-4 w3-margin-top" id="state">
       <label class="control-label">State:</label>
       <span class="w3-text-red">*</span>
       <!--         	<span id = "statedata" name = "statedata" style = "color:red; display: block;">&nbsp;</span>-->
-      <select class="w3-input" name="user_state" id="user_state" required></select>
+      <select class="w3-input" name="user_state" id="user_state" required>
+          <?php if($jm_userState != ''){?>
+          <option value="<?php echo $jm_userState ?>"><?php echo $jm_userState ?></option>
+          <?php } //echo $jm_userState; ?>
+      </select>
+      
     </div>
+         <!--added country by state by country id from state table-->
 
-    <div class="col-lg-4">
+    <div class="col-lg-4 w3-margin-top">
      <label class="control-label">City:</label>
      <span class="w3-text-red">*</span>
      <input class="w3-input" type="text" placeholder="Enter your city" name="jm_userCity" value="<?php echo $jm_userCity; ?>" required>
    </div>
  </div>
 
+<div id="jobSeeker_form" class="<?php if($profile_type==3){echo '';} else{ echo 'w3-hide';} ?>">
  <div class="w3-col l12 w3-margin-top">
    <h5 class="w3-col l12 w3-text-black w3-round w3-padding-top"><b>Job Seeker Miscellaneous Details:</b></h5>
  </div>
@@ -224,7 +251,7 @@ switch ($selected_profile_type) {
    <span class="help-block"></span>
  </div>
  <div class="w3-col l12 w3-margin-top">
-  <div class="col-lg-6">
+  <div class="col-lg-3">
     <label class="control-label">Expected Salary:</label>
 
     <select class="w3-input" id="expected_salary" name="expected_salary" selected>
@@ -236,12 +263,29 @@ switch ($selected_profile_type) {
       <option value="4-5 LPA" <?php if($expected_salary=='4-5 LPA'){ echo 'selected'; } ?>>4-5 LPA</option>
       <option value="More Than 5 LPA">More Than 5 LPA</option>
     </select>
+   </div>
+   <div class="col-lg-3">
+    <label class="control-label">Total Experience:</label>
+    <select class="w3-input" id="total_exp" name="total_exp" selected>
+      <option value="0" <?php if($jm_total_experience =="0"){ echo 'selected'; } ?>>0</option>
+      <option value="1" <?php if($jm_total_experience =="1"){ echo 'selected'; }  ?>>1</option>
+      <option value="2" <?php if($jm_total_experience =="2"){ echo 'selected'; }  ?>>2</option>
+      <option value="3" <?php if($jm_total_experience =="3"){ echo 'selected'; }  ?>>3</option>
+      <option value="4" <?php if($jm_total_experience =="4"){ echo 'selected'; }  ?>>4</option>
+      <option value="5" <?php if($jm_total_experience =="5"){ echo 'selected'; }  ?>>5</option>
+      <option value="6" <?php if($jm_total_experience =="6"){ echo 'selected'; }  ?>>6</option>
+      <option value="7" <?php if($jm_total_experience =="7"){ echo 'selected'; }  ?>>7</option>
+      <option value="8" <?php if($jm_total_experience =="8"){ echo 'selected'; }  ?>>8</option>
+      <option value="9" <?php if($jm_total_experience =="9"){ echo 'selected'; }  ?>>9</option>
+      <option value="10+" <?php if($jm_total_experience =="10+"){ echo 'selected'; }  ?>>10+</option>     
+    </select>
   </div>
 
   <div class="col-lg-6">
     <label class="control-label">LinkedIn URL:</label>
     <input class="w3-input"  type="text" name="LinkedIn_url" placeholder="Add URL here..." value="<?php echo $jm_linkedIn_url; ?>">
   </div>
+</div>
 </div>
 
 <div class ="w3-col l12 w3-margin-top">
@@ -277,6 +321,9 @@ switch ($selected_profile_type) {
       }
       ?>
       <div class="w3-col l12">
+         <div class="w3-col l12">
+        <a class="w3-right" title="remove" onclick="$(this).parent('div').parent('div').remove();"><i class="fa fa-close"></i></a>
+      </div> 
         <div class="col-lg-4">
           <label class="control-label">Course :</label>
           <span class="w3-text-red">*</span>
@@ -286,7 +333,7 @@ switch ($selected_profile_type) {
         <div class="col-lg-4">
           <label class="control-label">Passing Year :</label>
           <span class="w3-text-red">*</span>
-          <input class="w3-input" type="number" name="passing_year[]"  placeholder="2018" value="<?php echo $edu['jm_passing_year']; ?>" style="">
+          <input class="w3-input" type="number" name="passing_year[]"  placeholder="passing year" value="<?php echo $edu['jm_passing_year']; ?>" style="">
         </div>
 
         <div class="col-lg-4">
@@ -309,6 +356,9 @@ switch ($selected_profile_type) {
     $count=0; 
     if($jm_experience==''){?>
     <div class="w3-col l12">
+      <div class="w3-col l12">
+        <a class="w3-right" title="remove" onclick="$(this).parent('div').parent('div').remove();"><i class="fa fa-close"></i></a>
+      </div>      
      <div class="col-lg-4">
       <label class="control-label">Previous designation :</label>
       <input class="w3-input"  type="text" name="jm_previous_designation[]" placeholder="UI Designer" value="<?php echo $exp['jm_designation']; ?>">
@@ -368,7 +418,94 @@ $count++;
 </div>
 <div class="col-lg-2"></div>
 </div>
+    
+    
+    <div class="container">
+        <hr>
+        <div class="w3-col l12">
+            <div class="col-lg-2"></div>
+            <form class="updatepassword" name="updatePassword">
+                <div class="w3-col l8" id="passwordDiv">
+                    <div class="w3-col l12">
+                        <h5 class="w3-col l12  w3-padding-tiny w3-text-black w3-round " style="padding-left:1px;"><b>Change Password:</b></h5>
+                        <div class="w3-col l6">
+                            <label class="w3-padding-left">Your Password: </label>
+                            <div class="w3-margin-bottom w3-padding-left input-group">
+                                <input class="form-control" placeholder="Enter Password" id="user_password" name="user_password" type="password" maxlength="8" value="<?php echo $password; ?>" required>
+                                <span class="input-group-btn"><a class="btn btn-default" onclick="show_pass(this);">Show</a></span>
+                            </div>
+                        </div>
+                        <div class="w3-col l6">
+                            <label class="w3-padding-left">Confirm Password: </label>
+                            <div class=" w3-padding-left">
+                                <input class="form-control input-group" placeholder="Re-enter your password" id="user_passwordConfirm" name="user_passwordConfirm" type="password" maxlength="8"  required>
+                            </div>
+                            <div class=" w3-padding-left"><label id="message"></label></div>
+                        </div>                    
+                    </div>
+                    <div class="w3-col l12">
+                        <button class="btn bluishGreen_bg w3-text-white w3-margin-bottom w3-right" name="edit_btn" id="edit_btn" type="submit">
+                            <i class="fa fa-pencil"></i> Change Password
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="col-lg-2"></div>
+        </div>
+        
+    </div>
+    <hr>
+<script>
+$(function () {
+$('#edit_btn').click(function () {
+  var user_password = $("#user_password").val();
+  var user_passwordConfirm = $("#user_passwordConfirm").val();
+    //alert(dataString);
+    $.ajax({
+        type: "POST",
+        url: BASE_URL + "profile/Edit_profile/upadteUser_Password",
+        data: {
+           user_password: user_password,
+           user_passwordConfirm: user_passwordConfirm 
+        },
+        return: false, //stop the actual form post !important!
+        success: function (data)
+        {
+            $.alert(data);
+            $("#passwordDiv").load(location.href + " #passwordDiv>*", "");               
+        }
+    });
+    return false; //stop the actual form post !important!
+});
+});
+</script>    
+<script>
+	$('#user_passwordConfirm').on('keyup', function () {
+		if ($('#user_password').val() == $('#user_passwordConfirm').val()) {
+			$('#edit_btn').prop("disabled", false);
+			$('#message').html('');
 
+		} else {
+			$('#message').html('Password Not Matching').css('color', 'red');
+			$('#edit_btn').prop("disabled", true);
+		}
+	});
+</script>
+<!--script end -->
+<!-- script script to hide or show password input field -->
+<script>
+function show_pass(item){ 
+if(item.innerText=='Show'){
+	item.innerText='Hide';
+	document.getElementById('user_password').type="text"; 
+	}else{
+	item.innerText='Show';
+	document.getElementById('user_password').type="password"; 
+	}
+} 
+</script>
+<!-- script end -->
+        
 <script type="text/javascript">
   $(function () {
   $("#Edit_profile").submit(function (e) {
@@ -392,10 +529,38 @@ $count++;
   });
 });
 </script>  
- <script>
-    $(document).ready(function () {
-      print_country("user_country");
+ <script>   
+  $(document).ready(function () {
+  $("#user_country").change(function(){
+        var country_id = $('#user_country').val();
+        //$("#state").load(location.href + " #state>*", "");
+        $('#user_state').html('');
+        $.ajax({
+        type: "POST",
+        url: BASE_URL + "profile/Edit_profile/getStateby_country",
+        data: {
+           country_id: country_id 
+        },  
+        dataType: "text",
+        return: false, //stop the actual form post !important!
+        success: function (data)
+        {
+            var obj = JSON.parse(data);
+            //alert(obj.status_message[0].name);
+            for(var i=0; i<(obj.status_message).length; i++){
+                $('#user_state').append('<option value="'+obj.status_message[i].name+'">'+obj.status_message[i].name+'</option>');
+            }
+            //$('#user_state').append('<option value=""></option>');
+//             for (var i = 0; i < (response.data).length; i++)
+//                {
+//                    $("#driverName").append("<option value='" + response.data[i].drivername + "'>" + response.data[i].drivername + "</option>");
+//
+//                }
+        }
     });
+    return false; //stop the actual form post !important!
+  });
+  });
   </script>
   <script>
     $(document).ready(function() {

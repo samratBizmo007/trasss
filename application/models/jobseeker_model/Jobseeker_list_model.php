@@ -12,46 +12,58 @@ class Jobseeker_list_model extends CI_Model {
 //    get all job seeker list for explore jobseeker
     
     public function all_jobSeeker(){
-       $sqlSelect = "SELECT * FROM jm_user_tab INNER JOIN jm_userprofile_tab ON jm_userprofile_tab.jm_user_id=jm_user_tab.jm_user_id INNER JOIN jm_userskills_tab ON jm_userskills_tab.jm_user_id=jm_user_tab.jm_user_id WHERE jm_user_tab.jm_profile_type = '3' ORDER BY jm_user_tab.jm_username ASC";
-        $result = $this->db->query($sqlSelect);
-       if ($result->num_rows() <= 0) {
-            $response = array(
-                'status' => 500,
-                'status_message' => 'Job Seeker list is empty.');
-        } else {
-            $response = array(
-                'status' => 200,
-                'status_message' => $result->result_array());
-        }
-        return $response;
+     $sqlSelect = "SELECT * FROM jm_user_tab JOIN jm_userprofile_tab ON jm_userprofile_tab.jm_user_id=jm_user_tab.jm_user_id WHERE jm_user_tab.jm_profile_type = '3' ORDER BY jm_user_tab.jm_username ASC ";
+
+     $result = $this->db->query($sqlSelect);
+     if ($result->num_rows() <= 0) {
+        $response = array(
+            'status' => 500,
+            'status_message' => 'Job Seeker list is empty.');
+    } else {
+        $response = array(
+            'status' => 200,
+            'status_message' => $result->result_array());
     }
+    return $response;
+}
 
 
 // -----------------------------------------------------------------------------
-    public function filterSeeker($data){
+public function filterSeeker($data){
 
-        if($data['mode']['mode'] == 'jobseeker_list'){ 
+    if($data['mode']['mode'] == 'jobseeker_list'){ 
             //echo 'sujeet';exit;
             $cond = "";
-            if($data['fileds']){
-                //print_r($data);
-                foreach ($data['fileds'] as $k => $val) {
-                    $valArr = explode('/', $val);
-                    if($valArr[0] != ''){
-                        if($valArr[1] == 'LIKE'){
-                            $cond .= "$k ".$valArr[1]." '".$valArr[0]."%' AND ";
-                        }else{
-                            $cond .= "$k ".$valArr[1]." '".$valArr[0]."' AND ";
-                        }
-                        
-                    }
-                }
-                $cond .= " jm_user_tab.jm_profile_type = '3'";
-                //$cond .= " 1=1";
+                        $cond .= " u.jm_profile_type = '3' ";
 
+            if($data['fileds']){
+                //print_r($data);die();
+                $count=1;
+                foreach ($data['fileds'] as $k => $val) {
+
+                    $valArr = explode('/', $val);
+                    
+                    if($valArr[0] != ''){
+                        
+                        if($valArr[1] != 'LIKE'){
+                            $cond .= "AND us.".$k." ".$valArr[1]." '".$valArr[0]."' ";
+                        }else{
+                        if($count==1){
+                            $cond .= "AND (ut.".$k." ".$valArr[1]." '%".$valArr[0]."%'  ";
+                            $count++;
+                        }   
+                        else{
+                            $cond .= "OR ut.".$k." ".$valArr[1]." '%".$valArr[0]."%'  )";
+                        }                       
+                            
+                        }                       
+                    }
+
+                }
+                
                 //echo $cond;exit;
-                //$query = "SELECT * FROM jm_user_tab INNER JOIN jm_userprofile_tab ON jm_userprofile_tab.jm_user_id=jm_user_tab.jm_user_id INNER JOIN jm_userskills_tab ON jm_userskills_tab.jm_user_id=jm_user_tab.jm_user_id WHERE $cond ORDER BY jm_user_tab.jm_username ASC";
-               $query = "SELECT * FROM jm_user_tab, jm_userprofile_tab WHERE jm_user_tab.jm_user_id=jm_userprofile_tab.jm_user_id AND $cond";
+                
+                $query = "SELECT * FROM jm_user_tab as u join jm_userskills_tab as us join jm_userprofile_tab as ut on(u.jm_user_id = us.jm_user_id AND ut.jm_user_id = u.jm_user_id) WHERE $cond ORDER BY u.jm_username ASC";
                 //echo $query;die();
             //exit;
                 $q=$this->db->query($query);  
@@ -65,67 +77,81 @@ class Jobseeker_list_model extends CI_Model {
 
         //echo $this->db->last_query();
         //print_r($q->num_rows());exit;
-        
-        if($q->num_rows() <=0)
-        {   
-            $err='N/A';
-            return $err;
-        }   
-        else{
-            return $q->result_array();
-        }   
-    }
+
+    if($q->num_rows() <=0)
+    {   
+        $err='N/A';
+        return $err;
+    }   
+    else{
+        return $q->result_array();
+    }   
+}
     // ---------------------------------------------------------
 
     // ------------------------------------------------filter job list-----------------------//
 
 // -----------------------------------------------------------------------------
-    public function filterJob($data){
-
-        if($data['mode']['mode'] == 'job_list'){ 
+public function filterJob($data){
+//print_r($data);die();
+    if($data['mode']['mode'] == 'job_list'){ 
             //echo 'sujeet';exit;
-            $cond = "";
-            if($data['fileds']){
+        $cond = "";
+        if($data['fileds']){
                 //print_r($data);
-                foreach ($data['fileds'] as $k => $val) {
-                    $valArr = explode('/', $val);
-                    if($valArr[0] != ''){
-                        if($valArr[1] == 'LIKE'){
-                            $cond .= "$k ".$valArr[1]." '".$valArr[0]."%' AND ";
-                        }else{
-                            $cond .= "$k ".$valArr[1]." '".$valArr[0]."' AND ";
+            $filed_count=count($data['fileds']);
+            foreach ($data['fileds'] as $k => $val) {
+                    //print_r(count($data['fileds']));
+                $valArr = explode('/', $val);
+                if($valArr[0] != ''){
+                    if($valArr[1] == 'LIKE'){
+                        if($filed_count!=1 ){
+                            $cond .= "$k ".$valArr[1]." '".$valArr[0]."%' || ";
                         }
-                        
+                        else{
+                            $cond .= "$k ".$valArr[1]." '".$valArr[0]."%'  ";
+                        }
+
+                    }else{
+                        $cond .= "$k ".$valArr[1]." '".$valArr[0]."' ";
                     }
+
                 }
+                $filed_count--;
+            }
                 //$cond .= " 1=1";
 
                 //echo $cond;exit;
                 //$query = "SELECT * FROM jm_user_tab INNER JOIN jm_userprofile_tab ON jm_userprofile_tab.jm_user_id=jm_user_tab.jm_user_id INNER JOIN jm_userskills_tab ON jm_userskills_tab.jm_user_id=jm_user_tab.jm_user_id WHERE $cond ORDER BY jm_user_tab.jm_username ASC";
-               $query = "SELECT * FROM jm_post_job WHERE $cond";
-                echo $query;die();
+            if($cond!= ''){
+             $query = "SELECT * FROM jm_post_job WHERE $cond";
+         }else{
+             $query = "SELECT * FROM jm_post_job";
+
+         }
+                //echo $query;die();
             //exit;
-                $q=$this->db->query($query);  
+         $q=$this->db->query($query);  
                 // $this->db->order_by('jm_project_id', 'DESC');
                 // $q = $this->db->get($data['table']['table']);
-            }else{
-                $err='N/A';
-                return $err;
-            }
-        }
+     }else{
+        $err='N/A';
+        return $err;
+    }
+}
 
         //echo $this->db->last_query();
         //print_r($q->num_rows());exit;
-        
-        if($q->num_rows() <=0)
-        {   
-            $err='N/A';
-            return $err;
-        }   
-        else{
-            return $q->result_array();
-        }   
-    }
+
+if($q->num_rows() <=0)
+{   
+    $err='N/A';
+    return $err;
+}   
+else{
+    return $q->result_array();
+}   
+}
     // ---------------------------------------------------------
     //-------------------------------------end------------------------------------------//
 }

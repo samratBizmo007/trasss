@@ -2,19 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-/*
-|--------------------------------------------------------------------------
-|	PAyUMoney Integration Config
-|--------------------------------------------------------------------------
-|
-*/
-//PayUMoney Configurations
-define('MERCHANT_KEY', 'rjQUPktU');
-define('SALT', 'e5iIg1jwi8');
-define('PAYU_BASE_URL', 'https://test.payu.in');    //Testing url
-//define('PAYU_BASE_URL', 'https://secure.payu.in');  //actual URL
-define('SUCCESS_URL', 'http://localhost/jobmandi/profile/membership_control');  //have complete url
-define('FAIL_URL', 'http://localhost/jobmandi/profile/membership_control');    //add complete url 
+
 define('THEME_COLOR', '1fbea9');
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +17,6 @@ define('USER_KEY', '|kuwaitJobmandi');
 | Table field types
 |--------------------------------------------------------------------------
 |
-| Table field types
 |
 */
 // constants for db field types! for some application logic it is important
@@ -41,6 +28,19 @@ define('TFIELD_STR', -4);
 define('TFIELD_FLOAT', -5);
 define('TFIELD_DEFAULT', TFIELD_STR);
 
+/*
+|--------------------------------------------------------------------------
+| Table names
+|--------------------------------------------------------------------------
+|
+| Names of all tables used. Use these constants instead of
+| using the table names explicitely in your code.
+| NOTE: all tables have to contain at least the fields defined below.
+|
+*/
+define('TABLE_USERS', 'jm_user_tab');
+define('TABLE_PM', 'privmsgs');
+define('TABLE_PMTO', 'privmsgs_to');
 
 /*
 |--------------------------------------------------------------------------
@@ -70,7 +70,28 @@ define('TF_ADD_ADDRESS2', 'address_address2');
 define('TF_ADTO_ID', 'adto_id');
 define('TF_ADTO_USERID', 'adto_user');
 define('TF_ADTO_ADDRESSID', 'adto_address');
-
+// Private messaging table fields
+define('TF_PM_ID', 'privmsg_id');
+define('TF_PM_AUTHOR', 'privmsg_author');
+define('TF_PM_DATE', 'privmsg_date');
+define('TF_PM_SUBJECT', 'privmsg_subject');
+define('TF_PM_BODY', 'privmsg_body');
+define('TF_PM_NOTIFY', 'privmsg_notify');
+define('TF_PM_DELETED', 'privmsg_deleted');
+define('TF_PM_DDATE', 'privmsg_ddate');
+define('PM_RECIPIENTS', 'recipients'); // NOT AN ACTUAL DB FIELD, but used for controller & view
+// Private messaging link table fields
+define('TF_PMTO_ID', 'pmto_id');
+define('TF_PMTO_MESSAGE', 'pmto_message');
+define('TF_PMTO_RECIPIENT', 'pmto_recipient');
+define('TF_PMTO_READ', 'pmto_read');
+define('TF_PMTO_RDATE', 'pmto_rdate');
+define('TF_PMTO_DELETED', 'pmto_deleted');
+define('TF_PMTO_DDATE', 'pmto_ddate');
+define('TF_PMTO_ALLOWNOTIFY', 'pmto_allownotify');
+// User table fields
+define('TF_USER_ID', 'jm_user_id');
+define('TF_USER_NAME', 'jm_username');
 
 /*
 |--------------------------------------------------------------------------

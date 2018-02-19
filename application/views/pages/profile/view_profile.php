@@ -82,6 +82,7 @@ switch ($selected_profile_type) {
 </script> -->
 </head>
 <body class="w3-wide">
+
   <?php 
   $user_feedbackCount=0;
   if($all_userFeedback['status']==200){
@@ -89,9 +90,10 @@ switch ($selected_profile_type) {
   }
   ?>
   <?php
+  //print_r($all_userFeedback);
   if($all_userDetails['status']==200){
     foreach ($all_userDetails['status_message'] as $details) {
-
+       // print_r($details);
       ?>
       <div class="w3-row w3-padding" id="mainDiv">
         <div class="col-lg-2"></div>
@@ -120,6 +122,7 @@ switch ($selected_profile_type) {
             $profile_completed='';
             $email_verified='';
             $phone_verified='';
+            $mem_package='';
 
             $payment_verified_text='Not Verified';
             $profile_completed_text='Not Completed';
@@ -128,6 +131,8 @@ switch ($selected_profile_type) {
 
             if($all_userInfo['status']=='200'){
               foreach ($all_userInfo['status_message'] as $key) {
+				//print_r($key);
+                $mem_package=$key['membership_package'];
                 $user_name=$key['jm_username'];
                 $avg_rating=$key['jm_avg_rating'];
                 $membership_rating=$key['jm_membership_rating'];
@@ -152,16 +157,18 @@ switch ($selected_profile_type) {
                 }
               }
             }
-
+ 
             ?>
             <div class="w3-col l7 w3-padding">
               <?php 
-              if($details['jm_user_name']!=''){
+             
+              if($details['jm_user_name']!='')
+              {
                 ?>
                 <div class="w3-col l12"><label class="w3-xlarge"><?php echo $details['jm_user_name']; ?></label></div>
                 <?php } 
                 else{
-                  echo '<div class="w3-col l12"><label class="w3-xlarge">Enter your name</label><a href="'.base_url().'profile/edit_profile#full_name" class="btn bluish-green  w3-small fa fa-plus"> Add</a></div>';
+                  echo '<div class="w3-col l12"><label class="w3-xlarge">Enter your name</label><a href="'.base_url().'profile/edit_profile#full_name" class="btn  bluishGreen_txt w3-small fa fa-plus"> Add</a></div>';
                 }
                 ?>
 
@@ -171,7 +178,7 @@ switch ($selected_profile_type) {
                   <div class="w3-col l12"><span class="w3-large bluish-green"><?php echo $details['jm_userDesignation']; ?></span></div>
                   <?php } 
                   else{
-                    echo '<div class="w3-col l12"><span class="w3-large bluish-green">Your Designation</span><a href="'.base_url().'profile/edit_profile#designation" class="btn bluish-green w3-small fa fa-plus"> Add</a></div>';
+                    echo '<div class="w3-col l12"><span class="w3-large bluish-green">Your Designation</span><a href="'.base_url().'profile/edit_profile#designation" class="btn bluishGreen_txt w3-small fa fa-plus"> Add</a></div>';
                   }
                   ?>
                   <div class="w3-col l12 marginTop_large">
@@ -179,12 +186,12 @@ switch ($selected_profile_type) {
                       <?php 
                       if($details['jm_userCity']!=''){
                         ?>
-                        <span class="w3-small"><i class="w3-large fa fa-map-marker"></i> <?php echo $details['jm_userCity'].', '.$details['jm_userState'].', '.$details['jm_userCountry']; ?>.</span><br>
-                        <span class="w3-tiny w3-text-grey">Member since <?php echo date('M d,Y', strtotime($details['joining_date'])); ?>.</span>
+                        <span class="w3-small"><i class="w3-large fa fa-map-marker"></i> <?php echo $details['jm_userCity'].', '.$details['jm_userState'].', '.$all_userDetails['country']; ?>.</span><br>
+                        <span class="w3-tiny w3-text-grey">Member since <?php echo date('M d,Y', strtotime($key['joining_date'])); ?>.</span>
                         <?php } 
                         else{
                           echo '<span class="w3-small"><i class="w3-large fa fa-map-marker"></i> where are you from?</span><a href="'.base_url().'profile/edit_profile#location" class="btn bluish-green w3-small fa fa-plus"> Add</a><br>
-                          <span class="w3-tiny w3-text-grey">Member since '.date('M d,Y', strtotime($details['joining_date'])).'.</span>';
+                          <span class="w3-tiny w3-text-grey">Member since '.date('M d,Y', strtotime($key['joining_date'])).'.</span>';
                         }
                         ?>
                       </div>
@@ -231,8 +238,12 @@ switch ($selected_profile_type) {
                     </a>
                   </center>
                 </div>
-                <div class="w3-col l2">
-                  <a class="btn w3-right w3-text-white w3-hide"><span class="w3-small"><i class="w3-large fa fa-share-alt"></i>&nbsp;Share Profile</span></a>
+                <?php $user_id=$this->session->userdata('user_id');
+                	$profile_type=$this->session->userdata('profile_type');
+                	$var=base64_encode('jobmandi|'.$user_id.'|'.$profile_type.'|'.'share_profile');
+                //echo $user_id;?>
+                <div class="w3-col l2 <?php if($mem_package=='FREE' && $profile_type==3){ echo 'w3-hide'; } ?>">
+                  <a href="<?php echo base_url(); ?>profile/Share_profile/share_profile_data/<?php echo $var; ?>" target="_blank" class="btn w3-right w3-text-white" ><span class="w3-small"><i class="w3-large fa fa-share-alt"></i>&nbsp;Share Profile</span></a>
                 </div>
               </div>
               <div class="col-lg-2"></div>       
@@ -285,7 +296,7 @@ switch ($selected_profile_type) {
                     <p>
                       <?php 
                       if($details['jm_userDescription']=='' || $details['jm_userDescription']=='<div><br></div>'){
-                        echo 'Tell us something about yourself...<a href="'.base_url().'profile/edit_profile#user_description" class="btn bluish-green w3-small fa fa-plus"> Add</a>';
+                        echo 'Tell us something about yourself...<a href="'.base_url().'profile/edit_profile#user_description" class="btn bluishGreen w3-small fa fa-plus"> Add</a>';
                       }
                       else{
                         echo $details['jm_userDescription'];
@@ -300,12 +311,14 @@ switch ($selected_profile_type) {
                   <div class="w3-col l12">
                     <p class="w3-text-grey">
                       <?php 
-                      if($details['jm_userAspiration']!=''){
-                        echo $details['jm_userAspiration'];
+                      if($details['jm_userAspiration']=='' || $details['jm_userAspiration']=='<div><br></div>'){
+                        echo 'Explore your Aspirations...<a href="'.base_url().'profile/edit_profile#user_aspiration" class="btn bluish-green w3-small fa fa-plus"> Add</a>';
                       }
                       else{
-                        echo 'Tell Employers your Goals and Aspirations in short...<a href="'.base_url().'profile/edit_profile#user_aspiration" class="btn bluish-green w3-small fa fa-plus"> Add</a>';
+                        echo $details['jm_userAspiration'];
+                        
                       }
+                      
                       ?>
                     </p>
                     <p>
@@ -352,17 +365,18 @@ switch ($selected_profile_type) {
                         <span class="w3-text-grey w3-small"><?php echo $user_feedbackCount; ?> Feedback</span>
                       </div>          
                     </div>
-                    <div class="w3-col l6 w3-padding w3-hide">
+                    <div class="w3-col l6 w3-padding <?php if($profile_type==1 || $profile_type== 2){echo '';}else{ echo 'w3-hide';} ?>">
                       <!-- progress bar div -->
+<!--                      <?php print_r($percentage);?>-->
                       <div class="w3-col l12 w3-small  w3-padding-small">
                         <span><i class="w3-medium fa fa-check-square-o"></i>&nbsp;Jobs Completed</span> 
                         <div class="w3-col l10" style="padding-top: 7px">
                           <div class="w3-round-xlarge progress w3-border">
-                            <div class="w3-green w3-round-large progress" style="width: 0%"></div>              
+                            <div class="w3-green w3-round-large progress" style="width: <?php echo number_format($percentage['percentage'],2);?>%"></div>              
                           </div>
                         </div>           
                         <div class="w3-col l2">
-                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;0%</b></span><br>
+                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;<?php echo number_format($percentage['percentage'],2);?>%</b></span><br>
                         </div>  
                       </div>
                       <!-- progress bar ends -->
@@ -372,11 +386,11 @@ switch ($selected_profile_type) {
                         <span><i class="w3-small fa fa-dollar w3-circle"></i>&nbsp;On Budget</span> 
                         <div class="w3-col l10" style="padding-top: 7px">
                           <div class="w3-round-xlarge progress w3-border">
-                            <div class="w3-green w3-round-large progress" style="width: 0%"></div>              
+                            <div class="w3-green w3-round-large progress" style="width: <?php echo number_format($percentage['percentage_budget'],2);?>%"></div>              
                           </div>
                         </div>           
                         <div class="w3-col l2">
-                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;0%</b></span><br>
+                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;<?php echo number_format($percentage['percentage_budget'],2);?>%</b></span><br>
                         </div>  
                       </div>
                       <!-- progress bar ends -->
@@ -386,11 +400,11 @@ switch ($selected_profile_type) {
                         <span><i class="w3-small fa fa-hourglass-half"></i>&nbsp;On Time</span> 
                         <div class="w3-col l10" style="padding-top: 7px">
                           <div class="w3-round-xlarge progress w3-border">
-                            <div class="w3-green w3-round-large progress" style="width: 0%"></div>              
+                            <div class="w3-green w3-round-large progress" style="width: <?php echo number_format($percentage['percentage_time'],2);?>%"></div>              
                           </div>
                         </div>           
                         <div class="w3-col l2">
-                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;0%</b></span><br>
+                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;<?php echo number_format($percentage['percentage_time'],2);?>%</b></span><br>
                         </div>  
                       </div>
                       <!-- progress bar ends -->
@@ -409,7 +423,8 @@ switch ($selected_profile_type) {
                 <br>
                 <div class="col-lg-2"></div>
                 <div class="w3-col l8 ">
-                  <div class="w3-col l4 w3-padding ">
+                  <div class="col-lg-2 <?php if($profile_type==2 || $profile_type==4){echo '';}else{echo 'w3-hide';} ?>"></div>
+                  <div class="w3-col l4 w3-padding <?php if($profile_type==1 || $profile_type==3){echo '';}else{echo 'w3-hide';} ?>">
                     <div class="w3-col l12 w3-card-2">
                       <center>
                         <h5>My Skills</h5><!-- <?php print_r($all_userSkills);  ?> -->
@@ -427,9 +442,9 @@ switch ($selected_profile_type) {
                           }
                           else{
                             echo '<div class="skill_column mid_divProfile">';
-                            echo '<ul>';
+                            echo '<ul style="padding-left:10px;list-style-type:none">';
                             foreach($all_userSkills['status_message'] as $result) { 
-                              echo '<li>'.$result['jm_skill_name'].'</li>';
+                              echo '<li style="text-align: left"><i class="fa fa-circle"></i>'.$result['jm_skill_name'].'</li>';
                             }
                             echo '</ul>';
                             echo '</div>';
@@ -475,7 +490,7 @@ switch ($selected_profile_type) {
                                   <div class="w3-col l6 s6">
                                     <label class="w3-right"><?php echo $result['jm_passing_year']; ?></label>
                                   </div>
-                                  <div class="w3-col l12">
+                                  <div class="w3-col l12" >
                                     <span class="w3-tiny w3-text-grey"><?php echo $result['jm_university']; ?></span>
                                   </div>
                                 </div>
@@ -642,7 +657,7 @@ switch ($selected_profile_type) {
                                 </div>
                                 <div class="w3-col l7">
                                   <label class="w3-label  w3-text-black w3-margin-top w3-medium">Add Description:</label>
-                                  <div class="page-wrapper scrolly box-content" style="padding-right: 5px;max-height: 350px;overflow: scroll;">
+                                  <div class="page-wrapper scrolly box-content" style="padding-right: 5px;max-height: 350px;">
                                     <textarea id="jm_portfolio_details" class="content " name="jm_portfolio_details"  rows="7" placeholder="Describe you here..." ></textarea> 
                                     <span class="help-block"></span>
                                   </div>
@@ -683,6 +698,7 @@ switch ($selected_profile_type) {
 
               <div class="w3-col l12">
                 <?php 
+                
                 if($all_userFeedback['status']!=200){
                   echo '<center class="w3-light-grey w3-padding"><label class="w3-medium w3-text-grey">'.$all_userFeedback['status_message'].'</label></center>';
                 }                    
@@ -690,16 +706,16 @@ switch ($selected_profile_type) {
                   foreach ($all_userFeedback['status_message'] as $key) {
                     ?>
                     <div class="w3-col l6 w3-padding-small w3-margin-bottom">
-                      <div class="w3-col l12 w3-border w3-padding ">
+                      <div class="w3-col l12 w3-card-2 w3-padding ">
                         <div class="w3-col l2">
-                          <div class="w3-col l12 w3-light-grey w3-circle w3-margin-top feedback_pic bg_imageConfig" style="background-image: url('<?php echo base_url(); ?>images/default_male.png');"></div>
+                          <div class="w3-col l12 s3 w3-light-grey w3-circle w3-margin-top feedback_pic bg_imageConfig" style="background-image: url('<?php echo base_url(); ?>images/default_male.png');"></div>
                         </div>
                         <div class="w3-col l10">
                           <div class="w3-col l12 w3-padding">
                             <div class="w3-col l12" style="height: 120px;overflow: hidden">
                               <h5><?php echo $key['jm_project_title'] ?></h5>
-                              <p class="w3-small w3-text-grey" ><i class="fa fa-quote-left">
-                                &nbsp;<?php echo $key['jm_project_description'] ?>.&nbsp;<i class="fa fa-quote-right"></i></i>
+                              <p class="w3-medium w3-text-grey" ><i class="fa fa-quote-left">
+                                &nbsp;Great piece of work done by him... great time commitment.&nbsp;<i class="fa fa-quote-right"></i></i>
                               </p>
                             </div>
                             <div class="w3-col l12">

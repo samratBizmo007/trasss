@@ -373,10 +373,11 @@ error_reporting(E_ERROR | E_PARSE);
 
 				<div class ="col-md-12 w3-margin-top w3-padding" style="border:1px dashed ">
 
-					<input  type="file" id="jm_project_file" name="jm_project_file" required>
+					<input  type="file" id="jm_project_file" name="jm_project_file">
 				</div>
 
 				<div class="col-lg-12 w3-margin-top">
+				<div class="form-group">
 					<label class="project-legend">How do you want to pay?</label>
 					<span class="w3-text-red">*</span>
 
@@ -386,6 +387,7 @@ error_reporting(E_ERROR | E_PARSE);
 					<label class="container" style="padding-left:30px">Hourly project
 						<input  type="radio" id="jm_project_type" class="checkmark" value="Hourly" name="jm_project_type" required >
 					</label>
+				</div>
 				</div>
 				<div class="col-md-12">
 					<div class="form-group">
@@ -444,9 +446,9 @@ error_reporting(E_ERROR | E_PARSE);
 						</select>
 					</div>
 				</div>
-				<div class="w3-col l12 w3-margin-bottom ">	
-					<div class="">															
-						<input type="submit" name="" class="btn btn-primary btn-xlarge" value="Post My Project">
+				<div class="col-md-12 w3-margin-top w3-center w3-margin-bottom ">	
+					<div class="form-group">															
+						<input type="submit" name="" class="btn btn-primary btn-md bluishGreen_bg" value="Post My Project">
 					</div>
 				</div>
 

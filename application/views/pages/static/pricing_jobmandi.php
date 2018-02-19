@@ -71,8 +71,8 @@
     height:350px;
     border:1px solid black;
     display:inline-block;
-    display:inline;/ For IE7*/
-    zoom:1;/ For IE7*/
+    display:inline;/* For IE7*/
+    zoom:1;/* For IE7*/
     white-space:normal;
 }
 
@@ -148,7 +148,7 @@
 						<ul class="price">
 							<li class="header" style="background-color:#c7c7c7">Free</li>
 							<li class="grey"><i class="fa fa-rupee"></i> 0<span class="w3-medium">/year</span></li>
-							<li>20 Bids per month</li>
+							<li>20 Bids / month</li>
 							<li>15 Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
 							<li>Standard Bidding priority</li>		
@@ -164,7 +164,7 @@
 						<ul class="price">
 							<li class="header" style="background-color:#24b8a0;color:#ffffff ">PREMIUM </li>
 							<li class="grey"><i class="fa fa-rupee"></i> 1200<span class="w3-medium">/year</span></li>
-							<li><b>50 Bids per month</b></li>
+							<li><b>50 Bids / month</b></li>
 							<li>Unlimited Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
                             <li><b>Premium Bidding priority</b></li>		
@@ -185,7 +185,7 @@
 						<ul class="price">
 							<li class="header" style="background-color:#c7c7c7">Free</li>
 							<li class="grey"><i class="fa fa-rupee"></i> 0<span class="w3-medium">/month</span></li>
-							<li>20 Bids per month</li>
+							<li>20 Bids / month</li>
 							<li>15 Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
 							<li>Standard Bidding priority</li>		
@@ -202,7 +202,7 @@
 						<ul class="price">
 							<li class="header" style="background-color:#24b8a0">PREMIUM</li>
 							<li class="grey"><i class="fa fa-rupee"></i> 300<span class="w3-medium">/month</span></li>
-                            <li><b>50 Bids per month</b></li>
+                            <li><b>50 Bids / month</b></li>
 							<li>Unlimited Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
                             <li><b>Premium Bidding priority</b></li>		
@@ -358,9 +358,9 @@
 		<div class="col-lg-2"></div>
 		<h4 class='w3-center''>JobSeeker's Membership Plan</h4>
 <!-- 
-		<div class="w3-co l8 w3-hide-small w3-hide-medium"> -->
+		<div class="w3-co l8  w3-hide-medium"> -->
 
-			<div class=" w3-hide-small w3-hide-medium w3-col l12 w3-center w3-margin-top w3-margin-bottom">
+			<div class="  w3-col l12 w3-center w3-margin-top w3-margin-bottom">
 				<div class="btn-group btn-toggle  w3-margin-bottom">
    			 <button class="btn btn-lg btn-default" onclick="switchbutton();">Monthly</button>
     		 <button class="btn btn-lg btn-primary w3-text-white bluishGreen_bg" onclick="switchbutton();">Yearly</button>
@@ -376,7 +376,7 @@
 						<ul class="price">
 							<li class="header" style="background-color:#c7c7c7">Free</li>
 							<li class="grey"><i class="fa fa-rupee"></i> 0<span class="w3-medium">/year</span></li>
-							<li>3 job views per month</li>
+							<li>3 job Applications / month</li>
 							<li>15 Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
 							<li>Standard Job priority</li>		
@@ -391,7 +391,7 @@
 						<ul class="price">
 							<li class="header" style="background-color:#24b8a0;color:#ffffff ">PREMIUM </li>
 							<li class="grey"><i class="fa fa-rupee"></i> 1200<span class="w3-medium">/year</span></li>
-							<li><b>Unlimited jobs per month</b></li>
+							<li><b>Unlimited job Applications / month</b></li>
 							<li>Unlimited Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
                             <li><b>Premium Job priority</b></li>		
@@ -469,7 +469,7 @@
 						<ul class="price">
 							<li class="header" style="background-color:#c7c7c7">Free</li>
 							<li class="grey"><i class="fa fa-rupee"></i> 0<span class="w3-medium">/month</span></li>
-							<li>3 job views per month</li>
+							<li>3 job Applications / month</li>
 							<li>15 Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
 							<li>Standard Job priority</li>		
@@ -485,7 +485,7 @@
 						<ul class="price">
 							<li class="header" style="background-color:#24b8a0">PREMIUM</li>
 							<li class="grey"><i class="fa fa-rupee"></i> 300<span class="w3-medium">/month</span></li>
-                            <li><b>Unlimited jobs per month</b></li>
+                            <li><b>Unlimited job Applications / month</b></li>
 							<li>Unlimited Project Bookmarks</li>
 							<li>Custom Cover Photo</li>
                             <li><b>Premium Job priority</b></li>		
@@ -569,96 +569,100 @@
 
 <!------------JobSeeker's membership plan div End------------------------------>
 <!-- =================================================MOBILE VERSION CODE FOR THE JobSeeker's PLANS=================================-->
-	<div class="span11 w3-hide-large scroll_mob" style="overflow: auto;">
-		<div class="row-fluid">
-			<div class="horizontal">
-				<div class="col-lg-1"></div>
-				<div class="w3-col l8">
-					<div class="w3-col l12 w3-center w3-margin-top w3-margin-bottom">
-						<button id="button" class="w3-button " onclick="switchbutton();">Monthly/yearly</button> 
-					</div>
-					<div class="w3-col l12" id="show" style="display: none;">
-						<div class="col-lg-3"></div>
-						<div class="col-lg-3 ">
-							<div class="w3-center col-md-6">
-								<ul class="price">
-									<li class="header" style="background-color:#C7C7C7">Free</li>
-									<li class="grey"><i class="fa fa-rupee"></i> 0<span class="w3-medium">/year</span></li>
-									<li>3 job views per month</li>
-									<li>15 Project Bookmarks</li>
-									<li>Custom Cover Photo</li>
-									<li>Standard Job priority</li>		
-		                            <li>No View Count Rollover</li>		
-		                            <li>No Share Profile</li>
+<!--	<div class="span11 w3-hide-large scroll_mob" style="overflow: auto;">-->
+<!--		<div class="row-fluid">-->
+<!--			<div class="horizontal">-->
+<!--				<div class="col-lg-1"></div>-->
+<!--				<div class="w3-col l8 w3-center">-->
+<!--				<div class="btn-group btn-toggle  w3-margin-bottom">-->
+<!--   			 		<button class="btn btn-lg btn-default" onclick="switchDiv();">Monthly</button>-->
+<!--    				<button class="btn btn-lg btn-primary w3-text-white bluishGreen_bg" onclick="switchDiv();">Yearly</button>-->
+<!--  				</div>-->
+<!--					<div class="w3-col l12 w3-center w3-margin-top w3-margin-bottom">-->
+<!--						<button id="button" class="w3-button " onclick="switchbutton();">Monthly/yearly</button> -->
+<!--					</div>-->
+<!--					<div class="w3-col l12" id="show_s" style="display: none;">-->
+<!--						<div class="col-lg-3"></div>-->
+<!--						<div class="col-lg-3 ">-->
+<!--							<div class="w3-center col-md-6">-->
+<!--								<ul class="price">-->
+<!--									<li class="header" style="background-color:#C7C7C7">Free</li>-->
+<!--									<li class="grey"><i class="fa fa-rupee"></i> 0<span class="w3-medium">/year</span></li>-->
+<!--									<li>3 job views per month</li>-->
+<!--									<li>15 Project Bookmarks</li>-->
+<!--									<li>Custom Cover Photo</li>-->
+<!--									<li>Standard Job priority</li>		-->
+<!--		                            <li>No View Count Rollover</li>		-->
+<!--		                            <li>No Share Profile</li>-->
+<!---->
+<!--								</ul>-->
+<!--								<a href="#" class="btn w3-margin-top w3-margin-bottom w3-button  w3-center" style="background-color:#a5a5a5;color:#eaeaea">Subscribe</a>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--						<div class="col-lg-3 " >-->
+<!--							<div class="w3-center col-md-6">-->
+<!--								<ul class="price">-->
+<!--									<li class="header" style="background-color:#24b8a0;color:#ffffff ">PREMIUM</li>-->
+<!--									<li class="grey"><i class="fa fa-rupee"></i> 300<span class="w3-medium">/month</span></li>-->
+<!--                                    <li><b>Unlimited jobs per month</b></li>-->
+<!--									<li>Unlimited Project Bookmarks</li>-->
+<!--									<li>Custom Cover Photo</li>-->
+<!--		                            <li><b>Premium Job priority</b></li>		-->
+<!--		                            <li><b>Unlimited Jobs Rollover</b></li>		-->
+<!--		                            <li><b>Share Profile</b></li>-->
+<!---->
+<!--								</ul>-->
+<!--								<a href="#" class="btn w3-button w3-margin-bottom w3-margin-top w3-center" style="background-color:#24b8a0; color:#ffffff" >Subscribe</a>-->
+<!--							</div>-->
+<!---->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="w3-col l12" id="hide_s">-->
+<!--						<div class="col-lg-2"></div>-->
+<!--						<div class="col-lg-4 ">-->
+<!--							<div class="w3-center col-md-6">-->
+<!--								<ul class="price">-->
+<!--									<li class="header" style="background-color:#C7C7C7">Free</li>-->
+<!--									<li class="grey"><i class="fa fa-rupee"></i> 0<span class="w3-medium">/year</span></li>-->
+<!--                                    <li>3 job views per month</li>-->
+<!--							        <li>15 Project Bookmarks</li>-->
+<!--							        <li>Custom Cover Photo</li>-->
+<!--							        <li>Standard Job priority</li>		-->
+<!--                                    <li>No View Count Rollover</li>		-->
+<!--                                    <li>No Share Profile</li>-->
+<!--								</ul>-->
+<!--								 <a href="#" class="btn w3-button w3-margin-bottom w3-margin-top w3-center" style="background-color:#a5a5a5;color:#eaeaea">Subscribe</a> -->
+<!--							</div>-->
+<!---->
+<!--						</div>-->
+<!--						<div class="col-lg-4 col-md-6">-->
+<!--							<div class="w3-center col-md-6  ">-->
+<!--								<ul class="price">-->
+<!--									<li class="header" style="background-color:#24b8a0;color:#ffffff ">PREMIUM</li>-->
+<!--									-->
+<!--									<li class="grey"><i class="fa fa-rupee"></i> 300<span class="w3-medium">/month</span></li>-->
+<!--                                   <li><b>Unlimited jobs per month</b></li>-->
+<!--									<li>Unlimited Project Bookmarks</li>-->
+<!--									<li>Custom Cover Photo</li>-->
+<!--		                            <li><b>Premium Job priority</b></li>		-->
+<!--		                            <li><b>Unlimited Jobs Rollover</b></li>		-->
+<!--		                            <li><b>Share Profile</b></li>-->
+<!--								</ul>-->
+<!--								 <a href="#" class="btn w3-button w3-margin-bottom w3-margin-top w3-center" style="background-color:#24b8a0; color:#ffffff">Subscribe</a> -->
+<!--							</div>-->
+<!---->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="col-lg-3"></div>-->
 
-								</ul>
-								<a href="#" class="btn w3-margin-top w3-margin-bottom w3-button  w3-center" style="background-color:#a5a5a5;color:#eaeaea">Subscribe</a>
-							</div>
-						</div>
-						<div class="col-lg-3 " >
-							<div class="w3-center col-md-6">
-								<ul class="price">
-									<li class="header" style="background-color:#24b8a0;color:#ffffff ">PREMIUM</li>
-									<li class="grey"><i class="fa fa-rupee"></i> 300<span class="w3-medium">/month</span></li>
-                                    <li><b>Unlimited jobs per month</b></li>
-									<li>Unlimited Project Bookmarks</li>
-									<li>Custom Cover Photo</li>
-		                            <li><b>Premium Job priority</b></li>		
-		                            <li><b>Unlimited Jobs Rollover</b></li>		
-		                            <li><b>Share Profile</b></li>
-
-								</ul>
-								<a href="#" class="btn w3-button w3-margin-bottom w3-margin-top w3-center" style="background-color:#24b8a0; color:#ffffff" >Subscribe</a>
-							</div>
-
-						</div>
-					</div>
-					<div class="w3-col l12" id="hide">
-						<div class="col-lg-2"></div>
-						<div class="col-lg-4 ">
-							<div class="w3-center col-md-6">
-								<ul class="price">
-									<li class="header" style="background-color:#C7C7C7">Free</li>
-									<li class="grey"><i class="fa fa-rupee"></i> 0<span class="w3-medium">/year</span></li>
-                                    <li>3 job views per month</li>
-							        <li>15 Project Bookmarks</li>
-							        <li>Custom Cover Photo</li>
-							        <li>Standard Job priority</li>		
-                                    <li>No View Count Rollover</li>		
-                                    <li>No Share Profile</li>
-								</ul>
-								<!-- <a href="#" class="btn w3-button w3-margin-bottom w3-margin-top w3-center" style="background-color:#a5a5a5;color:#eaeaea">Subscribe</a> -->
-							</div>
-
-						</div>
-						<div class="col-lg-4 col-md-6">
-							<div class="w3-center col-md-6  ">
-								<ul class="price">
-									<li class="header" style="background-color:#24b8a0;color:#ffffff ">PREMIUM</li>
-									
-									<li class="grey"><i class="fa fa-rupee"></i> 300<span class="w3-medium">/month</span></li>
-                                   <li><b>Unlimited jobs per month</b></li>
-									<li>Unlimited Project Bookmarks</li>
-									<li>Custom Cover Photo</li>
-		                            <li><b>Premium Job priority</b></li>		
-		                            <li><b>Unlimited Jobs Rollover</b></li>		
-		                            <li><b>Share Profile</b></li>
-								</ul>
-								<!-- <a href="#" class="btn w3-button w3-margin-bottom w3-margin-top w3-center" style="background-color:#24b8a0; color:#ffffff">Subscribe</a> -->
-							</div>
-
-						</div>
-					</div>
-					<div class="col-lg-3"></div>
 
 
 
-
-				</div>
-				<div class="col-lg-2"></div>
-			</div>
-		</div>
-	</div>
+<!--				</div>-->
+<!--				<div class="col-lg-2"></div>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
 <!-- ===========================================End MOBILE VERSION CODE FOR THE JobSeeker's PLANS==============================-->
 <script type="text/javascript">
 // $(document).ready(function() {
@@ -723,5 +727,33 @@ function switchVisible() {
 });
  }
 </script>
+<script>
+	
+ function switchDiv() {
+ 	$('.btn-toggle').click(function() {
+    $(this).find('.btn').toggleClass('active');  
+    
+    if ($(this).find('.btn-primary').size()>0) {
+    	$(this).find('.btn').toggleClass('btn-primary');
+    
+	if (document.getElementById('hide_s')) {
+
+		if (document.getElementById('hide_s').style.display == 'none')
+		{
+			document.getElementById('hide_s').style.display = 'block';
+			document.getElementById('show_s').style.display = 'none';
+		}
+		else {
+			document.getElementById('hide_s').style.display = 'none';
+			document.getElementById('show_s').style.display = 'block';
+		}
+	}
+}
+ $(this).find('.btn').toggleClass('btn-default');
+       
+});
+ }
+</script>
+
 </body>	
 </html>

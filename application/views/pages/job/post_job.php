@@ -25,14 +25,14 @@
     <!---<script src="bootstrap/dist/js/bootstrap.min.js"></script>-->
     <script type="text/javascript" src="<?php echo base_url(); ?>css/alert/jquery-confirm.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>dist/editor.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>css/js/country2.js"></script>
+<!--    <script type="text/javascript" src="<?php echo base_url(); ?>css/js/country2.js"></script>-->
 
 
-    <script>
-        $(document).ready(function () {
-            print_country("job_country");
-        });
-    </script>
+<!--    <script>-->
+<!--        $(document).ready(function () {-->
+<!--            print_country("job_country");-->
+<!--        });-->
+<!--    </script>-->
     <style>
     .scrolly::-webkit-scrollbar
     {
@@ -131,7 +131,7 @@
                                     <div class="form-group">
                                         <select name="login_profile_type" id="login_profile_type" tabindex="1" class="form-control">
                                             <option class="w3-red" selected <?php if($this->uri->segment(2)=='') echo 'selected'; ?> value="0">Select profile type</option>
-                                            <option value="3" selected>Job Seeker</option>
+                                            <option value="4" selected>Job Employer</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -316,18 +316,19 @@
     |                                                                                                        |  
 -->
 <div class="container w3-margin-bottom w3-padding-bottom" id="postJobDiv">
-    <h2 class="w3-padding-left w3-margin-left">Post Job</h2>
-    <hr>
+	<label><h2 class="bluishGreen_txt w3-margin-left w3-padding-left"><b>Post Job</b></h2></label>
+    
+    
 
-    <div class="w3-col l12 w3-padding">
+    <div class="w3-col l12 ">
         <div class="col-lg-2"></div>
         <div class=" w3-col l8 bind-main">
             <!-- /////////////////-Div to bind for project Description/////////////////////-->
             <div class=" w3-margin-top" id="post_job">
                 <!--/////////////// div for project description////////////////////////////-->
                 <form id="post_jobForm" name="post_jobForm" >
-                    <div class="col-lg-12">
-                        <div class="w3-col-12">
+                    <div class="w3-col l12">
+                        <div class="w3-col l12">
                             <div class="col-lg-6">
                                 <label class="w3-small">Job Name :</label>
                                 <span class="w3-text-red">*</span>                                                                          
@@ -341,54 +342,55 @@
                         </div>
                     </div>
                     <div class="col-lg-12 ">
-                        <label class="w3-small w3-margin">Educational Qualification :</label>
-                        <div class="col-lg-12 scrolly  page-wrapper box-content" style="padding-right: 5px;max-height: 350px;overflow: scroll;">
+                        <label class="w3-small  " >Educational Qualification :</label>
+<!--                        <div class="col-lg-12 scrolly page-wrapper box-content" style="padding-right: 5px;max-height: 350px;">-->
                             <textarea id="Requirements" name="Requirements" class="content" rows="4 " cols="50" placeholder="Describe Requirements..." ></textarea> 
-                        </div>
+<!--                        </div>-->
                     </div>
 
                     <div class="col-lg-12">
-                        <label class=" w3-small w3-margin">Responsibility :</label>
-                        <div class="col-lg-12 scrolly page-wrapper box-content" style="padding-right: 5px;max-height: 350px;overflow: scroll;">
-                            <textarea id="Responsibility" name="Responsibility" class="content" rows="4 " cols="50" placeholder="Describe Responsibilities..." ></textarea> 
-                        </div>
+                        <label class=" w3-small w3-margin-top" style="margin-top:30px;">Responsibility :</label>
+<!--                        <div class="col-lg-12 scrolly page-wrapper  w3-padding box-content" style="padding-right: 5px;max-height: 350px;">-->
+                          <textarea id="Responsibility" name="Responsibility" class="content" rows="4 " cols="50" placeholder="Describe Responsibilities..." ></textarea> 
+<!--                        </div>-->
                     </div>
-                    <div class="col-lg-12">
+                    <div class="w3-col l12">
 
                         <div class="col-lg-6">
-                            <label class=" w3-small">Choose Categories :</label>
+                            <label class=" w3-small w3-margin-top">Choose Categories :</label>
                             <span class="w3-text-red">*</span>                                    
                             <select id="categories" name="categories" class="form-control" placeholder="Select Job Type..." required>
                                 <?php foreach ($all_categories['status_message'] as $row) { ?>  
-                                <option value="<?php echo stripcslashes($row['jm_category_name']); ?>"><?php echo $row['jm_category_name']; ?></option>
+                                <option value="<?php echo $row['category_id']; ?>"><?php echo $row['jm_category_name']; ?></option>
                                 <?php } ?>            
                             </select>    
                         </div>
 
                     </div>
-                    <div class="col-lg-12 w3-margin-top">
+                    <div class="w3-col l12 w3-margin-top">
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-6" id="selectDiv">
                             <label class=" w3-small">Required Skills :</label>
                             <span class="w3-text-red">*</span>                                  
-                            <select id="select-skill" name="skill[]" multiple class="demo-default" placeholder="Select a skill..." required>
-                                <option value="">Select skill</option>
-                                <?php foreach ($all_skills['status_message'] as $row) { ?>	
-                                <option value="<?php echo $row['jm_skill_id']; ?>"><?php echo $row['jm_skill_name']; ?></option>
-                                <?php } ?>
+                            <select id="select-skill" style="width: 100%; top: 36px; height: 34px; left: 0px;" name="skill[]" multiple class="selectized" placeholder="Select a skill..." required>
+                                <!--<option value="">Select skill</option>-->
+                                <?php //foreach ($all_skills['status_message'] as $row) { ?>	
+                                <!--<option value="<?php //echo $row['jm_skill_id']; ?>"><?php //echo $row['jm_skill_name']; ?></option>-->
+                                <?php //} ?>
                             </select>
-                            <script>
-                                $('#select-skill').selectize({});
-                            </script>
-                           <!--  <script >
+                            
+                           <script >
                                     // SELECT BOX DEPENDENCY CODE
                                     $(document).ready(function()
                                     {
+                                      $('#select-skill').selectize({});
                                       $("#categories").change(function()
                                       {
-                                        var jm_category_name=$(this).val();
-                                        alert(jm_category_name);
-                                        var dataString = 'jm_category_name='+ jm_category_name;
+                                       $("#selectDiv").load(location.href + " #selectDiv>*", "");  
+                                       //$("#select-skill").load(location.href + " #select-skill>*", "");  
+                                        var category_id=$(this).val();
+                                        //alert(category_id);
+                                        var dataString = 'category_id='+ category_id;
 
                                         $.ajax
                                         ({
@@ -396,16 +398,29 @@
                                           url: BASE_URL+"job/post_jobs/getSkill_byCategory",
                                           data: dataString,
                                           cache: false,
-                                          success: function(html)
+                                          //dataType: "text",
+                                          success: function(data)
                                           {
-                                            alert(html);
-                                            $("#select-skill").html(html);
-                                        } 
-                                    });
+                                            var key=JSON.parse(data);
+                                            //alert(key['status_message'][0]['jm_skill_name']);
+                                            if(key['status'] == '200'){
+                                            for(var i=0; i<(key['status_message']).length; i++){                                              
+                                            $('#select-skill').append('<option value="'+key['status_message'][i]['jm_skill_id']+'"><b>'+key['status_message'][i]['jm_skill_name']+'</b></option>');
+                                        }
+                                         $('#select-skill').selectize({});
+                                    }
+                                    }
+                                    }).done(function() {
+                                        $('#select-skill').selectize({});
+                                        });                                    
                                     });
 
                                   });
-                              </script> -->
+                                  
+                              </script>
+                              <script>
+                                //$('#select-skill').selectize({});
+                            </script>
                           </div>
                           <div class="col-lg-6">
                             <label class=" w3-small">Job Type :</label>
@@ -419,14 +434,14 @@
 
                     </div>
                     <div class="col-lg-12" >
-                        <label class="w3-small w3-margin">Date & Venue Address :</label>
-                        <div class="col-lg-12 scrolly page-wrapper box-content" style="padding-right: 5px;max-height: 350px;overflow: scroll;">
+                        <label class="w3-small">Date & Venue Address :</label>
+<!--                        <div class="col-lg-12 page-wrapper  box-content" style="padding-right: 5px;max-height: 350px;">-->
                             <textarea id="Address" name="Address" class="content" rows="4 " cols="50" placeholder="Describe Job Address And Date..." ></textarea> 
-                        </div>
+<!--                        </div>-->
                     </div>
-                    <div class="col-lg-12 w3-margin-top">
-                        <div class="col-lg-12">
-                            <div class="w3-col l6 w3-padding-right">
+                    <div class="w3-col l12 w3-margin-top">
+                        <div class="w3-col l12">
+                            <div class="col-lg-6 w3-padding-right">
                                 <label class="w3-small">Salary Range :</label>
                                 <span class="w3-text-red">*</span>
                                 <select required id="Salary_range" name="Salary_range" class="form-control" placeholder="Select a skill..." >
@@ -440,27 +455,37 @@
                                 </select>
                                 <span class="w3-tiny" style=" color: #00B59D;"><b>NOTE:</b>&nbsp;If you Dont Select Range It Default Value Is 'As Per The Company Norms.'</span>
                             </div>
-                            <div class="w3-col l6">
+                            <div class="col-lg-6 ">
                                 <label class="w3-small">Positions:</label>
                                 <span class="w3-text-red">*</span>                                        
                                 <input  type="number" name="Positions" id="Positions" min="1" class="form-control" placeholder="No Of Positions..." required>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 w3-margin-top">
+                    <div class="w3-col l12 ">
                         <div class="w3-col l12">
                             <div class="col-lg-4">
                                 <label class="w3-small">Country:</label>
                                 <span class="w3-text-red">*</span>
                                 <!--         	<span id = "countrydata" name = "countrydata" style = "color:red; display: block;">&nbsp;</span>-->
-                                <select class=" form-control"  id="job_country" name="job_country"  onchange="print_state('job_state', this.selectedIndex);" required></select>
+                                <select class=" form-control"   id="user_country" name="user_country" required>
+                                 <?php 
+          						foreach ($country['status_message'] as $key){?>
+             					<option value="<?php echo $key['id']; ?>"  <?php if($jm_userCountry == $key['id']){ echo 'selected=selected'; } ?> ><?php echo $key['name']; ?></option>
+        						 <?php }
+          						?>
+                                </select>
                             </div>
 
                             <div class="col-lg-4">
                                 <label class="w3-small">State:</label>
                                 <span class="w3-text-red">*</span>
                                 <!--         	<span id = "statedata" name = "statedata" style = "color:red; display: block;">&nbsp;</span>-->
-                                <select class="form-control" name="job_state" id="job_state" required></select>
+                                <select class="form-control" name="user_state" id="user_state" required>
+                                 <?php if($jm_userState != ''){?>
+          						 <option value="<?php echo $jm_userState ?>"><?php echo $jm_userState ?></option>
+         						 <?php } //echo $jm_userState; ?>
+                                </select>
                             </div>
 
                             <div class="col-lg-4">
@@ -471,13 +496,13 @@
                         </div>
                     </div>
                     <div class="col-lg-12 w3-margin-top">
-                        <div class="col-lg-12">                            
-                            <input type="submit" class="btn w3-text-white w3-right" value="submit" style=" background-color: #00B59D;">               										
+                        <div class="col-lg-12 w3-center">                            
+                            <input type="submit" class="btn w3-text-white w3-center" value="Post Job" style=" background-color: #00B59D;">               										
                             <span class=""></span>
                         </div>
                     </div>
                 </form>
-                <hr>
+                
             </div>
         </div>
     </div>
@@ -521,6 +546,7 @@ $(function () {
         processData: false,
             // return: false, //stop the actual form post !important!
             success: function (data){
+         		//alert(data);
                 $.alert(data);
             }
         });
@@ -531,5 +557,40 @@ $(function () {
 });
 //this fun is used to add job details ends here----------------------------------//
 </script>
+<script>   
+  $(document).ready(function () {
+  $("#user_country").change(function(){
+        var country_id = $('#user_country').val();
+        //$("#state").load(location.href + " #state>*", "");
+        //alert(country_id);
+        $('#user_state').html('');
+        $.ajax({
+        type: "POST",
+        url: BASE_URL + "job/Post_jobs/getStateby_country",
+        data: {
+           country_id: country_id 
+        },  
+        dataType: "text",
+        return: false, //stop the actual form post !important!
+        success: function (data)
+        {
+            //alert(data);
+            var obj = JSON.parse(data);
+            //alert(obj.status_message[0].name);
+            for(var i=0; i<(obj.status_message).length; i++){
+                $('#user_state').append('<option value="'+obj.status_message[i].name+'">'+obj.status_message[i].name+'</option>');
+            }
+            //$('#user_state').append('<option value=""></option>');
+//             for (var i = 0; i < (response.data).length; i++)
+//                {
+//                    $("#driverName").append("<option value='" + response.data[i].drivername + "'>" + response.data[i].drivername + "</option>");
+//
+//                }
+        }
+    });
+    return false; //stop the actual form post !important!
+  });
+  });
+  </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php 
 if(!defined('BASEPATH')) exit('No direct script access allowed');
+error_reporting(E_ERROR | E_PARSE);
 
 //Login controller
 class Login extends CI_Controller
@@ -12,6 +13,7 @@ class Login extends CI_Controller
 		$profile_type=$this->session->userdata('profile_type');
 
 		$this->load->helper('cookie');
+
 		//check session variable set or not, otherwise logout
 		if(($user_id=='') || ($profile_type=='')){
 			if((isset($_GET['payload'])) && ($_GET['payload'] !='')){
@@ -79,10 +81,13 @@ class Login extends CI_Controller
 
 		//---------------if any of the profile is not selected, then return this--------//
 		if($register_profile_type=='0'){
-			echo '<label class="w3-text-red w3-large">
+			$response=array(
+				'status' => 500,	//---------email sending failed 
+				'status_message' =>'<label class="w3-text-red w3-small">
 			<b><i class="fa fa-warning"> WARNING<br><br>Select Appropriate Profile first !!!</i> </b>
-			</label>			
-			';	
+			</label>'
+			);
+			echo json_encode($response);	
 			die();
 		}
 
@@ -112,17 +117,33 @@ class Login extends CI_Controller
 		extract($_POST);
 
 		//---------------if any of the profile is not selected, then return this--------//
-		if($forget_email==''){
-			echo '<label class="w3-text-red w3-large">
-			<b><i class="fa fa-warning"> WARNING<br><br>Invalid Email ID !!!</i> </b>
-			</label>			
-			';	
+		if($forget_profile_type=='0'){
+			$response=array(
+				'status' => 500,	//---------email sending failed 
+				'status_message' =>'<label class="w3-text-red w3-small">
+			<b><i class="fa fa-warning"> WARNING<br><br>Select Appropriate Profile first !!!</i> </b>
+			</label>'
+			);
+			echo json_encode($response);	
 			die();
+		}
+
+		//---------------if forget email is blank, then return this--------//
+		if($forget_email==''){
+			$response=array(
+				'status' => 500,	//---------email sending failed 
+				'status_message' =>'<label class="w3-text-red w3-small">
+			<b><i class="fa fa-warning"> WARNING<br><br>Invalid Email ID !!!</i> </b>
+			</label>'
+			);
+			echo json_encode($response);	
+			die();			
 		}
 
 		//Connection establishment, processing of data and response from REST API		
 		$data=array(
-			'forget_email' =>$forget_email
+			'forget_email' =>$forget_email,
+			'forget_profile_type'	=> $forget_profile_type
 		);
 
 		$path=base_url();
@@ -134,22 +155,40 @@ class Login extends CI_Controller
 		$response_json = curl_exec($ch);
 		curl_close($ch);
 		$response=json_decode($response_json, true);
+		if($response['status']==200){
+			$password=explode('|',base64_decode($response['status_message']) ) ;
+			//echo ($password[0]);die();
+			$mail_send=Login::sendPasswordEmail($forget_email,$password[0]);
+
+			if($mail_send['status']==200){
+				$response_mail=array(
+				'status' => 200,	//---------email sending succesfully 
+				'status_message' =>$mail_send['status_message']
+			);
+			}
+			else{
+				$response_mail=array(
+				'status' => 500,	//---------email sending succesfully 
+				'status_message' =>'Email Sending Failed. Check your Internet connection or check your registered Email-ID is valid or not.'
+			);
+			}
+			$response_json=json_encode($response_mail);
+		}
+		else
+		{
+			$response_mail=array(
+				'status' => 500,	//---------email sending failed 
+				'status_message' =>$response['status_message']
+			);
+			$response_json=json_encode($response_mail);
+		}
 		echo $response_json;		
 	}
 	//	------------------function ends here-----------------------------//
 
-	//----------------------email verification code----------------------------//
-	public function sendVerificatinEmail($email,$username){
-
-	// 	$config['protocol'] = 'smtp';
- //    $config['smtp_host'] = 'smtp.gmail.com'; //change this
- //    $config['smtp_port'] = '465';
- //    $config['smtp_user'] = 'mundesamrat@gmail.com'; //change this
- //    $config['smtp_pass'] = 'samrat-007'; //change this
- //    $config['charset'] = 'utf-8';
-	// $config['mailtype'] = 'html';
- //    $config['wordwrap'] = TRUE;
- //    $config['newline'] = "\r\n"; //use double quotes to comply with RFC 822 standard
+	//-------------------------------------------------------------------------//
+	//----------------------email for forget password code----------------------------//
+	public function sendPasswordEmail($email,$password){
 		$config = Array(
 			'protocol' => 'smtp',
 			'smtp_host' => 'mx1.hostinger.in',
@@ -160,30 +199,33 @@ class Login extends CI_Controller
      		'charset' => 'utf-8',
      		'wordwrap' => TRUE
      	);
-		$config['smtp_crypto'] = 'ssl';
+		$config['smtp_crypto'] = 'tls';
 		//return ($config);die();
 
 		$this->load->library('email', $config);
 		$this->email->set_newline("\r\n");
-		$this->email->from('samratbizmotech@gmail.com', "Admin Team");
+		$this->email->from('customercare@jobmandi.in', "Admin Team");
 		$this->email->to($email);  
-		$this->email->subject("Email Verification");
-		$this->email->message("Dear ".$username.",\nYour Email Address has been successfully verified and you can proceed further on jobmandi.in. Enjoy saying No to Less ;-p !!!");
-		if (!$this->email->send()) {
+		$this->email->subject("JOBMANDI-Forget Password Request");
+		$this->email->message("Dear ".$email.",<br>\nAs per your request, We are sending you the password of your registered Account.<br>Email: <b>".$email."</b><br>Password: <b>".$password."</b>.<br>Please try login by this password.<br>\n"."\n\nThanks\nAdmin Team");
+//print_r($this->email->message());die();
+		if ($this->email->send()) {
 			$response=array(
-				'status' => 0,	//---------email sending failed
-				'status_message' =>'Email Verification Failed.'
+				'status' => 200,	//---------email sending succesfully 
+				'status_message' =>'Email Sent Succesfully.'
 			);
 		} else {
+			//print_r($this->email->print_debugger());die();
 			$response=array(
-				'status' => 200,	//---------email send succesfully
-				'status_message' =>'Email Verified Succesfully.'
+				'status' => 500,	//---------email send failed
+				'status_message' =>'Email Sending Failed.'
 			);
 		}
 		return $response;
 
 	}
-	//----------------------email verification code ends------------------------//
+	//----------------------email for forget password code ends------------------------//
+	//--------------------------------------------------------------------------//
 
 	// ---------------function to logout all role------------------------//
 	public function logout(){
@@ -199,10 +241,25 @@ class Login extends CI_Controller
 		$response_json = curl_exec($ch);
 		curl_close($ch);
 		$response=json_decode($response_json, true);
-
+			
 		//if logout success then destroy session and unset session variables
 		$this->session->unset_userdata(array("user_id"=>"","user_name"=>"","profile_type"=>"","selected_profile_type"=>""));
 		$this->session->sess_destroy();
+		
+		$cookie= array( 
+						'name'   => 'cookie_uname', 
+						'value'  => '', 
+						'expire' => '0' 
+					);
+					$this->input->set_cookie($cookie);
+		
+		$password= array( 
+						'name'   => 'cookie_pass', 
+						'value'  => '', 
+						'expire' => '0' 
+					);
+					$this->input->set_cookie($password);
+					
 		redirect(base_url());
 		
 	}
@@ -221,7 +278,7 @@ class Login extends CI_Controller
 		$response_json = curl_exec($ch);
 		curl_close($ch);
 		$response=json_decode($response_json, true);
-		//echo $response_json;die();
+		//print_r( $response_json);die();
 		if ($response > 0){
 			$response=array(
 				'status' => 200,	//---------email sending failed
@@ -298,6 +355,30 @@ class Login extends CI_Controller
 			//start session of user if login success
 			$this->session->set_userdata($session_data);
 
+			
+		$remember_me='0';
+		  if(isset($login_remember)){
+		  	$cookie= array( 
+						'name'   => 'cookie_uname', 
+						'value'  => $response['user_name'], 
+						'expire' => '360000' 
+					);
+					$this->input->set_cookie($cookie);
+					
+			$password= array(
+						'name' => 'cookie_pass',
+						'value' => 'login_password',
+						'expire' => '360000'
+			
+			);
+			$this->input->set_cookie($password);
+//			$remember_me='1';
+//			$year = time() + 31536000;
+//			setcookie('remember_me', $_POST['login_username'], $year);
+		  }
+		  
+	
+			
 			// ---check payload cookie--------------//
 			$payloadCookie=$this->input->cookie('Payload',true);
 //echo $arr[1];die();
@@ -396,10 +477,7 @@ class Login extends CI_Controller
 			die();
 		}
 
-		$remember_me='0';
-		if(isset($login_remember)){
-			$remember_me='1';
-		}
+	
 		//Connection establishment, processing of data and response from REST API		
 		$data=array(
 			'login_profile_type' =>$login_profile_type,
@@ -433,6 +511,7 @@ class Login extends CI_Controller
 
 			//start session of user if login success
 			$this->session->set_userdata($session_data);
+			
 			echo ($response_json);			
 		}							
 	}		

@@ -2,12 +2,28 @@
 $class="fa-bookmark-o";
 $title="Add Bookmark";
 $user_id=$this->session->userdata('user_id');
-?>
 
-<?php foreach ($result as $key) { ?>
-      <div class="w3-col 12 w3-padding">              
+$userBookmark=array();
+     if($user_details['status']==200){
+      $userBookmark=json_decode($user_details['status_message'][0]['jm_userBookmark'],TRUE);
+    }
+    ?>
+<?php foreach ($result as $key) { 
+      $class="fa-bookmark-o";
+        $title="Add Bookmark";
+        if($userBookmark){ 
+          if(in_array($key['jm_project_id'], $userBookmark)){
+
+            $class="fa-bookmark";
+            $title="Bookmarked";
+          }
+        }         
+        ?>
+      <div class="w3-col l12 w3-padding">              
       <div class="w3-col l12 w3-border-bottom">
-      <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark(<?php echo $user_id ?>,<?php echo $key['jm_project_id'];?>" title="<?php echo $title ?>"><i id='project_'<?php echo $key['jm_project_id']; ?> class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
+      <div class="w3-right w3-margin-right w3-padding-right">
+       <a onclick="add_bookmark('<?php echo $user_id ?>','<?php echo $key['jm_project_id'];?>');" title="<?php echo $title ?>" ><i id='project_'<?php echo $key['jm_project_id']; ?> class="fa <?php echo $class; ?>" style="font-size:25px; color: black"></i></a>
+      </div>
       <div class="col-lg-8">
       <h4><?php echo $key['jm_project_title'] ?></h4>
       <div>
@@ -17,8 +33,10 @@ $user_id=$this->session->userdata('user_id');
       </div>
       </p>
       </div>
-      <div class="para_second">
-      <p>Tags & Skills: </p>
+      <div class="w3-col l12" style="overflow-wrap:break-word;">                                
+      <div class="w3-padding-bottom w3-medium w3-col l12" id="Skills_<?php echo $key['jm_project_id']; ?>">
+      <label>Skills:</label>
+      </div>
       </div>
       <div class="w3-col l8 w3-margin-bottom">
       <div class="w3-col l12">
@@ -50,5 +68,35 @@ $user_id=$this->session->userdata('user_id');
       </div>
       </div>             
       </div>
+      <script>
+       $(document).ready(function () {       
+       FetchSkills('<?php echo $key['jm_project_id']; ?>','<?php echo $key['jm_project_skill']; ?>');
+       });
+       </script>
 <?php } ?>
-          
+  <script>
+     function FetchSkills(jm_project_id,Skills){
+    		//alert(jm_project_id);
+    		//alert(Skills);  
+                    $('#Skills_'+jm_project_id).append('<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>');       
+    	            $.ajax({
+    	                type: "POST",
+    	                url: "<?php echo base_url(); ?>project/Project_listing/Get_Skills",
+    	                dataType: 'text',
+    	                data: {
+    	                	jm_project_id: jm_project_id,
+    	                    Skills: Skills
+    	                },
+    	                cache: false,
+    	                success: function(data) {
+                    $('#Skills_'+jm_project_id).html('');
+    			var key=JSON.parse(data);
+    	                //alert(key);
+    	 		for(i=0; i< key.length; i++){
+    	                    //$.alert(key[i].jm_skill_name);
+    	                    $('#Skills_'+jm_project_id).append('<span span w3-padding><span  class="w3-padding-small w3-round w3-light-grey" style="display:inline-block;margin-top:5px; margin-right: 5px; background-color:#787878;font-size:8px;">'+key[i].jm_skill_name+'</span></span>');
+    	                }
+    	            }
+    	        });
+    	}
+</script>         

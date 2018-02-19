@@ -44,8 +44,17 @@ class EmailNotification_model extends CI_Model {
                     $this->email->set_newline("\r\n");
                     $this->email->from('customercare@jobmandi.in', "Admin Team");
                     $this->email->to($email_id);
-                    $this->email->subject("JOBMANDI-Email Verification");
-                    $this->email->message("Dear " . $username . ",\nPlease click on below URL or paste into your browser to verify your Email Address");
+                    $this->email->subject("JOBMANDI-Customer Support.");
+                    $this->email->message("<html>"
+                            . "<head>"
+                            . "</head>"
+                            . "<body>"
+                            . "<p><label><b>Dear $username</label></b></p>"
+                            . "<p><label>You Have Not Been Login Since 15 days</label></p>"
+                            . "<p><label>Please Login..! Update Your Profile..!</label></p>"
+                            . "<p><label>BY - Jobmandi Customer Support.</label></p>"
+                            . "</body>"
+                            . "</html>");
 
                     $this->email->send(); //----send email function
                 }
@@ -94,9 +103,17 @@ class EmailNotification_model extends CI_Model {
                     $this->email->set_newline("\r\n");
                     $this->email->from('customercare@jobmandi.in', "Admin Team");
                     $this->email->to($email_id);
-                    $this->email->subject("JOBMANDI-Email Verification");
-                    $this->email->message("Dear " . $username . ",\nPlease click on below URL or paste into your browser to verify your Email Address");
-
+                    $this->email->subject("JOBMANDI- Customer Support.");
+                    $this->email->message("<html>"
+                            . "<head>"
+                            . "</head>"
+                            . "<body>"
+                            . "<p><label><b>Dear $username</label></b></p>"
+                            . "<p><label>You Have Not Been Login Since 15 days</label></p>"
+                            . "<p><label>Please Login..! Update Your Profile..!</label></p>"
+                            . "<p><label>BY - Jobmandi Customer Support.</label></p>"
+                            . "</body>"
+                            . "</html>");
                     $this->email->send(); //----send email function
                 }
             }
@@ -145,8 +162,17 @@ class EmailNotification_model extends CI_Model {
                     $this->email->set_newline("\r\n");
                     $this->email->from('customercare@jobmandi.in', "Admin Team");
                     $this->email->to($email_id);
-                    $this->email->subject("JOBMANDI-Email Verification");
-                    $this->email->message("Dear " . $username . ",\nPlease click on below URL or paste into your browser to verify your Email Address");
+                    $this->email->subject("JOBMANDI- Customer Support.");
+                    $this->email->message("<html>"
+                            . "<head>"
+                            . "</head>"
+                            . "<body>"
+                            . "<p><label><b>Dear $username</label></b></p>"
+                            . "<p><label>You Have Not Been Login Since 5 days</label></p>"
+                            . "<p><label>Please Login..! Update Your Profile..!</label></p>"
+                            . "<p><label>BY - Jobmandi Customer Support.</label></p>"
+                            . "</body>"
+                            . "</html>");
 
                     $this->email->send(); //----send email function
                 }

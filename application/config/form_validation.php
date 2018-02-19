@@ -1,6 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 
+
 $config['pm_form'] = array(
 	array(
 		'field' => PM_RECIPIENTS,

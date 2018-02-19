@@ -20,13 +20,45 @@ class Jobseeker_lists extends CI_Controller {
     }
 
     public function index() {
+        $this->load->model('job_model/Job_listing_model');
 
-        $data['jobs'] = Jobseeker_lists::getAllJobs();
+        //$data['jobs'] = Jobseeker_lists::getAllJobs();
+        
+        //----------pagination code starts here-------------------------------------
+        //------loading the library pagination----------------------//
+        $this->load->library('pagination');
+        //--------------creating the config array for pagination basic requirements----------------//
+        $config = [
+            'base_url' => base_url('jobseeker/Jobseeker_lists/index'),
+            'per_page' => 5,
+            'total_rows' => $this->Job_listing_model->numRows(),
+        ];
+        $config['first_tag_open'] = $config['last_tag_open']= $config['next_tag_open']= $config['prev_tag_open'] = $config['num_tag_open'] = '';
+        $config['first_tag_close'] = $config['last_tag_close']= $config['next_tag_close']= $config['prev_tag_close'] = $config['num_tag_close'] = '';
+        
+        $config['cur_tag_open'] = "";
+        $config['cur_tag_close'] = "";
+        //-----initialise pagination library with passing parameter config-----------//
+        $this->pagination->initialize($config);
+        //-----initialise pagination library with passing parameter config-----------//
+        $data["links"] = $this->pagination->create_links();
+        //$data['jobs'] = $this->Job_listing_model->getAllJobs($config['per_page'], $this->uri->segment(4));
+        $path = base_url();
+        $url = $path . 'api/JobListing_api/getAllJobs?per_page='.$config['per_page'].'&offset='.$this->uri->segment(4);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $data['jobs'] = json_decode($response_json, true);
+
         $search_cat=$this->input->get('search_param', TRUE);
         if($search_cat!=''){
             $data['jobs'] = Jobseeker_lists::getAllJob_Details_param($search_cat);
-        }    
-        //print_r($data);    
+        }
+        //return $response;
+        //print_r($data);   
+        $data['job_bookmarks'] = Jobseeker_lists::getAll_BookmarkedJobs();
         $this->load->view('includes/header.php');
         $this->load->view('pages/jobseeker/jobseeker_joblist.php', $data);
         $this->load->view('includes/footer.php');
@@ -61,9 +93,10 @@ class Jobseeker_lists extends CI_Controller {
         $response = json_decode($response_json, true);
         return $response;
     }
-    public function getAllJobs() {
+    public function getAll_BookmarkedJobs() {
+        $user_id = $this->session->userdata('user_id');
         $path = base_url();
-        $url = $path . 'api/JobListing_api/getAllJobs';
+        $url = $path . 'api/JobListing_api/getAll_BookmarkedJobs?user_id='.$user_id;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HTTPGET, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -74,9 +107,29 @@ class Jobseeker_lists extends CI_Controller {
     }
 
     public function getAllJob_Details_param($search_cat) {
+
+        //----------pagination code starts here-------------------------------------
+        //------loading the library pagination----------------------//
+        $this->load->library('pagination');
+        //--------------creating the config array for pagination basic requirements----------------//
+        $config = [
+            'base_url' => base_url('jobseeker/Jobseeker_lists/index'),
+            'per_page' => 10,
+            'total_rows' => $this->Job_listing_model->numRows(),
+        ];
+        $config['first_tag_open'] = $config['last_tag_open']= $config['next_tag_open']= $config['prev_tag_open'] = $config['num_tag_open'] = '';
+        $config['first_tag_close'] = $config['last_tag_close']= $config['next_tag_close']= $config['prev_tag_close'] = $config['num_tag_close'] = '';
         
+        $config['cur_tag_open'] = "";
+        $config['cur_tag_close'] = "";
+        //-----initialise pagination library with passing parameter config-----------//
+        $this->pagination->initialize($config);
+        //-----initialise pagination library with passing parameter config-----------//
+        $data["links"] = $this->pagination->create_links();
+        //$data['jobs'] = $this->Job_listing_model->getAllJobs($config['per_page'], $this->uri->segment(4));
+                
         $path = base_url();
-        $url = $path . 'api/JobListing_api/getAllJob_Details_param?param='.$search_cat;
+        $url = $path . 'api/JobListing_api/getAllJob_Details_param?per_page='.$config['per_page'].'&offset='.$this->uri->segment(4).'&param='.$search_cat;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HTTPGET, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -86,43 +139,64 @@ class Jobseeker_lists extends CI_Controller {
         return $response;
     }
 
-    public function getJob_Details($job_id) {
+    //-------------------add bookmark----------------------//
+public function add_bookmarkForJob(){
+  extract($_POST);
+  $path=base_url();
+  $url = $path.'api/JobListing_api/add_bookmarkForJob?user_id='.$user_id.'&job_id='.$job_id; 
+  $ch = curl_init($url);
+  curl_setopt($ch, CURLOPT_HTTPGET, true);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $response_json = curl_exec($ch);
+  curl_close($ch);
+  $response=json_decode($response_json, true);
+ // print_r($response);die();
+//  
+//  if($response['status'] == 200){
+//            echo '<div class="alert alert-success" style="margin-bottom:5px">
+//		  <strong>'.$response['status_message'].'</strong> 
+//		  </div>
+//		  <script>
+//		window.setTimeout(function() {
+//		$(".alert").fadeTo(500, 0).slideUp(500, function(){
+//		$(this).remove(); 
+//		});
+//		}, 100);
+//		</script>';
+//        }
+//  
+}
+//-------------------function ends----------------------//
+
+    public function del_bookmarkForJob(){
+        extract($_POST);
         $path = base_url();
-        $url = $path . 'api/JobApplications_api/getJob_Details?job_id='.$job_id;
+        $url = $path.'api/JobListing_api/del_bookmarkForJob?user_id='.$user_id.'&job_id='.$job_id;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HTTPGET, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response_json = curl_exec($ch);
         curl_close($ch);
         $response = json_decode($response_json, true);
+    }
+
+
+    public function getJob_Details($job_id) {
+        $user_id = $this->session->userdata('user_id'); 
+        $profile_type = $this->session->userdata('profile_type');
+        $path = base_url();
+        $url = $path . 'api/JobApplications_api/getJob_Details?job_id='.$job_id.'&user_id='.$user_id.'&profile_type='.$profile_type;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+        //print_r($response_json);die();
         return $response;
     }
 
    
 
-     // ---------------explore job seeker filter--------------//
-    public function filterJobs(){ 
-    $this->load->model('jobseeker_model/Jobseeker_list_model','jobs');
-    $data = $this->input->post();
-    $result['result'] = $this->jobs->filterJob($data);
-    echo '<pre>';print_r($result);exit;
-    if($result['result'] == 'N/A'){
-      echo '
-      <div class="w3-col 12 w3-padding w3-margin">              
-      <div class="w3-col l12">
-      <div class="w3-center">
-      <img src="'.base_url().'css/logos/no_data.png" width="auto" class="img"/>
-      </div>
-      </div>             
-      </div>';
-    }else{
-      
-      if($data['mode']['mode'] == 'jobseeker_list'){
-        $this->load->view('pages/jobseeker/_jobseeker.php',$result);
-      }
-    }
-
-  }
-  //---------------------fucntion ends--------------------//
 
 }

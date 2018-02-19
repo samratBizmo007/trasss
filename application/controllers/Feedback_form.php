@@ -22,7 +22,7 @@ class Feedback_form extends CI_Controller
  	public function submit_feedback_freelanceremployer()
  	{
  		extract($_POST);
- 		
+ 		//print_r($_POST);die();
  		$user_id=$this->session->userdata('user_id');
  		$data=array(
  			'jm_project_id' =>$project_id,
@@ -74,7 +74,7 @@ class Feedback_form extends CI_Controller
  	}
 //-------------------------end function----------------------------------//
 
- 	//-------------function to submit project feedback for freelancer-------------------//
+ 	//-------------function to submit project feedback for freelancer employer-------------------//
  	public function submit_feedbackEmployer()
  	{
  		extract($_POST);

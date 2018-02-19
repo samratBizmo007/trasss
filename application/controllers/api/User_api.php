@@ -60,13 +60,14 @@ class User_api extends REST_Controller
 	 public function SavePayment_post() {
         $data = $_POST;
        // print_r($data);die();
-        $result = $this->membership_model->save_paymentdetails($data,$user_id);
+        $result = $this->membership_model->save_paymentdetails($data);
        return $this->response($result);
     }
 	//--------------------end function-----------------------------------------//
 
 	public function cron_job_membership_get()
 	{
+		//extract($_GET);
 		$result = $this->membership_model->cron_job_membership();
 		return $this->response($result);
 	}

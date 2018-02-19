@@ -9,6 +9,8 @@ class Explore_jobseeker extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        
+        $this->load->model('Jobseeker_model/Jobseeker_list_model');
         // //start session		
         // $user_id = $this->session->userdata('user_id');
         // $user_name = $this->session->userdata('user_name');
@@ -21,11 +23,15 @@ class Explore_jobseeker extends CI_Controller {
 
     public function index() {
         $data['job_seeker'] = Explore_jobseeker::all_jobSeeker();
-//        $search_cat=$this->input->get('search_param', TRUE);
-//        if($search_cat!=''){
-//            $data['jobs'] = Explore_jobseeker::getAllJob_Details_param($search_cat);
-//        }    
-        //print_r($data);    
+			//print_r($data);die();
+        $path=base_url();
+        $url = $path.'api/Dashboard_api/get_allSkills';   
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $data['all_skills'] = json_decode($response_json, true);
         $this->load->view('includes/header.php');
         $this->load->view('pages/jobseeker/explore_jobseeker.php', $data);
         $this->load->view('includes/footer.php');
@@ -45,6 +51,20 @@ class Explore_jobseeker extends CI_Controller {
         return $response;
     }
     public function all_jobSeeker() {
+    	
+    
+//    	$this->load->library('pagination');
+//        $config['base_url'] = base_url().'jobseeker/explore_jobseeker';
+//		$config['uri_segment'] = 3;
+//        $config['per_page'] = 1;
+//        $config['total_rows'] = 1;
+//        
+//        $this->pagination->initialize($config);
+//       // $page->$this->uri->segment(3,0);
+//         $this->pagination->create_links();
+//       // print_r($data['pagination']);die();
+//        $data['table'] = $this->Jobseeker_list_model->all_jobSeeker($config['per_page'],$this->uri->segment(3));
+    	
         $path = base_url();
         $url = $path . 'api/Jobseeker_list_api/all_jobSeeker';
         $ch = curl_init($url);

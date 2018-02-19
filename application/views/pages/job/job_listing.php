@@ -190,6 +190,8 @@ error_reporting(E_ERROR | E_PARSE);
 </html>
 <script>
 function FetchSkills(job_id,Skills){
+	//alert(Skills);
+	
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>job/Job_listings/FetchSkills",
