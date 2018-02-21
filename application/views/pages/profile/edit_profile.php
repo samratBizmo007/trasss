@@ -152,6 +152,7 @@ switch ($selected_profile_type) {
       <div class="w3-col l12">
         <div class="w3-col l8 ">
          <h2 class="bluishGreen_txt"><b>Edit Profile</b></h2>
+         <a class=" btn badge" href="<?php echo base_url(); ?>profile/view_profile"><i class="fa fa-chevron-left w3-tiny"></i> View Profile</a>
          
        </div>
        <div class="w3-col l4 w3-padding">
@@ -194,14 +195,14 @@ switch ($selected_profile_type) {
       </div>
     </div>
 
-    <div class="w3-col l12  w3-padding" id="user_description" style="padding-right: 5px;max-height: 350px;">
+    <div class="w3-col l12  w3-padding" id="user_description" style="padding-right: 5px;">
      <label class="control-label">Description:</label>
      <textarea class="" id="txtEditor-new" name="jm_userDescription" class="content" rows="7" placeholder="Describe you here..."><?php echo $jm_userDescription; ?></textarea> 
      <span class="help-block"></span>
    </div>
          <!--added country by country table-->
 <?php// print_r($country);?>
-   <div class="w3-col l12  w3-margin-top" id="location">
+   <div class="w3-col l12 " id="location">
     <div class="col-lg-4 w3-margin-top">
       <label class="control-label">Country:</label>
       <span class="w3-text-red">*</span>
@@ -243,11 +244,10 @@ switch ($selected_profile_type) {
  <div class="w3-col l12 w3-margin-top">
    <h5 class="w3-col l12 w3-text-black w3-round w3-padding-top"><b>Job Seeker Miscellaneous Details:</b></h5>
  </div>
-
- <div class="w3-col l12 scrolly" id="user_aspiration" style="padding-right: 5px;max-height: 350px;overflow: scroll;">
+ 
+ <div class="w3-col l12 w3-padding" id="user_aspiration" style="padding-right: 5px;">
    <label class=" control-label">Job Seeker's Aspiration:</label>
-   <textarea id="jm_userAspiration" name="jm_userAspiration" class="content" rows="7" placeholder="Describe you details here..." ><?php echo $jm_userAspiration; ?></textarea>                 
-
+   <textarea id="jm_userAspiration" name="jm_userAspiration" class="content" rows="7" placeholder="Describe you details here..." ><?php echo $jm_userAspiration; ?></textarea>
    <span class="help-block"></span>
  </div>
  <div class="w3-col l12 w3-margin-top">
@@ -407,11 +407,10 @@ $count++;
 <span><a  id="add_more_experiance" class="btn add_moreMaterial w3-small bluish-green w3-right">Add more <i class="fa fa-plus"></i></a></span>
 </div>  
 
-<div class="form-group w3-margin-top w3-margin-bottom">
-  <div class="w3-col l12 w3-center">
-    <input type="submit" class="btn btn-lg w3-text-white bluishGreen_bg" value="Save Changes">
+<div class="form-group w3-margin-top w3-padding-right w3-margin-bottom">
+  <div class="w3-col l12 ">
+    <center><button type="submit" class="btn w3-center btn-lg w3-text-white bluishGreen_bg"><i class="fa fa-save"></i> Save Changes</button></center>
     <span></span>
-    <input type="reset" class="btn btn-lg" value="Reset">
   </div>
 </div>
 </form>
@@ -421,7 +420,6 @@ $count++;
     
     
     <div class="container">
-        <hr>
         <div class="w3-col l12">
             <div class="col-lg-2"></div>
             <form class="updatepassword" name="updatePassword">

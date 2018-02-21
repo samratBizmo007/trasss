@@ -147,11 +147,15 @@ error_reporting(E_ERROR | E_PARSE);
                     getShortlistedcandidates('<?php echo $job_Id; ?>');
                 });
             </script>
-            <div class="w3-col l12 w3-margin-top">
-                <label class="w3-margin-bottom" style=" padding-left: 14px;"><h5 class="" style=" color: black;">Shortlisted Candidate List</h5></label>
-              <div class="col-md-12 w3-margin-bottom" id="">
+            <div class="w3-col l12 ">
+                <label class="w3-padding-small" style=""><h5 class="" style=" color: black;">Hired Candidate List</h5>
+                 </label>
+                <div class="w3-col l12 w3-padding-small">
+                <span class="w3-tiny w3-text-red">NOTE: List of Hired Candidates.</span>
+                </div>
+              <div class="col-md-12 w3-padding-small w3-margin-bottom" id="">
                             <div class="" id="candidate_Div" name="candidate_Div" style="max-height: 600px; overflow: scroll;">
-                                <table class="table table-striped table-responsive"> 
+                                <table class="table table-striped table-responsive w3-small"> 
                                     <!-- table starts here -->
                                     <thead class="w3-text-white">
                                         <tr class="bluishGreen_bg">

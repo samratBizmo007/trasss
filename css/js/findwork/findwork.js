@@ -18,8 +18,10 @@ $(document).ready(function(){
 						$('.skill').append('<div id="'+res[i].skill_id+'" class="skill-tabs"><span><a class="btn" onclick="delSkill('+res[i].skill_id+')" style="padding:0;margin:0"><i class="fa fa-times-circle-o" style="font-size: 15px; color: black"></i></a><span style="font-size:12px; padding-left:7px; color: black;text-decoration: none;"><label class="getskill">'+res[i].jm_skill_name+'</label></span></span></div>');
 					}
 					else{
+						
 						skill = skill+'|'+res[i].skill_id;						
 						$('.skill').append('<div id="'+res[i].skill_id+'" class="skill-tabs"><span><a class="btn" onclick="delSkill('+res[i].skill_id+')" style="padding:0;margin:0"><i class="fa fa-times-circle-o" style="font-size: 15px; color: black"></i></a><span style="font-size:12px; padding-left:7px; color: black;text-decoration: none;"><label class="getskill">'+res[i].jm_skill_name+'</label></span></span></div>');
+
 					}
 
 					$('#skills_filtered').val(skill);
@@ -32,13 +34,23 @@ $(document).ready(function(){
 	$('#hit').on('click',function(event){
 		event.preventDefault();
 		var str = $('#term').val();
+
 		skill=$('#skills_filtered').val();
 		var skill_selected = $('#skill_list option[value="' + $('#term').val() + '"]').data('value');
+
 		if(str!=""){
-			if(skill=='')
+			if(skill==''){
 				skill=skill_selected;
-			else
+			}
+			else{
+				// ----------check skill already added or not
+				if(skill.includes(skill_selected))
+				{
+					return false;	
+				}
+
 				skill = skill+'|'+skill_selected;
+			}
 			$('.skill').append('<div id="'+skill_selected+'" class="skill-tabs"><span><a class="btn" onclick="delSkill('+skill_selected+')" style="padding:0;margin:0"><i class="fa fa-times-circle-o" style="font-size: 15px; color: black"></i></a><span style="font-size:12px; padding-left:7px; color: black;text-decoration: none;"><label class="getskill">'+str+'</label></span></span></div>');
 			$('#term').val('');
 			$('#skills_filtered').val(skill);
@@ -57,7 +69,7 @@ $(document).ready(function(){
 			return false;
 		}
 		var rang = $('#myRange').val();
-		var value = 10000 * (parseInt(rang)/100);
+		var value =rang;// 10000 * (parseInt(rang)/100);
 		var str = $('#strsearch').val();
 		var sortby = $('#sortby').val();
 
@@ -67,42 +79,42 @@ $(document).ready(function(){
 				var field = 'jm_project_id';
 			}
 			if(sortby == 'high'){
-				var order = 'DESC';
+				var order = 'ASC';
 				var field = 'jm_project_price';
 			}
 			if(sortby == 'low'){
-				var order = 'ASC';
+				var order = 'DESC';
 				var field = 'jm_project_price';
 			}
 		}
 		setTimeout(function(){
-		$.ajax({
-			url :BASE_URL+'project/project_listing/filterProject',
-			type : 'POST',
-			dataType : 'text',
-			data : {
-					    'fileds' : {
-					        'jm_project_title' : str+'/LIKE',
-					        'jm_project_skill' : skill+'/REGEXP',
-					        'jm_project_price' : value+'/<'
-					    },
-					    'order' : {
-					        'field' : field,
-					        'order' : order,
-					    },
-					    'table' : {
-					        'table' : 'jm_project_list',
-					    },
-					    'mode' : {
-					        'mode' : 'project_list',
-					    }
+			$.ajax({
+				url :BASE_URL+'project/project_listing/filterProject',
+				type : 'POST',
+				dataType : 'text',
+				data : {
+					'fileds' : {
+						'jm_project_title' : str+'/LIKE',
+						'jm_project_skill' : skill+'/REGEXP',
+						'jm_project_price' : value+'/<'
 					},
-		}).
-		done(function(data){
-			console.log(data);
-			$('#showResult').html(data);
+					'order' : {
+						'field' : field,
+						'order' : order,
+					},
+					'table' : {
+						'table' : 'jm_project_list',
+					},
+					'mode' : {
+						'mode' : 'project_list',
+					}
+				},
+			}).
+			done(function(data){
+				console.log(data);
+				$('#showResult').html(data);
 		});//end of ajax
-	},1000);
+		},1000);
 
 	});
 
@@ -115,7 +127,7 @@ $(document).ready(function(){
 			return false;
 		}
 		var rang = $('#myRange').val();
-		var value = 10000 * (parseInt(rang)/100);
+		var value = rang;//10000 * (parseInt(rang)/100);
 		var str = $('#strsearch').val();
 		var sortby = $('#sortby').val();
 		if(sortby){
@@ -124,42 +136,42 @@ $(document).ready(function(){
 				var field = 'jm_project_id';
 			}
 			if(sortby == 'high'){
-				var order = 'DESC';
+				var order = 'ASC';
 				var field = 'jm_project_price';
 			}
 			if(sortby == 'low'){
-				var order = 'ASC';
+				var order = 'DESC';
 				var field = 'jm_project_price';
 			}
 		}
 		setTimeout(function(){
-		$.ajax({
-			url :BASE_URL+'project/project_listing/filterProject',
-			type : 'POST',
-			dataType : 'text',
-			data : {
-					    'fileds' : {
-					        'jm_project_title' : str+'/LIKE',
-					        'jm_project_skill' : skill+'/REGEXP',
-					        'jm_project_price' : value+'/<'
-					    },
-					    'order' : {
-					        'field' : field,
-					        'order' : order,
-					    },
-					    'table' : {
-					        'table' : 'jm_project_list',
-					    },
-					    'mode' : {
-					        'mode' : 'project_list',
-					    }
+			$.ajax({
+				url :BASE_URL+'project/project_listing/filterProject',
+				type : 'POST',
+				dataType : 'text',
+				data : {
+					'fileds' : {
+						'jm_project_title' : str+'/LIKE',
+						'jm_project_skill' : skill+'/REGEXP',
+						'jm_project_price' : value+'/<'
 					},
-		}).
-		done(function(data){
-			console.log(data);
-			$('#showResult').html(data);
+					'order' : {
+						'field' : field,
+						'order' : order,
+					},
+					'table' : {
+						'table' : 'jm_project_list',
+					},
+					'mode' : {
+						'mode' : 'project_list',
+					}
+				},
+			}).
+			done(function(data){
+				console.log(data);
+				$('#showResult').html(data);
 		});//end of ajax
-	},1000);
+		},1000);
 
 	});
 
@@ -168,7 +180,7 @@ $(document).ready(function(){
 		skill = $('#skills_filtered').val();
 		//alert(skill);
 		var rang = $('#myRange').val();
-		var value = 10000 * (parseInt(rang)/100);
+		var value = rang;//10000 * (parseInt(rang)/100);
 		var str = $('#strsearch').val();
 		var sortby = $('#sortby').val();
 		if(sortby){
@@ -177,11 +189,11 @@ $(document).ready(function(){
 				var field = 'jm_project_id';
 			}
 			if(sortby == 'high'){
-				var order = 'DESC';
+				var order = 'ASC';
 				var field = 'jm_project_price';
 			}
 			if(sortby == 'low'){
-				var order = 'ASC';
+				var order = 'DESC';
 				var field = 'jm_project_price';
 			}
 		}
@@ -192,22 +204,22 @@ $(document).ready(function(){
 					type : 'POST',
 					dataType : 'text',
 					data : {
-							    'fileds' : {
-							        'jm_project_title' : str+'/LIKE',
-							        'jm_project_skill' : skill+'/REGEXP',
-							        'jm_project_price' : value+'/<'
-							    },
-							    'order' : {
-							        'field' : field,
-							        'order' : order,
-							    },
-							    'table' : {
-							        'table' : 'jm_project_list',
-							    },
-							    'mode' : {
-							        'mode' : 'project_list',
-							    }
-							},
+						'fileds' : {
+							'jm_project_title' : str+'/LIKE',
+							'jm_project_skill' : skill+'/REGEXP',
+							'jm_project_price' : value+'/<'
+						},
+						'order' : {
+							'field' : field,
+							'order' : order,
+						},
+						'table' : {
+							'table' : 'jm_project_list',
+						},
+						'mode' : {
+							'mode' : 'project_list',
+						}
+					},
 				}).
 				done(function(data){
 					//alert(data);
@@ -226,7 +238,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		skill = $('#skills_filtered').val();
 		var rang = $('#myRange').val();
-		var value = 10000 * (parseInt(rang)/100);
+		var value =rang;// 1000 * (parseInt(rang)/100);
 		var str = $('#strsearch').val();
 		var sortby = $('#sortby').val();
 		if(sortby){
@@ -235,11 +247,11 @@ $(document).ready(function(){
 				var field = 'jm_project_id';
 			}
 			if(sortby == 'high'){
-				var order = 'DESC';
+				var order = 'ASC';
 				var field = 'jm_project_price';
 			}
 			if(sortby == 'low'){
-				var order = 'ASC';
+				var order = 'DESC';
 				var field = 'jm_project_price';
 			}
 		}
@@ -250,22 +262,22 @@ $(document).ready(function(){
 					type : 'POST',
 					dataType : 'text',
 					data : {
-							    'fileds' : {
-							        'jm_project_title' : str+'/LIKE',
-							        'jm_project_skill' : skill+'/REGEXP',
-							        'jm_project_price' : value+'/<'
-							    },
-							    'order' : {
-							        'field' : field,
-							        'order' : order,
-							    },
-							    'table' : {
-							        'table' : 'jm_project_list',
-							    },
-							    'mode' : {
-							        'mode' : 'project_list',
-							    }
-							},
+						'fileds' : {
+							'jm_project_title' : str+'/LIKE',
+							'jm_project_skill' : skill+'/REGEXP',
+							'jm_project_price' : value+'/<'
+						},
+						'order' : {
+							'field' : field,
+							'order' : order,
+						},
+						'table' : {
+							'table' : 'jm_project_list',
+						},
+						'mode' : {
+							'mode' : 'project_list',
+						}
+					},
 				}).
 				done(function(data){
 					console.log(data);
@@ -283,66 +295,66 @@ $(document).ready(function(){
 		event.preventDefault();
 		skill = $('#skills_filtered').val();
 		var rang = $('#myRange').val();
-		var value = 10000 * (parseInt(rang)/100);
+		var value = rang;//10000 * (parseInt(rang)/100);
 		var str = $('#strsearch').val();
 		var sortby = $('#sortby').val();
 //alert(skill);
 
-		if(sortby){
-			if(sortby == 'lastest'){
-				var order = 'DESC';
-				var field = 'jm_project_id';
-			}
-			if(sortby == 'high'){
-				var order = 'DESC';
-				var field = 'jm_project_price';
-			}
-			if(sortby == 'low'){
-				var order = 'ASC';
-				var field = 'jm_project_price';
-			}
-		}
+if(sortby){
+	if(sortby == 'lastest'){
+		var order = 'DESC';
+		var field = 'jm_project_id';
+	}
+	if(sortby == 'high'){
+		var order = 'ASC';
+		var field = 'jm_project_price';
+	}
+	if(sortby == 'low'){
+		var order = 'DESC';
+		var field = 'jm_project_price';
+	}
+}
 
 
-		if(str.length != 1 || event.keyCode != 32){
-			setTimeout(function(){
-				$.ajax({
-					url :BASE_URL+'project/project_listing/filterProject',
-					type : 'POST',
-					dataType : 'text',
-					data : {
-							    'fileds' : {
-							        'jm_project_title' : str+'/LIKE',
-							        'jm_project_skill' : skill+'/REGEXP',
-							        'jm_project_price' : value+'/<'
-							    },
-							    'order' : {
-							        'field' : field,
-							        'order' : order,
-							    },
-							    'table' : {
-							        'table' : 'jm_project_list',
-							    },
-							    'mode' : {
-							        'mode' : 'project_list',
-							    }
-							},
-				}).
-				done(function(data){
+if(str.length != 1 || event.keyCode != 32){
+	setTimeout(function(){
+		$.ajax({
+			url :BASE_URL+'project/project_listing/filterProject',
+			type : 'POST',
+			dataType : 'text',
+			data : {
+				'fileds' : {
+					'jm_project_title' : str+'/LIKE',
+					'jm_project_skill' : skill+'/REGEXP',
+					'jm_project_price' : value+'/<'
+				},
+				'order' : {
+					'field' : field,
+					'order' : order,
+				},
+				'table' : {
+					'table' : 'jm_project_list',
+				},
+				'mode' : {
+					'mode' : 'project_list',
+				}
+			},
+		}).
+		done(function(data){
 					//alert(data);
 					console.log(data);
 					$('#showResult').html(data);
 				});//end of ajax
 			},1000);//end of timeout function
-		}else{
-			$('#err-msg').text("No content for search");
-			$('.do-err').fadeIn("slow");
-			$(".do-err").delay(1000).fadeOut();
-		}
-	});
+}else{
+	$('#err-msg').text("No content for search");
+	$('.do-err').fadeIn("slow");
+	$(".do-err").delay(1000).fadeOut();
+}
+});
 
 
-$('#view_bookmark').on('click',function(event){
+	$('#view_bookmark').on('click',function(event){
 		event.preventDefault();
 		//alert('check function');
 		//var str = $('#term').val();
@@ -353,7 +365,7 @@ $('#view_bookmark').on('click',function(event){
 
 		// }
 		var rang = $('#myRange').val();
-		var value = 10000 * (parseInt(rang)/100);
+		var value =rang;// 10000 * (parseInt(rang)/100);
 		var str = $('#strsearch').val();
 		var sortby = $('#sortby').val();
 		
@@ -363,44 +375,44 @@ $('#view_bookmark').on('click',function(event){
 				var field = 'jm_project_id';
 			}
 			if(sortby == 'high'){
-				var order = 'DESC';
+				var order = 'ASC';
 				var field = 'jm_project_price';
 			}
 			if(sortby == 'low'){
-				var order = 'ASC';
+				var order = 'DESC';
 				var field = 'jm_project_price';
 			}
 		}
 		setTimeout(function(){
 			//alert('check setTimeout');
-		$.ajax({
+			$.ajax({
 
-			url :BASE_URL+'project/project_listing/show_bookmark',
-			type : 'POST',
-			dataType : 'text',
-			data : {
-					    'fileds' : {
-					        'jm_project_title' : str+'/LIKE',
-					        'jm_project_skill' : skill+'/REGEXP',
-					        'jm_project_price' : value+'/<'
-					    },
-					    'order' : {
-					        'field' : field,
-					        'order' : order,
-					    },
-					    'table' : {
-					        'table' : 'jm_project_list',
-					    },
-					    'mode' : {
-					        'mode' : 'project_list',
-					    }
+				url :BASE_URL+'project/project_listing/show_bookmark',
+				type : 'POST',
+				dataType : 'text',
+				data : {
+					'fileds' : {
+						'jm_project_title' : str+'/LIKE',
+						'jm_project_skill' : skill+'/REGEXP',
+						'jm_project_price' : value+'/<'
 					},
-		}).
-		done(function(data){
-			console.log(data);
-			$('#showResult').html(data);
+					'order' : {
+						'field' : field,
+						'order' : order,
+					},
+					'table' : {
+						'table' : 'jm_project_list',
+					},
+					'mode' : {
+						'mode' : 'project_list',
+					}
+				},
+			}).
+			done(function(data){
+				console.log(data);
+				$('#showResult').html(data);
 		});//end of ajax
-	},1000);
+		},1000);
 
 	});
 
@@ -417,7 +429,7 @@ $('#view_bookmark').on('click',function(event){
 	// 			// $('#showResult').find('div').remove();
 	// 			console.log(data);
 	// 			$('#showResult').html(data);
-				
+
 	// 		});//end of ajax
 	// 	}//end of if
 	// });
@@ -432,7 +444,7 @@ $('#view_bookmark').on('click',function(event){
 		}
 		skill = $('#skills_filtered').val();
 		var rang = $('#myRange').val();
-		var value = 10000 * (parseInt(rang)/100);
+		var value = rang;//10000 * (parseInt(rang)/100);
 		var str = $('#strsearch').val();
 		var sortby = $('#sortby').val();
 		
@@ -442,11 +454,11 @@ $('#view_bookmark').on('click',function(event){
 				var field = 'jm_project_id';
 			}
 			if(sortby == 'high'){
-				var order = 'DESC';
+				var order = 'ASC';
 				var field = 'jm_project_price';
 			}
 			if(sortby == 'low'){
-				var order = 'ASC';
+				var order = 'DESC';
 				var field = 'jm_project_price';
 			}
 		}
@@ -459,23 +471,23 @@ $('#view_bookmark').on('click',function(event){
 					type : 'POST',
 					dataType : 'text',
 					data : {
-							    'fileds' : {
-							        'jm_project_title' : str+'/LIKE',
-							        'jm_project_skill' : skill+'/REGEXP',
-							        'jm_project_price' : value+'/<',
-							        'jm_job_type' : radioValue+'/=',
-							    },
-							    'order' : {
-							        'field' : field,
-							        'order' : order,
-							    },
-							    'table' : {
-							        'table' : 'jm_project_list',
-							    },
-							    'mode' : {
-							        'mode' : 'project_list',
-							    }
-							},
+						'fileds' : {
+							'jm_project_title' : str+'/LIKE',
+							'jm_project_skill' : skill+'/REGEXP',
+							'jm_project_price' : value+'/<',
+							'jm_job_type' : radioValue+'/=',
+						},
+						'order' : {
+							'field' : field,
+							'order' : order,
+						},
+						'table' : {
+							'table' : 'jm_project_list',
+						},
+						'mode' : {
+							'mode' : 'project_list',
+						}
+					},
 				}).
 				done(function(data){
 					console.log(data);
@@ -490,44 +502,40 @@ $('#view_bookmark').on('click',function(event){
 	});
 
 
-
-
-
-
-	$('button[name="reset"]').on('click',function(event){
-		var skill = '';
-		var rang = '';
-		var value = '';
-		var str = '';
-		setTimeout(function(){
-			$.ajax({
-				url :BASE_URL+'project/project_listing/filterProject',
-				type : 'POST',
-				dataType : 'text',
-				data : {
-						    'fileds' : {
-							        'jm_project_title' : str+'/LIKE',
-							        'jm_project_skill' : skill+'/REGEXP',
-							        'jm_project_price' : value+'/<'
-							    },
-							    'order' : {
-							        'field' : field,
-							        'order' : order,
-							    },
-							    'table' : {
-							        'table' : 'jm_project_list',
-							    },
-							    'mode' : {
-							        'mode' : 'project_list',
-							    }
-						},
-			}).
-			done(function(data){
-				console.log(data);
-				$('#showResult').html(data);
-			});//end of ajax
-		},1000);//end of timeout function
-	});//
+	// $('button[name="reset"]').on('click',function(event){
+	// 	var skill = '';
+	// 	var rang = '';
+	// 	var value = '';
+	// 	var str = '';
+	// 	setTimeout(function(){
+	// 		$.ajax({
+	// 			url :BASE_URL+'project/project_listing/filterProject',
+	// 			type : 'POST',
+	// 			dataType : 'text',
+	// 			data : {
+	// 					    'fileds' : {
+	// 						        'jm_project_title' : str+'/LIKE',
+	// 						        'jm_project_skill' : skill+'/REGEXP',
+	// 						        'jm_project_price' : value+'/<'
+	// 						    },
+	// 						    'order' : {
+	// 						        'field' : field,
+	// 						        'order' : order,
+	// 						    },
+	// 						    'table' : {
+	// 						        'table' : 'jm_project_list',
+	// 						    },
+	// 						    'mode' : {
+	// 						        'mode' : 'project_list',
+	// 						    }
+	// 					},
+	// 		}).
+	// 		done(function(data){
+	// 			console.log(data);
+	// 			$('#showResult').html(data);
+	// 		});//end of ajax
+	// 	},1000);//end of timeout function
+	// });//
 
 
 
@@ -543,7 +551,7 @@ $('#view_bookmark').on('click',function(event){
 	output.innerHTML = slider.value;
 
 	slider.oninput = function() {
-		output.innerHTML = 10000 * (parseInt(this.value)/100);
+		output.innerHTML =this.value;// 10000 * (parseInt(this.value)/100);
 	}//end of function
 
 
@@ -559,7 +567,7 @@ function add_bookmark(user_id,project_id){
 			uri=BASE_URL+"project/Project_listing/del_bookmark";
 		}		
 		dataString='user_id='+user_id+'&project_id='+project_id;
-                   $.LoadingOverlay("show");
+		$.LoadingOverlay("show");
 
 		$.ajax({
 			type: "POST",
@@ -569,9 +577,9 @@ function add_bookmark(user_id,project_id){
 
 			success: function(data)
 			{		
-                               $.LoadingOverlay("hide");
+				$.LoadingOverlay("hide");
 				$('#bookmark_msg').html(data); 
-                                location.reload(); 
+				location.reload(); 
 				//$("#showResult").load(location.href + " #showResult>*", "");        
 			}
 		});	
@@ -582,58 +590,70 @@ function add_bookmark(user_id,project_id){
 function delSkill(id){
 	$('#'+id+'').remove();
 	var strValue=$('#skills_filtered').val();
-	//alert(strValue);
-	var res = strValue.replace('|'+id, '');
-	var res = strValue.replace(id, '');
-	var res = strValue.replace('|'+id, '');
-	//alert(res);
+
+	var res; 
+	if(strValue.includes(id))
+	{
+		res= strValue.replace(id, '');
+	}
+	else{
+		res= strValue.replace('|'+id, '');
+	}
+	//var res = strValue.replace('|'+id, '');
 	$('#skills_filtered').val(res);
+	skill = $('#skills_filtered').val();
+
+	var div=$('.skill').html();
+	if(div ==''){
+		$('#skills_filtered').val('');
+		skill = '';
+	}
 	//var str = $('#term').val();
-		skill = $('#skills_filtered').val();
-		var rang = $('#myRange').val();
-		var value = 10000 * (parseInt(rang)/100);
-		var str = $('#strsearch').val();
-		var sortby = $('#sortby').val();
-		if(sortby){
-			if(sortby == 'lastest'){
-				var order = 'DESC';
-				var field = 'jm_project_id';
-			}
-			if(sortby == 'high'){
-				var order = 'DESC';
-				var field = 'jm_project_price';
-			}
-			if(sortby == 'low'){
-				var order = 'ASC';
-				var field = 'jm_project_price';
-			}
+
+	var rang = $('#myRange').val();
+	var value =rang;// 10000 * (parseInt(rang)/100);
+	var str = $('#strsearch').val();
+	var sortby = $('#sortby').val();
+	if(sortby){
+		if(sortby == 'lastest'){
+			var order = 'DESC';
+			var field = 'jm_project_id';
 		}
-		
-		$.ajax({
-			url :BASE_URL+'project/project_listing/filterProject',
-			type : 'POST',
-			dataType : 'text',
-			data : {
-			    'fileds' : {
-			        'jm_project_title' : str+'/LIKE',
-			        'jm_project_skill' : skill+'/REGEXP',
-			        'jm_project_price' : value+'/<'
-			    },
-			    'order' : {
-			        'field' : field,
-			        'order' : order,
-			    },
-			    'table' : {
-			        'table' : 'jm_project_list',
-			    },
-			    'mode' : {
-			        'mode' : 'project_list',
-			    }
+		if(sortby == 'high'){
+			var order = 'ASC';
+			var field = 'jm_project_price';
+		}
+		if(sortby == 'low'){
+			var order = 'DESC';
+			var field = 'jm_project_price';
+		}
+	}
+
+	$.ajax({
+		url :BASE_URL+'project/project_listing/filterProject',
+		type : 'POST',
+		dataType : 'text',
+		data : {
+			'fileds' : {
+				'jm_project_title' : str+'/LIKE',
+				'jm_project_skill' : skill+'/REGEXP',
+				'jm_project_price' : value+'/<'
 			},
-		}).
-		done(function(data){
-			console.log(data);
-			$('#showResult').html(data);
+			'order' : {
+				'field' : field,
+				'order' : order,
+			},
+			'table' : {
+				'table' : 'jm_project_list',
+			},
+			'mode' : {
+				'mode' : 'project_list',
+			}
+		},
+	}).
+	done(function(data){
+		console.log(data);
+		$('#showResult').html(data);
 		});//end of ajax
 	
 }

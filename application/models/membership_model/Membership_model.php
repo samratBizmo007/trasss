@@ -37,7 +37,9 @@ class Membership_model extends CI_Model
       //echo $query;die();
 
 			if($this->db->query($query)) {	
-				Membership_model::get_update_subscription($productinfo,$user_id);
+				if($status!='failure' && $status!=''){
+					Membership_model::get_update_subscription($productinfo,$user_id);
+				}
 
 				$response = array(
 					'status' => 200,

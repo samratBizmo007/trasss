@@ -46,7 +46,7 @@ public function filterSeeker($data){
                     if($valArr[0] != ''){
                         
                         if($valArr[1] != 'LIKE'){
-                            $cond .= "AND us.".$k." ".$valArr[1]." '".$valArr[0]."' ";
+                            $cond .= "AND us.".$k." ".$valArr[1]." '[".$valArr[0]."]' ";
                         }else{
                         if($count==1){
                             $cond .= "AND (ut.".$k." ".$valArr[1]." '%".$valArr[0]."%'  ";
@@ -64,7 +64,7 @@ public function filterSeeker($data){
                 //echo $cond;exit;
                 
                 $query = "SELECT * FROM jm_user_tab as u join jm_userskills_tab as us join jm_userprofile_tab as ut on(u.jm_user_id = us.jm_user_id AND ut.jm_user_id = u.jm_user_id) WHERE $cond ORDER BY u.jm_username ASC";
-                //echo $query;die();
+                echo $query;die();
             //exit;
                 $q=$this->db->query($query);  
                 // $this->db->order_by('jm_project_id', 'DESC');
@@ -106,7 +106,7 @@ public function filterJob($data){
                 if($valArr[0] != ''){
                     if($valArr[1] == 'LIKE'){
                         if($filed_count!=1 ){
-                            $cond .= "$k ".$valArr[1]." '".$valArr[0]."%' || ";
+                            $cond .= "$k ".$valArr[1]." '".$valArr[0]."%' OR ";
                         }
                         else{
                             $cond .= "$k ".$valArr[1]." '".$valArr[0]."%'  ";
@@ -124,12 +124,12 @@ public function filterJob($data){
                 //echo $cond;exit;
                 //$query = "SELECT * FROM jm_user_tab INNER JOIN jm_userprofile_tab ON jm_userprofile_tab.jm_user_id=jm_user_tab.jm_user_id INNER JOIN jm_userskills_tab ON jm_userskills_tab.jm_user_id=jm_user_tab.jm_user_id WHERE $cond ORDER BY jm_user_tab.jm_username ASC";
             if($cond!= ''){
-             $query = "SELECT * FROM jm_post_job WHERE $cond";
+             $query = "SELECT * FROM jm_post_job WHERE $cond AND is_active='1'";
          }else{
-             $query = "SELECT * FROM jm_post_job";
+             $query = "SELECT * FROM jm_post_job  WHERE is_active='1'";
 
          }
-                //echo $query;die();
+               // echo $query;die();
             //exit;
          $q=$this->db->query($query);  
                 // $this->db->order_by('jm_project_id', 'DESC');

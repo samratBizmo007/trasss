@@ -75,30 +75,39 @@ class Project_listing_model extends CI_Model
 
 	public function filterProject($data){
 
-		//echo '<pre>';print_r($data);
+		//echo '<pre>';print_r($data);die();
 		//echo 'sujeet';exit;
 		// ----------------------------project list filter---------------------------- //
 		$p_cond='';
 		if($data['mode']['mode'] == 'project_list'){
+			//echo 'sujeet';exit;
 			if($data['fileds']){
 				foreach ($data['fileds'] as $k => $val) {
 					$valArr = explode('/', $val);
 					
-					//echo "$k $valArr[1] '".$valArr[0]."'";echo '<br>';
+					//echo "$k ".$valArr[1]." '".$valArr[0]."' AND ";echo '<br>';
 					if($valArr[0] != ''){
 						if($valArr[1] == 'LIKE'){
-							$p_cond .= "$k ".$valArr[1]." '".$valArr[0]."%' OR ";
+							$p_cond .= "$k ".$valArr[1]." '".$valArr[0]."%' AND ";
 						}else{
 							if($valArr[1]=='<'){
 								if($valArr[0]=='100'){
-									$p_cond .= "$k > '".$valArr[0]."' ";
+									$p_cond .= " $k > ".$valArr[0]." ";
 								}
 								else{
-									$p_cond .= "$k ".$valArr[1]." '".$valArr[0]."' ";
+									$p_cond .= " $k ".$valArr[1]." ".$valArr[0]."";
 								}
 							}
 							else{
-								$p_cond .= "$k ".$valArr[1]." '".$valArr[0]."' AND ";
+								//$p_cond .= "$k ".$valArr[1]." '".$valArr[0]."' AND ";
+
+								if($k=='jm_job_type'){
+									//echo $valArr[0];
+									$p_cond .= " AND $k ".$valArr[1]." '".$valArr[0]."' ";
+								}
+								else{
+									$p_cond .= "$k ".$valArr[1]." '[".$valArr[0]."]' AND ";
+								}
 							}
 						}
 						
@@ -107,7 +116,7 @@ class Project_listing_model extends CI_Model
 //echo $p_cond;die();
 
 				//echo $cond;exit;
-				$query = "SELECT * FROM jm_project_list WHERE $p_cond AND is_active = '1' ORDER BY jm_project_id DESC";
+				$query = "SELECT * FROM jm_project_list WHERE ($p_cond) AND is_active = '1' ORDER BY ".$data['order']['field']." ".$data['order']['order']." ";
 				//echo $query;die();
 				$q=$this->db->query($query);  
 			}else{
@@ -133,7 +142,7 @@ class Project_listing_model extends CI_Model
 					if($valArr[0] != ''){
 						
 						if($valArr[1] != 'LIKE'){
-							$cond .= "AND us.".$k." ".$valArr[1]." '".$valArr[0]."' ";
+							$cond .= "AND us.".$k." ".$valArr[1]." '[".$valArr[0]."]' ";
 						}else{
 						if($count==1){
 							$cond .= "AND (ut.".$k." ".$valArr[1]." '%".$valArr[0]."%'  ";

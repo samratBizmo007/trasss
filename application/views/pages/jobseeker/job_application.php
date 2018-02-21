@@ -299,7 +299,7 @@
                     //alert(key);
                     for (i = 0; i < key.length; i++) {
                         //$.alert(key[i].jm_skill_name);
-                        $('#SkillId_' + job_id).append('<span w3-padding><span  class="w3-padding-small w3-margin-right w3-round-xxlarge  w3-text-white" style="display:inline-block;background-color:#787878;font-size:8px;">' + key[i].jm_skill_name + '</span></span>');
+                        $('#SkillId_' + job_id).append('<span w3-padding><span  class="w3-padding-small w3-light-grey w3-round" style="display:inline-block; margin-top:5px; margin-right: 5px; font-size:10px;">'+key[i].jm_skill_name+'</span></span>');
                     }
                 }
             });

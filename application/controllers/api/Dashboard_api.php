@@ -19,9 +19,17 @@ class Dashboard_api extends REST_Controller
 	// 	return $this->response($result);			
 	// }
 	//---------------------USER LOGIN END------------------------------//
-
-
-	// -----------------------ALL SKILLS API----------------------//
+        public function get_job_get(){
+            extract($_GET);
+            $result = $this->dashboard_model->get_job($job_id);
+	    return $this->response($result);
+        }
+        public function show_BookmarkedJobs_get(){
+            extract($_GET);
+            $result = $this->dashboard_model->show_BookmarkedJobs($user_id);
+	    return $this->response($result);
+        }
+        // -----------------------ALL SKILLS API----------------------//
 	//-------------------------------------------------------------//
 	public function get_allSkills_get(){
 		$result = $this->dashboard_model->get_allSkills();

@@ -292,7 +292,7 @@ echo $_COOKIE['remember_me']; ?>" required>
 										<input type="email" name="forget_email" id="femail" tabindex="1" class="form-control" placeholder="Enter your Email Address" value="" required>
 									</div>
 									<div class="col-sm-6 col-sm-offset-3">
-										<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary" value="Submit">
+										<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn bluishGreen_bg" value="Submit">
 									</div>
 								</form>
 								<form id="register_form" role="form" method='post' enctype='multipart/form-data' style="display: none;">
@@ -313,7 +313,7 @@ echo $_COOKIE['remember_me']; ?>" required>
 										<input type="email" name="register_email" id="register_email" tabindex="4" class="form-control" placeholder="Email address" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="register_password" id="register_password" tabindex="4" class="form-control" placeholder="Password" maxlength="8" required>
+										<input type="password" name="register_password" id="register_password" tabindex="4" class="form-control" placeholder="Password" minlength="8" required>
 									</div>
 									<div class="form-group">
 										<input type="password" name="register_confirm_password" id="register_confirm_password" tabindex="5" onkeyup="checkPassword();" class="form-control" maxlength="8" placeholder="Confirm Password" required>

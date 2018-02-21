@@ -1,6 +1,7 @@
 <?php 
 $user_id=$this->session->userdata('user_id');
 $user_name=$this->session->userdata('user_name');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -720,18 +721,22 @@ $user_name=$this->session->userdata('user_name');
                         <div class="col-lg-2 sitelink" style="padding:3px">
                           <h5>EXPLORE</h5>
                           <ul>
+                           <?php if($profile_type=='1' || $profile_type == ''){ ?>
                             <li>
                               <a style="color: #868686;line-height: 24px;text-transform: uppercase;font-size: 12px;" href="<?php echo base_url(); ?>project/project_listing?search_param=fixPrice">FIXED PROJECTS</a>
                             </li>
                             <li>
                               <a style="color: #868686;line-height: 24px;text-transform: uppercase;font-size: 12px;" href="<?php echo base_url(); ?>project/project_listing?search_param=hourly">HOURLY PROJECTS</a>
                             </li>
+                           <?php } ?>
+                           <?php if($profile_type=='3' || $profile_type == ''){ ?>
                             <li>
                               <a style="color: #868686;line-height: 24px;text-transform: uppercase;font-size: 12px;" href="<?php echo base_url(); ?>jobseeker/jobseeker_lists?search_param=Full_Time">FULL-TIME JOBS</a>
                             </li>
                             <li>
                               <a style="color: #868686;line-height: 24px;text-transform: uppercase;font-size: 12px;" href="<?php echo base_url(); ?>jobseeker/jobseeker_lists?search_param=Part_Time">PART-TIME JOBS</a>
                             </li>
+                           <?php } ?>
                             <!--  <li><a href="#">ONLINE JOBS</a></li> -->
                           </ul>
                         </div>                  

@@ -131,7 +131,6 @@ public function save_feedback_freelancer($data)
       'status' => 500,
       'status_message' => 'Updation Failed.');
   } else {
-    $demo = Post_project_model::calculate_Avg_freelancing_rating($jm_freelancer_id);
     $Update= Post_project_model::update_status($jm_project_id);
     $response = array(
       'status' => 200,
@@ -155,6 +154,7 @@ else
       'status_message' => 'feedback saved.');
   }
 }
+$demo = Post_project_model::calculate_Avg_freelancing_rating($jm_freelancer_id);
 $update_where = array('jm_project_id =' => $jm_project_id);
      $data=array('is_active'=>'0');    //2 value for bid status denotes freelancer is awarded...
      $this->db->where($update_where);

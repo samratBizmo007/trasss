@@ -90,7 +90,6 @@ $profile_type = $this->session->userdata('profile_type');
     </div>
   </div>
 
-  <hr>
   <div class="container w3-margin-bottom">
     <div class="">
       <label><h2 class="" style=" color: #00B59D; font-size: 20px;">Job List</h2></label>
@@ -100,45 +99,42 @@ $profile_type = $this->session->userdata('profile_type');
 
       <!-- -------------------Div to bind for project Description------------------------------>                    
       <?php
-        //$user_id = $this->session->userdata('user_id');
-        //$user_name = $this->session->userdata('user_name');
-        //print_r($job_bookmarks);die();
-        //echo $user_id;die();
-        $K = 0;
-$Bookmark_jobs = array();
-if ($job_bookmarks['status'] == 200) {
-    $Bookmark_jobs = json_decode($job_bookmarks['status_message'][0]['jm_job_bookmarks'], TRUE);
-}
+      
+      $K = 0;
+      $Bookmark_jobs = array();
+      if ($job_bookmarks['status'] == 200) {
+        $Bookmark_jobs = json_decode($job_bookmarks['status_message'][0]['jm_job_bookmarks'], TRUE);
+      }
 //echo $Bookmark_jobs;die();
-if ($jobs['status'] == 200) {
+      if ($jobs['status'] == 200) {
 
-    foreach ($jobs['status_message'] as $key) {
-        $class = "fa-bookmark-o";
-        $title = "Add Bookmark";
-        if ($Bookmark_jobs) {
+        foreach ($jobs['status_message'] as $key) {
+          $class = "fa-bookmark-o";
+          $title = "Add Bookmark";
+          if ($Bookmark_jobs) {
             if (in_array($key['job_id'], $Bookmark_jobs)) {
 
-                $class = "fa-bookmark";
-                $title = "Bookmarked";
+              $class = "fa-bookmark";
+              $title = "Bookmarked";
             }
-        }
-        ?>
-        <?php
-        $apply_link = base_url() . 'jobseeker/jobseeker_lists/' . $key['job_id'];
-        if ($user_id == '' || $profile_type == '') {
+          }
+          ?>
+          <?php
+          $apply_link = base_url() . 'jobseeker/jobseeker_lists/' . $key['job_id'];
+          if ($user_id == '' || $profile_type == '') {
             $apply_link = base_url() . 'auth/login?profile=3&payload=ApplyJob&value=' . base64_encode($key['job_id']);
-        }
-        ?>
+          }
+          ?>
           <div class="w3-col l12 w3-border-bottom" id="JobList_Div">
             <!-- div for project description-->
             <div class="row w3-padding ">
               <div class="w3-col l12 w3-padding-left">
                 <div class="row w3-col l12">
                   <div class="w3-col l11 s11 m11">
-                      <a href="<?php echo $apply_link;?>"><span class="bluishGreen_txt w3-padding-left w3-margin-right" style=" font-size: 25px;"><b><?php echo $key['job_name']?></b></span></a>
+                    <a href="<?php echo $apply_link;?>"><span class="bluishGreen_txt w3-padding-left w3-margin-right" style=" font-size: 25px;"><b><?php echo $key['job_name']?></b></span></a>
                   </div> 
                   <div class="w3-col l1 s1 m1 w3-right w3-medium">
-                      <a class="w3-right w3-padding-left" data-toggle="fa" onclick="add_bookmarkForJob('<?php echo $user_id; ?>','<?php echo $key['job_id']; ?>')" title="<?php echo $title; ?>">
+                    <a class="w3-right w3-padding-left" data-toggle="fa" onclick="add_bookmarkForJob('<?php echo $user_id; ?>','<?php echo $key['job_id']; ?>')" title="<?php echo $title; ?>">
                       <i id="job_<?php echo $key['job_id']; ?>" class="fa <?php echo $class; ?>" style="font-size:25px; color: black;">                                                       
                       </i>
                     </a>
@@ -147,32 +143,32 @@ if ($jobs['status'] == 200) {
 
                 <div class="row w3-col l12 w3-padding-left">
                   <div class="w3-col l6 w3-padding-bottom w3-medium">
-                      <span><b><?php echo $key['company_name']; ?></b></span>
+                    <span><b><?php echo $key['company_name']; ?></b></span>
                   </div>                                                                                               
                 </div>
 
                 <div class="row w3-col l12 w3-padding-left">
                   <div class="w3-col l3 w3-padding-bottom w3-medium">
-                      <i class="fa fa-rupee w3-text-grey" style="font-size:15px;"></i><span> <?php echo $key['Salary_range']; ?> </span>
+                    <i class="fa fa-rupee w3-text-grey" style="font-size:15px;"></i><span> <?php echo $key['Salary_range']; ?> </span>
                   </div>
                   <div class="w3-col l3 w3-padding-bottom w3-medium">
-                      <i class="fa fa-user w3-text-grey" style="font-size:15px;"></i><span> <?php echo $key['positions']; ?></span>
+                    <i class="fa fa-user w3-text-grey" style="font-size:15px;"></i><span> <?php echo $key['positions']; ?></span>
                   </div>
                   <div class="w3-col l3 w3-padding-bottom w3-medium">
-                      <i class="fa fa-briefcase w3-text-grey" style="font-size:15px;"></i><span> <?php echo $key['job_type']; ?></span>       
+                    <i class="fa fa-briefcase w3-text-grey" style="font-size:15px;"></i><span> <?php echo $key['job_type']; ?></span>       
                   </div>
                   <div class="w3-col l3 w3-padding-bottom w3-medium">
-                      <i class="fa fa-map-marker w3-text-grey" style="font-size:15px;"></i><span> <?php echo $key['city']; ?></span>       
+                    <i class="fa fa-map-marker w3-text-grey" style="font-size:15px;"></i><span> <?php echo $key['city']; ?></span>       
                   </div>
                 </div>
 
-                  <!-- ====================================SKILLS DIV=============================================                               -->
-                  <div class="row w3-col l12 m12 s12 w3-padding-left" style="overflow-wrap:break-word;">                     
-                    <div class="w3-medium w3-col l12 s12 m12" id="SkillId_<?php echo $key['job_id'];?>">
-                        <label>Skills : </label>
-                    </div>
-                  </div>  
-                  <!-- ====================================APPLY JOB BUTTON=============================================                               -->   
+                <!-- ====================================SKILLS DIV=============================================                               -->
+                <div class="row w3-col l12 m12 s12 w3-padding-left" style="overflow-wrap:break-word;">                     
+                  <div class="w3-medium w3-col l12 s12 m12" id="SkillId_<?php echo $key['job_id'];?>">
+                    <label>Skills : </label>
+                  </div>
+                </div>  
+                <!-- ====================================APPLY JOB BUTTON=============================================                               -->   
                 <div class="row w3-col l12 w3-padding-left w3-medium">                                               
                   <div class="w3-col l12 s12 m12">
                     <a title="Apply To This Job" class="w3-right w3-round-xxlarge w3-padding-small btn w3-text-white" data-toggle="tooltip" style="background-color: black; font-size:10px" href="<?php echo $apply_link;?>">Apply Now</a>                                                                   
@@ -184,11 +180,11 @@ if ($jobs['status'] == 200) {
             <!-- div for project description-->                       
           </div>
           <script>
-         $(document).ready(function(){
+           $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip(); 
             $('[data-toggle="fa"]').tooltip();
-        });
-            $(document).ready(function () {
+          });
+           $(document).ready(function () {
              FetchSkills('<?php echo $key['job_id'];?>','<?php echo $key['skills'];?>');
            });
          </script>
@@ -244,19 +240,19 @@ if ($jobs['status'] == 200) {
   }    
   function FetchSkills(job_id,Skills){
    $('#SkillId_'+job_id).append('<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>');       
-	  $.ajax({
-      type: "POST",
-      url: "<?php echo base_url(); ?>job/Job_listings/FetchSkills",
-      dataType: 'text',
-      data: {
-        job_id: job_id,
-        Skills: Skills
-      },
-      cache: false,
-      success: function(data) {
+   $.ajax({
+    type: "POST",
+    url: "<?php echo base_url(); ?>job/Job_listings/FetchSkills",
+    dataType: 'text',
+    data: {
+      job_id: job_id,
+      Skills: Skills
+    },
+    cache: false,
+    success: function(data) {
                           //$.alert(data);
-   $('#SkillId_'+job_id).html('');       
-        var key=JSON.parse(data);
+                          $('#SkillId_'+job_id).html('');       
+                          var key=JSON.parse(data);
                 //$.alert(key);
                 for(i=0; i< key.length; i++){
                     //$.alert(key[i].jm_skill_name);
@@ -264,7 +260,7 @@ if ($jobs['status'] == 200) {
                   }
                 }
               });
-  }
+ }
 
   // -----------------fucntion add bookmark-------------
   function add_bookmarkForJob(user_id,job_id){

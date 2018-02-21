@@ -9,6 +9,14 @@ class Edit_profile extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        //start session     
+        $user_id=$this->session->userdata('user_id');
+        $user_name=$this->session->userdata('user_name');
+        $profile_type=$this->session->userdata('profile_type');
+        //check session variable set or not, otherwise logout
+        if(($user_id=='') || ($user_name=='') || ($profile_type=='')){
+            redirect('auth/login');
+        }
     }
 
     public function index() {
@@ -175,9 +183,9 @@ class Edit_profile extends CI_Controller {
             'jm_user_name' => $jm_user_name . ' ' . $jm_user_last,
             'jm_userDesignation' => $jm_userDesignation,
             'jm_userDescription' => $jm_userDescription,
-            'jm_userCity' => $jm_userCity,
-            'jm_userState' => $user_state,
-            'jm_userCountry' => $user_country,
+            'jm_userCity' => addslashes($jm_userCity),
+            'jm_userState' => addslashes($user_state),
+            'jm_userCountry' => addslashes($user_country),
             'jm_education' => json_encode($education),
             'jm_experience' => json_encode($experience),
             'jm_rateHr' => $jm_rateHr,
@@ -197,8 +205,8 @@ class Edit_profile extends CI_Controller {
         curl_close($ch);
         $response = json_decode($response_json, true);
 //print_r($response_json);die();
-        if ($response['status'] != '200') {
-            echo '<h3 class="w3-text-red w3-margin"><i class="fa fa-warning"></i> ' . $response['status_message'] . '</h3><script>
+        if($response['status'] != '200') {
+            echo '<h3 class="w3-text-red w3-margin"><i class="fa fa-warning"></i>WARNING: OOPS, Something went wrong.</h3><script>
             window.setTimeout(function() {
                 $(".alert").fadeTo(500, 0).slideUp(500, function(){
                     $(this).remove(); 

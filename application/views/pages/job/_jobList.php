@@ -25,7 +25,7 @@ if ($job_bookmarks['status'] == 200) {
             }
             ?>
 <!--            <div class="w3-margin-top w3-border-bottom  w3-margin-bottom" id="JobList_Div">
-                ------------------------------------------ div for project description----------------------------------------------
+                 div for project description
                 <div class="row w3-padding ">
                     <div class="w3-col l12 w3-padding-left">
                         <div class="row w3-col l12 w3-margin-top">
@@ -75,7 +75,7 @@ if ($job_bookmarks['status'] == 200) {
 
                     </div>
                 </div>
-                ------------------------------------------ div for project description----------------------------------------------                       
+                 div for project description                       
             </div>-->
             <?php 
                   $apply_link=base_url().'jobseeker/jobseeker_lists/'.$key['jm_jobpost_id'];

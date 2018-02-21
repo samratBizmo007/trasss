@@ -8,7 +8,7 @@ class Jobseeker_list_api extends REST_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Jobseeker_model/Jobseeker_list_model');
+        $this->load->model('jobseeker_model/Jobseeker_list_model');
         date_default_timezone_set('Asia/Kolkata'); //set Kuwait's timezone
     }
     

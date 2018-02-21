@@ -19,7 +19,6 @@ class Freelancer_list extends CI_Controller
 	public function index(){
 
 		$user_id = $this->session->userdata('user_id');
-		$this->load->database();
 		$this->load->model('freelancer_model/freelancer_model');
 		$data['info']=$this->freelancer_model->get_freelancer();
 		//$data['percentage']=Freelancer_list::get_bars_value();

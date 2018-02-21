@@ -563,7 +563,6 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
         <center class="w3-margin-bottom" style="margin-top:20px;">
           <h6 class="" style="color:#00b59e;margin:0px;margin-bottom:15px" style="margin-bottom:20px"><b>Membership</b></h6>
           <span class="w3-card w3-round-xxlarge w3-medium " style="padding:8px 16px 8px 16px"><i class="fa fa-certificate"></i> <?php
-
           echo $membership_package; ?></span>
         </center>
       </div>
@@ -611,7 +610,7 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
 
         <center class="w3-margin-bottom">
           <h6 class="w3-text-bluishGreen"><b>Membership</b></h6>
-          <span class="w3-card w3-round-xxlarge w3-padding-small w3-large "><i class="fa fa-certificate"></i> <?php echo $membership_package; ?></span>
+          <span class="w3-card w3-round-xxlarge w3-padding-tiny w3-large "><i class="fa fa-certificate"></i> <?php echo $membership_package; ?></span>
         </center>
       </div>
     </div>
@@ -1011,7 +1010,7 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
 
     <div class="col-lg-12 w3-hide-small <?php echo $myjob; ?>" id="profileWise_data" >
       <h3 class="w3-padding-small"><b>My Jobs</b></h3>
-      <div class="w3-col l6 w3-margin-bottom w3-padding-small " id="JobList_Div" style="">
+      <div class="w3-col l6 w3-margin-bottom w3-padding-small " id="JobList_Div" style="height: 350px; overflow: auto;">
         <label class="" style="">Applied Jobs</label>
         <?php
         $K = 0;
@@ -1019,12 +1018,12 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
           ?>
           <?php foreach ($jobsApplied['status_message'] as $key) {?>
           
-          <div class="w3-col l12 m12 s12 w3-card w3-center w3-padding" style=" height: 65px;">
+          <div class="w3-col l12 m12 s12 w3-card w3-center w3-padding" style=" height: 65px; ">
             <div class="col-lg-3 m3 s3 w3-center lineinfo" style="">
               <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
               <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
             </div>
-            <div class="col-lg-3 m3 s3 lineinfo">
+            <div class="col-lg-2 m3 s3 lineinfo">
               <label class="w3-tiny w3-text-grey">Job Type</label><br>
               <label class="w3-small"><b><?php echo $key['jm_job_type'] ?></b></label>
             </div>
@@ -1032,15 +1031,16 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
               <label class="w3-tiny w3-text-grey">Salary</label><br>                
               <label class="w3-small"><b><?php echo $key['jm_salary_range'] ?></b></label>
             </div>
-            <div class="col-lg-3 m3 s3 lineinfo" >
-              <div class="w3-col l6 m6 s6">
+            <div class="col-lg-2 m3 s3 lineinfo" >
+              
                 <label class="w3-tiny w3-text-grey">Positions</label><br>                
                 <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
+              
               </div>
-              <div class="w3-col l6 m6 s6  w3-margin-top">
-                <a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View</a>
+              <div class="w3-col l2 m6 s6 lineinfo w3-margin-top">
+                <a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View Details</a>
               </div>
-            </div>
+            
           </div>
           <?php
         }
@@ -1052,7 +1052,7 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
         <?php } ?>
       </div>  
           <!------------------------ div for previous jobs ----------------------------------------------->                                            
-       <div class="w3-col l6 w3-padding-small" id="JobList_Div" style=" padding-left: 5px;">
+       <div class="w3-col l6 w3-padding-small" id="JobList_Div" style=" padding-left: 5px; height: 350px; overflow: auto;">
            <label class="">Previous Jobs</label>              
       <?php
       if ($previousJobs['status'] == 200) {
@@ -1065,7 +1065,7 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
                                           <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
                                           <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
                                       </div>
-                                      <div class="col-lg-3 lineinfo">
+                                      <div class="col-lg-2 lineinfo">
                                           <label class="w3-tiny w3-text-grey">Job Type</label><br>
                                           <label class="w3-small"><b><?php echo $key['jm_job_type'] ?></b></label>
                                       </div>
@@ -1073,15 +1073,15 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
                                           <label class="w3-tiny w3-text-grey">Salary</label><br>                
                                           <label class="w3-small"><b><?php echo $key['jm_salary_range'] ?></b></label>
                                       </div>
-                                      <div class="col-lg-3 m3 s3 lineinfo" >
-                                         <div class="w3-col l6 m6 s6">
+                                      <div class="col-lg-2 m3 s3 lineinfo" >
+                                        
                                              <label class="w3-tiny w3-text-grey">Positions</label><br>                
                                              <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
                                          </div>
-                                         <div class="w3-col l6 m6 s6  w3-margin-top">
-                                             <a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View</a>
+                                         <div class="w3-col l2 m6 s6  w3-margin-top">
+                                             <a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View Details</a>
                                          </div>
-                                     </div>
+                                     
                                   </div>                  
                        <?php 
                      }
@@ -1104,8 +1104,8 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
               <div class="w3-col l10">    
 
                 <div class="col-lg-12 w3-hide-large <?php echo $myjob; ?>" id="profileWise_data" >
-                  <h3 class="w3-padding-left"><b>My Jobs</b></h3>
-                  <div class="w3-col l6 w3-margin-bottom w3-padding-small" id="JobList_Div" style="padding-right: 5px;">
+                  <h3 class="w3-padding-small"><b>My Jobs</b></h3>
+                  <div class="w3-col l6 w3-margin-bottom w3-padding-small" id="JobList_Div" style="padding-right: 5px;height: 350px; overflow: auto;">
                     <label class="" style="">Applied Jobs</label>
                     <?php
                     $K = 0;
@@ -1118,45 +1118,24 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
                           <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
                           <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
                         </div>
-                        <div class="w3-col l3 m3 s3 smallview">
+                        <div class="w3-col l2 m3 s2 smallview">
                           <label class="w3-tiny w3-text-grey">Job Type</label><br>
                           <label class="w3-small"><b><?php echo $key['jm_job_type']; ?></b></label>
                         </div>
-                        <div class="w3-col l3 m3 s3 smallview">
+                        <div class="w3-col l2 m3 s2 smallview">
                           <label class="w3-tiny w3-text-grey">Salary</label><br>                
                           <label class="w3-small"><b><?php echo $key['jm_salary_range']; ?></b></label>
                         </div>                                     
-                        <div class="w3-col l3 m3 s3 smallview" >
+                        <div class="w3-col l2 m3 s2 smallview" >
                           <label class="w3-tiny w3-text-grey">Positions</label><br>                
                           <label class="w3-small"><b><?php echo $key['jm_positions']; ?></b></label>
-                          <a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View</a>
                         </div>
-                      </div>
-<!--          
-          
-                  <div class="w3-col l12 m12 s12 w3-card w3-center w3-padding" style=" height: 65px;">
-                      <div class="col-lg-3 m3 s3 w3-center lineinfo" style="">
-                          <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
-                          <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
-                      </div>
-                      <div class="col-lg-3 m3 s3 lineinfo">
-                          <label class="w3-tiny w3-text-grey">Job Type</label><br>
-                          <label class="w3-small"><b><?php echo $key['jm_job_type'] ?></b></label>
-                      </div>
-                      <div class="col-lg-3 m3 s3 lineinfo">
-                          <label class="w3-tiny w3-text-grey">Salary</label><br>                
-                          <label class="w3-small"><b><?php echo $key['jm_salary_range'] ?></b></label>
-                      </div>
-                      <div class="col-lg-3 m3 s3 lineinfo" >
-                          <div class="w3-col l6 m6 s6">
-                              <label class="w3-tiny w3-text-grey">Positions</label><br>                
-                              <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
-                          </div>
-                          <div class="w3-col l6 m6 s6  w3-margin-top">
-                              <a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View</a>
-                          </div>
-                      </div>
-                    </div>-->
+                       
+                        <div class="w3-col l3 m3 s3  w3-margin-top">
+                          <a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small  w3-black w3-round-xlarge w3-padding-tiny btn">View Details</a>
+                        </div>
+                       </div>
+
                     <?php
                   }
                 } else {
@@ -1167,7 +1146,7 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
                   <?php } ?>
                 </div>  
           <!------------------------ div for previous jobs ----------------------------------------------->                                            
-       <div class="w3-col l6 w3-padding-small" id="JobList_Div" style="padding-left: 5px;">
+       <div class="w3-col l6 w3-padding-small" id="JobList_Div" style="padding-left: 5px;height: 350px; overflow: auto;">
            <label class="w3-left">Previous Jobs</label>              
         <?php
       if ($previousJobs['status'] == 200) {
@@ -1180,19 +1159,22 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
                                          <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
                                          <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
                                      </div>
-                                      <div class="w3-col l3 s3 m3 smallview">
+                                      <div class="w3-col l2 s2 m3 smallview">
                                           <label class="w3-tiny w3-text-grey">Job Type</label><br>
                                           <label class="w3-small"><b><?php echo $key['jm_job_type'] ?></b></label>
                                       </div>
-                                      <div class="w3-col l3 s3 m3 smallview">
+                                      <div class="w3-col l2 s2 m3 smallview">
                                           <label class="w3-tiny w3-text-grey">Salary</label><br>                
                                           <label class="w3-small"><b><?php echo $key['jm_salary_range'] ?></b></label>
                                       </div>
-                                      <div class="w3-col l3 s3 m3 smallview" >
+                                      <div class="w3-col l2 s2 m3 smallview" >
                                           <label class="w3-tiny w3-text-grey">Positions</label><br>                
                                           <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
 
                                       </div>
+                                      <div class="w3-col l3 m3 s3  w3-margin-top">
+                          				<a href="<?php echo base_url(); ?>jobseeker/jobseeker_lists/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small  w3-black w3-round-xlarge w3-padding-tiny btn">View Details</a>
+                        			</div>
                                   </div>                  
                        <?php 
                      }
@@ -1253,7 +1235,7 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
                                 <label class="w3-tiny w3-text-grey">Positions</label><br>                
                                 <label class="w3-small"><b><?php echo $key['jm_positions']; ?></b></label>
                              </div>
-                              <div class="col-lg-3 w3-margin-top">
+                              <div class="col-lg-3 lineinfo w3-margin-top">
                                 <a href="<?php echo base_url(); ?>job/job_listings/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View Details</a>
                               </div>   
                               </div>
@@ -1264,7 +1246,7 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
                         } else { ?>
 
                         <div class="w3-col l12 w3-card" id="">
-                          <div class=" w3-light-grey w3-text-grey w3-small  bluishGreen_bg" style ="text-align: center;"><b>There are no jobs Posted.</b></div>
+                          <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>There are no jobs Posted.</b></div>
                         </div> 
                         <?php } ?>
                       </div>
@@ -1280,7 +1262,7 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
                           ?>
 
                           <div class="w3-col l12 w3-card w3-col l12 w3-card w3-center w3-padding" style="padding-top: 4px; padding-bottom: 4px; height: 65px;">
-                            <div class="col-lg-3 w3-center lineinfo" style="">
+                            <div class="col-lg-2 w3-center lineinfo" style="">
                               <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
                               <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
                             </div>
@@ -1288,18 +1270,18 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
                               <label class="w3-tiny w3-text-grey">Job Type</label><br>
                               <label class="w3-small"><b><?php echo $key['jm_job_type']; ?></b></label>
                             </div>
-                            <div class="col-lg-3 lineinfo">
+                            <div class="col-lg-2 lineinfo">
                               <label class="w3-tiny w3-text-grey">Salary</label><br>                
                               <label class="w3-small"><b><?php echo $key['jm_salary_range']; ?></b></label>
                             </div>
-                            <div class="col-lg-3 lineinfo" >
-                              <div class="w3-col l6">
+                            <div class="col-lg-2 lineinfo" >
+                              
                                 <label class="w3-tiny w3-text-grey">Positions</label><br>                
                                 <label class="w3-small"><b><?php echo $key['jm_positions']; ?></b></label>
                               </div>
-                              <div class="w3-col l6 w3-margin-top">
-                                <a href="<?php echo base_url(); ?>job/job_listings/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View</a></div>   
-                              </div>
+                              <div class="col-lg-3 lineinfo w3-margin-top">
+                                <a href="<?php echo base_url(); ?>job/job_listings/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View Details</a></div>   
+                              
                                 
                             </div>                                   
                             <?php
@@ -1325,8 +1307,9 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
                     <div class="col-lg-1"></div>
                      <div class="w3-col l10">
                   <div class="col-lg-12 w3-hide-small " id="JobDescription">
-                   <div class="w3-col l6 " style=" height: 350px; overflow: auto;">
+                   <div class="w3-col l6 " style="">
                       <label class="" style="">Posted Jobs</label>
+                       <div class="w3-padding-small" style=" height: 350px; overflow: auto;">
                       <?php
                       if ($postedjobs['status'] == 200) {
                         foreach ($postedjobs['status_message'] as $key) {
@@ -1363,6 +1346,7 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
                                           <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>There are no jobs Posted.</b></div>
                                         </div> 
                                     <?php } ?>
+                                  </div>
                                   </div>
                                   
                                   <!-----------------------------------------div for showing closed jobs-------------------------------------------------------->                    
@@ -1413,7 +1397,7 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
 
 <!-- Div for showing the posted projects and previous projects for freelancer-->
 <?php
-if ($profile_type == 1) {
+if ($profile_type == '') {
   ?>
   <script>
     $(document).ready(function () {
@@ -1511,9 +1495,9 @@ if ($profile_type == 1) {
           </div>
         </div>
         <div class="w3-col l6 w3-padding-small " >
-        <div class="" style=" height: 350px; overflow: auto; padding-right: 5px;">
+        <div class="" style=" height: 350px; ">
          <label class="" style="">Previous Projects</label>
-         <div class="w3-col l12 w3-card w3-padding-small" id="freelance_previousProjects" style="">
+         <div class="w3-col l12 w3-card w3-padding-small" id="freelance_previousProjects" style="height: 350px; overflow: auto;">
          </div>
          </div>
        </div>
@@ -1543,9 +1527,9 @@ if ($profile_type == 1) {
 
       <!-------------------------------------Div for showing the posted jobs -------------------------------------------------------->
       <h3 class="w3-padding-small" style=""><b>My Jobs</b></h3>
-      <div class="w3-col l6" style=" height: 350px; overflow: auto;">
+      <div class="w3-col l6" style=" ">
         <label class="w3-padding-small" style="">Posted Jobs</label>
-        <div class="w3-padding-small">
+        <div class="w3-padding-small " style="height: 350px; overflow: auto;">
         <?php
         if ($postedjobs['status'] == 200) {
           foreach ($postedjobs['status_message'] as $key) {
@@ -1583,32 +1567,34 @@ if ($profile_type == 1) {
     </div>
 
     <!-----------------------------------------div for showing closed jobs-------------------------------------------------------->                    
-    <div class="w3-col l6 w3-padding-small" style=" height: 350px; overflow: auto;">
-     <label class="" style=" padding-left: 8px;">Previous Jobs</label> 
+    <div class="w3-col l6 " style="">
+     <label class="" style="">Previous Jobs</label>
+      <div class="w3-paddding-small" style="height: 350px; overflow: auto;">
      <?php
      if ($previousjobs['status'] == 200) {
       foreach ($previousjobs['status_message'] as $key) {
         ?>
 
-        <div class="w3-col l12 w3-card w3-card w3-center w3-padding" style=" height: 65px;">
-         <div class="smallview w3-col l3 m3 s3 w3-center " style="">
-          <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
-          <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
-        </div>
-        <div class="w3-col l3 m3 s3">
-          <label class="w3-tiny w3-text-grey">Job Type</label><br>
-          <label class="w3-small"><b><?php echo $key['jm_job_type'] ?></b></label>
-        </div>
-        <div class="w3-col l3 m3 s3">
-          <label class="w3-tiny w3-text-grey">Salary</label><br>                
-          <label class="w3-small"><b><?php echo $key['jm_salary_range'] ?></b></label>
-        </div>
-        <div class="w3-col l3 m3 s3" >
-          <label class="w3-tiny w3-text-grey">Positions</label><br>                
-          <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
-          <div class="w3-col l12"><a href="<?php echo base_url(); ?>job/job_listings/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny ">View Details</a></div>
-        </div>
-      </div>
+         <div class="w3-col l12 m12 s12  w3-card w3-card  w3-center w3-padding-left w3-padding-right" style="">
+             <div class="smallview w3-col l3 m3 s3 w3-center " style="">
+              <label class="w3-tiny w3-text-grey ">Job&nbsp;Name</label><br>
+              <label class="w3-small"><b><?php echo $key['jm_job_post_name']; ?></b></label>
+            </div>
+            <div class="w3-col l3 m3 s3 smallview">
+              <label class="w3-tiny w3-text-grey">Job Type</label><br>
+              <label class="w3-small"><b><?php echo $key['jm_job_type'] ?></b></label>
+            </div>
+            <div class="w3-col l3 m3 s3 smallview">
+              <label class="w3-tiny w3-text-grey">Salary</label><br>                
+              <label class="w3-small"><b><?php echo $key['jm_salary_range'] ?></b></label>
+            </div>
+            <div class="w3-col l3 m3 s3 smallview" >
+              <label class="w3-tiny w3-text-grey">Positions</label><br>                
+              <label class="w3-small"><b><?php echo $key['jm_positions'] ?></b></label>
+              
+            </div>
+            <div class="w3-col l12 w3-margin-bottom"><a href="<?php echo base_url(); ?>job/job_listings/<?php echo $key['jm_jobpost_id']; ?>" class="w3-small w3-right w3-black w3-round-xlarge  w3-padding-tiny ">View Details</a></div>
+          </div>
 
       <?php
     }
@@ -1617,7 +1603,8 @@ if ($profile_type == 1) {
     <div class="w3-light-grey w3-text-grey w3-small w3-padding-small w3-center bluishGreen_bg" style="text-align: center;"><b>There are no previous jobs .</b></div>
   </div>
   <?php } ?>
-</div>                                   
+</div> 
+</div>                                  
 <!-----------------------------------------div for show ing closed jobs-------------------------------------------------------->                                                               
 
 </div>
@@ -1673,10 +1660,10 @@ if ($profile_type == 2) {
             
         
       <h4>Bookmark Project</h4>
-     <?php } ?>
+     
       <div class="" style=" height:350px; overflow: auto;">
    <?php 
-      if($view_bookmark)
+      if(count($view_bookmark)!=0)
         {?>
         
          <?php   
@@ -1720,10 +1707,16 @@ if ($profile_type == 2) {
             }
           }
         }$count++;
-      }
-      ?> 
+   ?> <?php }else{?>
+                   <div class="w3-col l12 w3-card" id="">
+                    <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>No Bookmark Available.</b></div>
+                  </div>
+                  
+                  <?php } ?>
       </div>
     </div>
+    
+    <?php } ?>
     <div class="col-lg-1"></div>
   </div>
 <!--  <div class="w3-container ">
@@ -1793,13 +1786,86 @@ if ($profile_type == 2) {
             <div class=" w3-col l12 w3-small"><span class="w3-right" style="padding-right:5px;margin-top:10px">'.$key['jm_project_bid'].' Proposals</span></div>
             
           </div> -->
-          <div class="col-lg-1"></div>
-        </div>
+<!--          <div class="col-lg-1"></div>
+        </div>-->
 
 
 
 
  <!----------------- End div for show bookmark project list--------------------------------------->
+ 
+ <!-----------------------div for Bookmark Job---------------------------------------------------->
+ <div class="w3-row w3-padding-small">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10" id="myBookmarkjob_div" >
+        <?php if($profile_type==3){?>
+            
+        
+      <h4>Bookmark Job</h4>
+    
+      <div class="" style=" height:350px; overflow: auto;">
+   <?php         //print_r (count($job_bookmarks));die();
+      if (count($job_bookmarks)!=0) {?>
+        
+         <?php   
+         $count=1;
+                 //  print_r( $view_bookmark['status_message'][0]);die();
+         foreach ($job_bookmarks as $key)  
+         { 
+            // print_r($key);
+          foreach ($key as $val) {
+          {
+           
+           //  print_r($val);
+            foreach ($val as $book) {
+
+              ?>
+              <div class="w3-col l12  w3-card " >
+                <div class="col-lg-2 col-xs-3">
+                    <label class="w3-tiny w3-text-grey">Job Name</label>
+                    <p><b><?php echo $book['jm_job_post_name'];?></b></p>
+                </div>
+                
+                <div class="col-lg-2 col-xs-3 w3-center">
+                    <label class="w3-tiny w3-text-grey">Company name</label>
+                  <p><b><?php echo $book['jm_company_name'];?></b></p>
+
+                </div>
+
+                <div class="col-lg-2 col-xs-3 w3-center">
+                    <label class="w3-tiny w3-text-grey">Posted time</label>
+                  <p><b><?php echo "posted ".timeago($book['jm_posting_date']);?></b></p>
+
+                </div>
+                <div class="col-lg-3 col-xs-3 w3-center">
+                    <label class="w3-tiny w3-text-grey">Location</label>
+                  <p><b><?php echo $book['jm_job_city'];?></b></p>
+
+                </div>
+                <div class="col-lg-2 col-xs-12 w3-center w3-margin-bottom">
+                  <a href="<?php echo base_url();?>jobseeker/jobseeker_lists/<?php echo $book['jm_jobpost_id'];?>" class="w3-small w3-right w3-black w3-round-xlarge w3-margin-top w3-padding-tiny btn">View Details</a>
+                </div>
+              </div>
+              <?php
+          # code...
+            }
+          }
+        }$count++;
+      }
+      //else{  ?>                   
+                       
+                  <?php }else{?>
+                   <div class="w3-col l12 w3-card" id="">
+                    <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>No Bookmark Available.</b></div>
+                  </div>
+                  <?php } ?>
+      
+      </div>
+       <?php } ?>
+    </div>
+    <div class="col-lg-1"></div>
+  </div>
+ <!----------------------------End Div for Bookmark Job---------------------------------------->
  <?php         
  $user_id = $this->session->userdata('user_id');
  ?>

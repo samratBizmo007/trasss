@@ -166,7 +166,7 @@ $profile_type=$this->session->userdata('profile_type');
             <a class="btn w3-left w3-col s12 w3-left" style="text-align:left" href="<?php echo base_url(); ?>jobseeker/explore_jobseeker">Explore Job Seekers</a>
             <?php } ?>
 
-            <?php if($profile_type=='' || $profile_type=='1' || $profile_type=='2'){ ?>
+            <?php if($profile_type=='' ||  $profile_type=='2'){ ?>
             <a class="btn w3-left w3-col s12 w3-left"  style="text-align:left" href="<?php echo base_url(); ?>project/post_project_Controller">Post Project</a>
             <?php } ?>
 
@@ -216,7 +216,7 @@ $profile_type=$this->session->userdata('profile_type');
 
 
                 <li class="scroll dropdown">
-                  <?php if($profile_type != 3 ){ ?>
+                  <?php if($profile_type != 3 && $profile_type != 1 ){ ?>
                   <a class="dropbtn">Post </a>
                   <?php } ?>
                   <div class="dropdown-content" style="float:left;">
@@ -224,7 +224,7 @@ $profile_type=$this->session->userdata('profile_type');
                     <a class="btn w3-left" style="color:black;width:100%" href="<?php echo base_url(); ?>job/post_jobs">Post Job</a>
                     <?php } ?>
                     
-                    <?php if($profile_type == '' || $profile_type == 2 || $profile_type == 1 ){ ?>
+                    <?php if($profile_type == '' || $profile_type == 2){ ?>
                     <a class="btn w3-left" style="color:black;width:100%" href="<?php echo base_url(); ?>project/post_project_Controller">Post Project</a>
                     <?php } ?>                    
                   </div>

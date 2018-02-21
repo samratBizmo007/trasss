@@ -55,12 +55,13 @@ if(isset($_GET['jm_job_type'])){
       }
     });
   </script> -->
+
+  <script type="text/javascript" src="<?php echo base_url(); ?>css/bootstrap/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="<?php echo base_url(); ?>css/bootstrap/bootstrap.min.js"></script>
+  <script src="<?php echo base_url(); ?>css/bootstrap/bootstrap-toggle.min.js"></script>
   <script type="text/javascript" src="<?php echo base_url(); ?>css/js/findwork/findwork.js"></script>
   <script type="text/javascript" src="<?php echo base_url(); ?>css/js/loadingoverlay.min.js"></script>
   <script type="text/javascript" src="<?php echo base_url(); ?>css/js/loadingoverlay_progress.min.js"></script>
-   <script type="text/javascript" src="<?php echo base_url(); ?>css/bootstrap/jquery-3.1.1.js"></script>
-  <script type="text/javascript" src="<?php echo base_url(); ?>css/bootstrap/bootstrap.min.js"></script>
-  <script src="<?php echo base_url(); ?>css/bootstrap/bootstrap-toggle.min.js"></script>
   <style>
   .pagination {
     display: inline-block;
@@ -235,10 +236,10 @@ if(isset($_GET['jm_job_type'])){
         </div>
         </p>
         </div>
-       <div class=" w3-col l12" style="overflow-wrap:break-word;">                                
-       <div class="w3-padding-bottom w3-medium w3-col l12" id="SkillId_'.$key['jm_project_id'].'">
-       <label>Skills:</label>
-       </div>
+        <div class=" w3-col l12" style="overflow-wrap:break-word;">                                
+        <div class="w3-padding-bottom w3-medium w3-col l12" id="SkillId_'.$key['jm_project_id'].'">
+        <label>Skills:</label>
+        </div>
         </div>  
         <div class="w3-col l8 w3-margin-bottom">
         <div class="w3-col l12">
@@ -272,19 +273,19 @@ if(isset($_GET['jm_job_type'])){
         </div>             
         </div>
         
-         <script>
-       $(document).ready(function () {
-       
-       FetchSkills('.$key['jm_project_id'].','.$key['jm_project_skill'].');
+        <script>
+        $(document).ready(function () {
+
+         FetchSkills('.$key['jm_project_id'].','.$key['jm_project_skill'].');
        });
        </script>';
-        
-      }
-      
-    }
-    
-      ?>
-      
+
+     }
+
+   }
+
+   ?>
+
 <!--      <div class="pagination">
   		  <a href="#">&laquo;</a>
   	 	  <a href="<?php  //echo $this->pagination->create_links();?>"></a>
@@ -294,39 +295,39 @@ if(isset($_GET['jm_job_type'])){
 		  <a href="#">5</a>
 		  <a href="#">6</a>
 		  <a href="#">&raquo;</a>
-	</div>-->
- 
-      
-                    
+   </div>-->
+
+
+
 	 <!--<nav aria-label="Page navigation example">
         <ul class="pagination">      
            <li class="page-item"><a class="page-link"> <?php  echo $this->pagination->create_links();?></a></li>
         </ul>
         </nav>
     
-    --></div>
+      --></div>
 
-    
-    
-   
 
-     <div class="w3-col l3 w3-padding ">
 
-      <div>
-        <div><b>Skills :</b></div>
-        <div class="skill"></div>
-      </div>
-      <div class="small_search">
-        <div style="display:inline">
-          <form>
-            <input type="hidden" class="" id="skills_filtered">
-            <input list="skill_list" type="text" name="allSkill" id="term" class="latest_search uneditable-input" placeholder="search skills..." style="padding-left: 10px;width: 165px">
-            <datalist id="skill_list">
-              <?php 
-              foreach($all_skills['status_message'] as $result) { ?>
-              <option data-value="<?php echo $result['jm_skill_id']; ?>" value="<?php echo $result['jm_skill_name']; ?>"><?php echo $result['jm_skill_name']; ?></option>                  
-              <?php
-				 } 
+
+
+      <div class="w3-col l3 w3-padding ">
+
+        <div>
+          <div><b>Skills :</b></div>
+          <div class="skill"></div>
+        </div>
+        <div class="small_search">
+          <div style="display:inline">
+            <form>
+              <input type="hidden" class="" id="skills_filtered">
+              <input list="skill_list" type="text" name="allSkill" id="term" class="latest_search uneditable-input" placeholder="search skills..." style="padding-left: 10px;width: 165px">
+              <datalist id="skill_list">
+                <?php 
+                foreach($all_skills['status_message'] as $result) { ?>
+                <option data-value="<?php echo $result['jm_skill_id']; ?>" value="<?php echo $result['jm_skill_name']; ?>"><?php echo $result['jm_skill_name']; ?></option>                  
+                <?php
+              } 
               ?>
             </datalist>
             <i class="fa fa-plus-circle" style="font-size:20px;" name='usrname' id="hit"></i>
@@ -336,9 +337,9 @@ if(isset($_GET['jm_job_type'])){
       <div class="budget">
         <div style="display:inline">
           <div><b>Budget : &nbsp;&nbsp;&nbsp;<span id="demo"></span></b></div>
-          <div class="slidecontainer"><input type="range" min="1" max="100" value="1" class="slider" id="myRange" name="rangetype"></div>
+          <div class="slidecontainer"><input type="range" min="100" max="2500000" value="1" class="slider" id="myRange" name="rangetype"></div>
           <div><p class="w3-label">Range 100-2500000</p></div>
-          <button type="button" class="view_button" id="reset" name="reset"><i class="fa fa-filter"></i> Reset Filter</button>
+          <button type="button" class="view_button" onclick="window.location.reload();" id="reset" name="reset"><i class="fa fa-refresh"></i> Reset Filter</button>
         </div>
       </div>
                <!--  <div class="w3-col l6 s6 w3-margin-top" ><a href="#" id="view_bookmark" class=" btn w3-small w3-black  w3-round-xlarge w3-padding-tiny btn">View Bookmark</a>
@@ -354,35 +355,35 @@ if(isset($_GET['jm_job_type'])){
 
      <script>
        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip(); 
-            $('[data-toggle="fa"]').tooltip();
-        });
-     function FetchSkills(jm_project_id,Skills){
+        $('[data-toggle="tooltip"]').tooltip(); 
+        $('[data-toggle="fa"]').tooltip();
+      });
+       function FetchSkills(jm_project_id,Skills){
     		//alert(jm_project_id);
     		//alert(Skills);
                 //$("#element").LoadingOverlay("show");
 
-    		$('#SkillId_'+jm_project_id).append('<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>');
-    	            $.ajax({
-    	                type: "POST",
-    	                url: "<?php echo base_url(); ?>project/Project_listing/FetchSkills",
-    	                dataType: 'text',
-    	                data: {
-    	                	jm_project_id: jm_project_id,
-    	                    Skills: Skills
-    	                },
-    	                cache: false,
-    	                success: function(data) {
-    		$('#SkillId_'+jm_project_id).html('');
-    			var key=JSON.parse(data);
+                $('#SkillId_'+jm_project_id).append('<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>');
+                $.ajax({
+                 type: "POST",
+                 url: "<?php echo base_url(); ?>project/Project_listing/FetchSkills",
+                 dataType: 'text',
+                 data: {
+                  jm_project_id: jm_project_id,
+                  Skills: Skills
+                },
+                cache: false,
+                success: function(data) {
+                  $('#SkillId_'+jm_project_id).html('');
+                  var key=JSON.parse(data);
     	                //alert(key);
-    	 		for(i=0; i< key.length; i++){
+                      for(i=0; i< key.length; i++){
     	                    //$.alert(key[i].jm_skill_name);
     	                    $('#SkillId_'+jm_project_id).append('<span><span  class="w3-padding-small w3-round w3-light-grey" style="display:inline-block;margin-top:5px; margin-right: 5px; background-color:#787878;font-size:8px;">'+key[i].jm_skill_name+'</span></span>');
-    	                }
-    	            }
-    	        });
-    	}
+                       }
+                     }
+                   });
+              }
  //  var today = new Date();
  //    var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
 

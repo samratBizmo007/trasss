@@ -3,7 +3,8 @@ error_reporting(E_ERROR | E_PARSE);
 $user_id=$New_userID;
 $profile_type=$New_profile_type;
 
-
+//echo $profile_type;
+//echo $user_id;
 $profile_value='';
 switch ($profile_type) {
       //-------------case Freelancer  ----------------//    
@@ -73,8 +74,17 @@ switch ($profile_type) {
   <?php
   if($all_userDetails['status']==200){
     foreach ($all_userDetails['status_message'] as $details) {
-
-      ?>
+            if ($details['jm_user_name']=='')
+            {
+                ?><div class="w3-col l12 w3-margin-top container">              
+                    <div class="w3-center">
+                         <span><strong>Please Update your Profile</strong></span>
+                     </div>
+                    <div class="w3-center">
+                         <span> Go To: dashboard -> profile ->Edit Profile</span>  
+                    </div>
+                </div>
+            <?php } else {?>
       <div class="w3-row w3-padding" id="mainDiv">
         <div class="col-lg-2"></div>
         <div class="w3-col l8 w3-margin-top w3-margin-bottom">
@@ -226,7 +236,7 @@ switch ($profile_type) {
           $hide_fullDiv="";
           $hide_rateDiv="";
           $hide_extraDiv="";
-          switch ($selected_profile_type) {
+          switch ($profile_type) {
       //-------------case Freelancer  ----------------//    
             case '1':
   //$hide_fullDiv="w3-hide";
@@ -237,7 +247,8 @@ switch ($profile_type) {
             case '2':
   //$hide_fullDiv="w3-hide";
             $hide_rateDiv="w3-hide"; 
-            $hide_extraDiv="w3-hide";   
+            $hide_extraDiv="w3-hide";
+            
             break;
 
       //-------------case Job Seeker----------------//
@@ -342,11 +353,11 @@ switch ($profile_type) {
                         <span><i class="w3-medium fa fa-check-square-o"></i>&nbsp;Jobs Completed</span> 
                         <div class="w3-col l10" style="padding-top: 7px">
                           <div class="w3-round-xlarge progress w3-border">
-                            <div class="w3-green w3-round-large progress" style="width: <?php echo $percentage['percentage'];?>%"></div>              
+                            <div class="w3-green w3-round-large progress" style="width: <?php echo number_format($percentage['percentage'],2);?>%"></div>              
                           </div>
                         </div>           
                         <div class="w3-col l2">
-                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;<?php echo $percentage['percentage'];?>%</b></span><br>
+                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;<?php echo number_format($percentage['percentage'],2);?>%</b></span><br>
                         </div>  
                       </div>
                       <!-- progress bar ends -->
@@ -356,11 +367,11 @@ switch ($profile_type) {
                         <span><i class="w3-small fa fa-dollar w3-circle"></i>&nbsp;On Budget</span> 
                         <div class="w3-col l10" style="padding-top: 7px">
                           <div class="w3-round-xlarge progress w3-border">
-                            <div class="w3-green w3-round-large progress" style="width: <?php echo $percentage['percentage_budget'];?>%"></div>              
+                            <div class="w3-green w3-round-large progress" style="width: <?php echo number_format($percentage['percentage_budget'],2);?>%"></div>              
                           </div>
                         </div>           
                         <div class="w3-col l2">
-                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;<?php echo $percentage['percentage_budget'];?>%</b></span><br>
+                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;<?php echo number_format($percentage['percentage_budget'],2);?>%</b></span><br>
                         </div>  
                       </div>
                       <!-- progress bar ends -->
@@ -370,11 +381,11 @@ switch ($profile_type) {
                         <span><i class="w3-small fa fa-hourglass-half"></i>&nbsp;On Time</span> 
                         <div class="w3-col l10" style="padding-top: 7px">
                           <div class="w3-round-xlarge progress w3-border">
-                            <div class="w3-green w3-round-large progress" style="width: <?php echo $percentage['percentage_time'];?>%"></div>              
+                            <div class="w3-green w3-round-large progress" style="width: <?php echo number_format($percentage['percentage_time'],2);?>%"></div>              
                           </div>
                         </div>           
                         <div class="w3-col l2">
-                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;<?php echo $percentage['percentage_time'];?>%</b></span><br>
+                          <span class="w3-medium" style="padding-top: 0"><b>&nbsp;<?php echo number_format($percentage['percentage_time'],2);?>%</b></span><br>
                         </div>  
                       </div>
                       <!-- progress bar ends -->
@@ -721,6 +732,7 @@ switch ($profile_type) {
         <?php 
       }
     }
+  }
     ?>
 
   </body>

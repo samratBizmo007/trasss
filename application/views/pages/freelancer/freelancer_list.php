@@ -504,10 +504,22 @@ $search_cat=$this->input->get('search_param', TRUE);
     skill=$('#skills_filtered').val();
     var skill_selected = $('#skill_list option[value="' + $('#term').val() + '"]').data('value');
     if(str!=""){
-      if(skill=='')
+      if(skill==''){
         skill=skill_selected;
-      else
+      }
+      else{
+        // ----------check skill already added or not
+        if(skill.includes(skill_selected))
+        {
+          return false; 
+        }
+        
         skill = skill+'|'+skill_selected;
+      }
+      // if(skill=='')
+      //   skill=skill_selected;
+      // else
+      //   skill = skill+'|'+skill_selected;
       $('.skill').append('<div id="'+skill_selected+'" class="skill-tabs"><span><a class="btn" onclick="delSkill('+skill_selected+')" style="padding:0;margin:0"><i class="fa fa-times-circle-o" style="font-size: 15px; color: black"></i></a><span style="font-size:12px; padding-left:7px; color: black;text-decoration: none;"><label class="getskill">'+str+'</label></span></span></div>');
       $('#term').val('');
       $('#skills_filtered').val(skill);
@@ -563,11 +575,15 @@ function delSkill(id){
   $('#'+id+'').remove();
   var strValue=$('#skills_filtered').val();
   //alert(strValue);
-  var res = strValue.replace('|'+id, '');
-  var res = strValue.replace(id, '');
-  var res = strValue.replace('|'+id, '');
-  //alert(res);return false;
-
+   var res; 
+  if(strValue.includes(id))
+  {
+    res= strValue.replace(id, '');
+  }
+  else{
+    res= strValue.replace('|'+id, '');
+  }
+  //var res = strValue.replace('|'+id, '');
   $('#skills_filtered').val(res);
   skill = $('#skills_filtered').val();
 

@@ -7,6 +7,44 @@ class Dashboard_model extends CI_Model{
 		parent::__construct();
     //$this->load->model('search_model');
 	}
+        public function get_job($job_id)
+	{
+		$query="SELECT *FROM jm_post_job WHERE jm_jobpost_id='$job_id' AND is_active='1' ";
+		$result = $this->db->query($query);
+		if($result->num_rows() <=0)
+		{
+			$response = array(
+				'status'=>500,
+				'status_message' =>'no projects found');
+		}else{
+			$response = array(
+				'status' => 200,
+				'status_message' => $result->result_array());
+
+		}
+
+		return $response;
+	}
+        public function show_BookmarkedJobs($user_id){
+           $query="SELECT * FROM jm_userprofile_tab WHERE jm_user_id='$user_id'";
+		//echo $query;die();
+		$result = $this->db->query($query);
+		if($result->num_rows() <=0)
+		{
+			$response = array(
+				'status' => 500,
+				'status_message' =>'no user found');
+		}else{
+			$response = array(
+				'status' => 200,
+				'status_message' => $result->result_array());
+		}
+
+		return $response;
+
+
+        }
+
         //-------this fun is used to get the feed back of freelancer and freelancer employer------------//
         public function getTestomonials($user_id,$profile_type){
             
@@ -156,7 +194,7 @@ class Dashboard_model extends CI_Model{
         }
         //--------this fun is used to get the frelancer employer average ratings-----------//
         public function getAppliedJobs_ByUser($user_id) {
-		$sqlSelect = "SELECT * FROM jm_applied_candidates as can JOIN jm_post_job as job ON (can.jm_job_id = job.jm_jobpost_id) WHERE can.jm_applieduser_id ='$user_id' AND job.is_active = '1' ORDER BY DESC";
+		$sqlSelect = "SELECT * FROM jm_applied_candidates as can JOIN jm_post_job as job ON (can.jm_job_id = job.jm_jobpost_id) WHERE can.jm_applieduser_id ='$user_id' AND job.is_active = '1' ORDER BY job.jm_jobpost_id DESC";
 		$result = $this->db->query($sqlSelect);
 		if ($result->num_rows() > 0) {
 			$response = array(
@@ -172,7 +210,7 @@ class Dashboard_model extends CI_Model{
         //------------this fun is used to get the the applied jobs------------------------//
     //------------this fun is used to get the the previous jobs------------------------//
     public function getPostedJobs_ByUser($user_id) {
-        $sqlSelect = "SELECT * FROM jm_applied_candidates as can JOIN jm_post_job as job ON (can.jm_job_id = job.jm_jobpost_id) WHERE can.jm_applieduser_id ='$user_id' AND job.is_active = '0' ORDER BY DESC";
+        $sqlSelect = "SELECT * FROM jm_applied_candidates as can JOIN jm_post_job as job ON (can.jm_job_id = job.jm_jobpost_id) WHERE can.jm_applieduser_id ='$user_id' AND job.is_active = '0' ORDER BY job.jm_jobpost_id DESC";
         $result = $this->db->query($sqlSelect);
         if ($result->num_rows() > 0) {
             $response = array(
@@ -205,7 +243,7 @@ class Dashboard_model extends CI_Model{
     //------------this fun is used to get the the posted jobs by job employer------------------------//
     
     public function getPrevious_JobsByJobEmployer($user_id){
-      $sqlSelect = "SELECT * FROM jm_post_job WHERE jm_user_id='$user_id' AND is_active='0' ORDER BY DESC";
+      $sqlSelect = "SELECT * FROM jm_post_job WHERE jm_user_id='$user_id' AND is_active='0' ORDER BY jm_jobpost_id DESC";
         $result = $this->db->query($sqlSelect);
         if ($result->num_rows() > 0) {
             $response = array(
@@ -220,7 +258,7 @@ class Dashboard_model extends CI_Model{
     }
 
     public function Show_Live_Projects($user_id){
-        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_posted_user_id='$user_id' AND is_active='1'";
+        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_posted_user_id='$user_id' AND is_active='1' ORDER BY jm_project_id DESC";
         //echo $sqlSelect;die();
         $result = $this->db->query($sqlSelect);
         if ($result->num_rows() > 0) {
@@ -237,7 +275,7 @@ class Dashboard_model extends CI_Model{
 
     // ----------freelancer live projects-------------------//
     public function freelanceLive_Projects($user_id){
-        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_freelancer_user_id='$user_id' AND is_active='1' ORDER BY DESC";
+        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_freelancer_user_id='$user_id' AND is_active='1' ORDER BY jm_project_id DESC";
         $result = $this->db->query($sqlSelect);
         if ($result->num_rows() > 0) {
             $response = array(
@@ -254,7 +292,7 @@ class Dashboard_model extends CI_Model{
 
     // ----------freelancer previous projects-------------------//
     public function freelancePrevious_Projects($user_id){
-        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_freelancer_user_id='$user_id' AND is_active!='1' ORDER BY DESC";
+        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_freelancer_user_id='$user_id' AND is_active!='1' ORDER BY jm_project_id DESC";
         $result = $this->db->query($sqlSelect);
         if ($result->num_rows() > 0) {
             $response = array(
@@ -285,7 +323,7 @@ class Dashboard_model extends CI_Model{
     }
 
     public function Show_Previous_Projects($user_id){
-        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_posted_user_id='$user_id' AND is_active='0'";
+        $sqlSelect = "SELECT * FROM jm_project_list WHERE jm_posted_user_id='$user_id' AND is_active='0' ORDER BY jm_project_id DESC";
         $result = $this->db->query($sqlSelect);
         if ($result->num_rows() > 0) {
             $response = array(

@@ -381,7 +381,7 @@ error_reporting(E_ERROR | E_PARSE);
 					<label class="project-legend">How do you want to pay?</label>
 					<span class="w3-text-red">*</span>
 
-					<label class="container" style="padding-left:30px">Fixed price project:
+					<label class="container" style="padding-left:30px">Fixed price project
 						<input  type="radio" class="checkmark" name="jm_project_type" checked="checked" value="Fixed_Price">
 					</label>
 					<label class="container" style="padding-left:30px">Hourly project
@@ -393,7 +393,7 @@ error_reporting(E_ERROR | E_PARSE);
 					<div class="form-group">
 						<label class="project-legend">Add skill for project</label>	
 						<span class="w3-text-red">*</span>
-						<select id="select-skill" name="skill[]" multiple class="demo-default " style="width:100%" placeholder="Select a skill...">
+						<select id="select-skill" name="skill[]" multiple class="demo-default " style="width:100%" placeholder="Select a skill..." required>
 							<?php 
 							foreach($all_skills['status_message'] as $row)
 							{

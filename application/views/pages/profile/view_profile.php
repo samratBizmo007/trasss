@@ -72,14 +72,14 @@ switch ($selected_profile_type) {
 </script>
 <script>
   $(document).ready(function() {
-    $('.content').richText();
+   $('#jm_portfolio_details').richText();
   });
-       </script>
-  <!-- <script>
-  $(document).ready(function() {
-    $("#jm_portfolio_details").Editor();
-  });
-</script> -->
+</script>
+   <script>
+//  $(document).ready(function() {
+//    $("#jm_portfolio_details").Editor();
+//  });
+</script> 
 </head>
 <body class="w3-wide">
 
@@ -323,15 +323,23 @@ switch ($selected_profile_type) {
                     </p>
                     <p>
                      <?php 
-                     if($details['expected_salary']==''){
-                      echo 'N/A';
+                     if($details['expected_salary']=='' || $details['expected_salary']=='0'){
+                      echo '';
                     }
                     else{
                       ?>
-                      <label class="w3-small"><i class="fa fa-money w3-medium"></i> Expected Salary : <span class="w3-text-grey"><?php echo $details['expected_salary']; ?></span></label>
+                      <label class="w3-small"><i class="fa fa-money w3-medium"></i> Expected Salary : <span class="w3-text-grey"><?php echo $details['expected_salary']; ?></span></label><br>
                       <?php } ?>
-                      <br>
-                      <label class="w3-small"><i class="fa fa-linkedin-square w3-medium"></i> Linked In :</label> <a class="w3-text-blue" href="<?php echo $details['jm_linkedIn_url']; ?>"><span><?php echo $details['jm_linkedIn_url']; ?></span></a>
+                      
+
+                      <?php 
+                     if($details['expected_salary']=='' || $details['expected_salary']=='0'){
+                      echo '';
+                    }
+                    else{
+                      ?>
+                      <label class="w3-small"><i class="fa fa-linkedin-square w3-medium"></i> Linked In :</label> <a class="w3-text-blue" href="<?php echo $details['jm_linkedIn_url']; ?>"><span><?php echo $details['jm_linkedIn_url']; ?></span></a><br>
+                      <?php } ?>
                     </p>
                   </div>
                 </div>

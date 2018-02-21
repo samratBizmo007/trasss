@@ -35,11 +35,48 @@ class Dashboard extends CI_Controller
         $data['freelancer_ratings'] = Dashboard::getAverageRatingsOf_Freelancer();
         $data['FreelancEmployer_ratings'] = Dashboard::getAverageRatingsOf_FreelancEmployer();
         $data['Testimonials_For_Freellancer'] = Dashboard::getTestomonials();
+         $data['job_bookmarks'] = Dashboard::show_BookmarkedJobs();
+         //print_r($data['job_bookmarks']);die();
         $this->load->view('includes/header.php');
         $this->load->view('pages/profile/dashboard', $data);
         $this->load->view('includes/footer.php');
     }	
 //-----------------------------------------------------------------------------
+//-------------function for bookmark job--------------//
+ public function show_BookmarkedJobs() {
+        $user_id = $this->session->userdata('user_id');
+        $path = base_url();
+        $url = $path . 'api/Dashboard_api/show_BookmarkedJobs?user_id='.$user_id;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+         $bookmark = "";
+        foreach ($response['status_message'] as $value) {
+            $bookmark = $value['jm_job_bookmarks'];
+        }
+        if ($bookmark != "") {
+            // echo $bookmark;die();
+            $a = array();
+            foreach (json_decode($bookmark) as $key) {
+                // $jm_project_id='1';
+                $path = base_url();
+                $url = $path . 'api/Dashboard_api/get_job?job_id='.$key;
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_HTTPGET, true);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $response_json = curl_exec($ch);
+                curl_close($ch);
+                $response = json_decode($response_json, true);
+
+                $a[] = $response;
+            }
+            return $a;
+        }
+    }
+//---------end function----//
 //------------this fun is used to get the details of rating of freelancer----------------------//
   public function getAverageRatingsOf_Freelancer(){
     $user_id=$this->session->userdata('user_id');

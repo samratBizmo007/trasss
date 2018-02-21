@@ -19,7 +19,7 @@ class Login extends CI_Controller
 			if((isset($_GET['payload'])) && ($_GET['payload'] !='')){
 				extract($_GET);
 
-				switch($payload){
+				switch($_GET['payload']){
 					case 'ApplyJob':
 
 					$applyJob_cookie= array( 
@@ -30,14 +30,14 @@ class Login extends CI_Controller
 					$this->input->set_cookie($applyJob_cookie);
 					break;
 
-					case 'ApplyJob':
+					case 'ViewProject':
 
 					$viewProject_cookie= array( 
 						'name'   => 'Payload', 
-						'value'  => 'ViewProject|'.base64_decode($value), 
+						'value'  => 'ViewProject|'.$value, 
 						'expire' => '1200' 
 					);
-					$this->input->set_cookie($applyJob_cookie);
+					$this->input->set_cookie($viewProject_cookie);
 					break;
 
 					default:
@@ -385,7 +385,7 @@ class Login extends CI_Controller
 			if($payloadCookie!=''){
 				$arr=explode('|', $payloadCookie);
 				
-//echo $arr[0];die();
+//echo $arr[1];die();
 				switch($arr[0]){
 					case 'ApplyJob':
 
@@ -411,14 +411,28 @@ class Login extends CI_Controller
 					$this->input->set_cookie($cookie);
 					break;
 
-					case 'PostProject':
+					case 'ViewProject':
 
-					// $postProject_cookie= array( 
-					// 	'name'   => 'Payload', 
-					// 	'value'  => 'PostProject|'.base64_decode($value), 
-					// 	'expire' => '1200'
-					// );
-					// $this->input->set_cookie($postProject_cookie);
+					echo '
+					<div class="alert alert-success">
+					<strong>'.$response['status_message'].'</strong> 
+					</div>
+					<script>
+					window.setTimeout(function() {
+						$(".alert").fadeTo(500, 0).slideUp(500, function(){
+							$(this).remove(); 
+						});
+						window.location.href="'.base_url().'project/view_project/'.$arr[1].'";
+					}, 100);
+					</script>
+					';	
+					//echo $arr[1];die();					
+					$cookie= array( 
+						'name'   => 'Payload', 
+						'value'  => '', 
+						'expire' => '0' 
+					);
+					$this->input->set_cookie($cookie);
 					break;
 
 					default:

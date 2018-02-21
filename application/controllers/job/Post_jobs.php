@@ -137,7 +137,7 @@ print_r($response_json);
             //echo json_encode($skill);
         $salary='';
         if($Salary_range == 0){
-            $Salary_range = 'As Per Company Norms';
+            $Salary_range = 'Not Disclosed';
         }
         $data = $_POST;
         
