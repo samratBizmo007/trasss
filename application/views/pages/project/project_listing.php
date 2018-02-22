@@ -232,7 +232,7 @@ if(isset($_GET['jm_job_type'])){
         <div>
         <p>
         <div style="max-height:200px;overflow: hidden">
-        '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'"><span style="color:#02b28b"><i>more</i></span></a>
+        '.$key['jm_project_description'].'<a class="w3-margin-left" href="'.$view_link.'"><span style="color:#02b28b"><i>more</i></span></a>
         </div>
         </p>
         </div>

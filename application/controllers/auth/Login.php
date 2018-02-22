@@ -98,7 +98,7 @@ class Login extends CI_Controller
 			'register_email' => $register_email,
 			'register_profile_type'	=> $register_profile_type
 		);
-
+		//print_r($data);die();
 		$path=base_url();
 		$url = $path.'api/auth_api/register';
 		$ch = curl_init($url);
@@ -246,19 +246,19 @@ class Login extends CI_Controller
 		$this->session->unset_userdata(array("user_id"=>"","user_name"=>"","profile_type"=>"","selected_profile_type"=>""));
 		$this->session->sess_destroy();
 		
-		$cookie= array( 
-						'name'   => 'cookie_uname', 
-						'value'  => '', 
-						'expire' => '0' 
-					);
-					$this->input->set_cookie($cookie);
-		
-		$password= array( 
-						'name'   => 'cookie_pass', 
-						'value'  => '', 
-						'expire' => '0' 
-					);
-					$this->input->set_cookie($password);
+//		$cookie= array( 
+//						'name'   => 'cookie_uname', 
+//						'value'  => '', 
+//						'expire' => '0' 
+//					);
+//					$this->input->set_cookie($cookie);
+//		
+//		$password= array( 
+//						'name'   => 'cookie_pass', 
+//						'value'  => '', 
+//						'expire' => '0' 
+//					);
+//					$this->input->set_cookie($password);
 					
 		redirect(base_url());
 		
@@ -315,9 +315,11 @@ class Login extends CI_Controller
 		}
 
 		$remember_me='0';
+		//print_r($login_remember);
 		if(isset($login_remember)){
 			$remember_me='1';
 		}
+		
 		//Connection establishment, processing of data and response from REST API		
 		$data=array(
 			'login_profile_type' =>$login_profile_type,
@@ -326,7 +328,7 @@ class Login extends CI_Controller
 			'login_password'	=> $login_password,
 			'login_remember'	=> $remember_me
 		);
-		
+		//print_r($data);die();
 		$path=base_url();
 		$url = $path.'api/auth_api/login';
 		$ch = curl_init($url);
@@ -355,23 +357,34 @@ class Login extends CI_Controller
 			//start session of user if login success
 			$this->session->set_userdata($session_data);
 
-			
-		$remember_me='0';
+			//print_r($remember_me);
+		//$remember_me='0';
+		//print_r($login_remember);
 		  if(isset($login_remember)){
+		  	$cookie_profile = array(
+		  				'name'   => 'cookie_profile', 
+						'value'  => $response['profile_type'], 
+						'expire' => '86400' 
+		  	);
+		  		$this->input->set_cookie($cookie_profile);
+		  	
 		  	$cookie= array( 
 						'name'   => 'cookie_uname', 
 						'value'  => $response['user_name'], 
-						'expire' => '360000' 
+						'expire' => '86400' 
 					);
+					//print_r($cookie);die();
 					$this->input->set_cookie($cookie);
 					
-			$password= array(
-						'name' => 'cookie_pass',
-						'value' => 'login_password',
-						'expire' => '360000'
-			
-			);
+//			$password= array(
+//						'name' => 'cookie_pass',
+//						'value' => $login_password,
+//						'expire' => '360000'
+//			
+//			);
+			//print_r($password);die();
 			$this->input->set_cookie($password);
+			//print_r(set_cookie($password));die();
 //			$remember_me='1';
 //			$year = time() + 31536000;
 //			setcookie('remember_me', $_POST['login_username'], $year);
@@ -500,7 +513,7 @@ class Login extends CI_Controller
 			'login_password'	=> $login_password,
 			'login_remember'	=> $remember_me
 		);
-		
+		//print_r($data);die();
 		$path=base_url();
 		$url = $path.'api/auth_api/login';
 		$ch = curl_init($url);

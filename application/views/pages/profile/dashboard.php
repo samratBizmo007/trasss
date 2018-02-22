@@ -1495,9 +1495,9 @@ if ($profile_type == '') {
           </div>
         </div>
         <div class="w3-col l6 w3-padding-small " >
-        <div class="" style=" height: 350px; ">
          <label class="" style="">Previous Projects</label>
-         <div class="w3-col l12 w3-card w3-padding-small" id="freelance_previousProjects" style="height: 350px; overflow: auto;">
+         <div class="" style="height: 350px; overflow: auto;">
+         <div class="w3-col l12 w3-card w3-padding-small" id="freelance_previousProjects">
          </div>
          </div>
        </div>
@@ -1656,15 +1656,36 @@ if ($profile_type == 2) {
   <div class="w3-row">
     <div class="col-lg-1"></div>
     <div class="col-lg-10" id="myBookmark_div" >
-        <?php if($profile_type==1){?>
+        <?php if($profile_type==1){ ?>
             
         
       <h4>Bookmark Project</h4>
      
       <div class="" style=" height:350px; overflow: auto;">
    <?php 
+   		//print_r($view_bookmark);
+   		
       if(count($view_bookmark)!=0)
-        {?>
+        {
+//       check for closed bookmark projects 	
+        $bmark_status=array();
+   		foreach($view_bookmark as $bmark){
+   			if($bmark['status']=='500'){
+   				$bmark_status[]='1';
+   			}
+   			else{
+   				$bmark_status[]='0';
+   			}
+   		}
+   		
+   		if(!in_array('0', $bmark_status)){
+                 echo '  <div class="w3-col l12 w3-card" id="">
+                    <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>No Bookmark Available.</b></div>
+                  </div>';
+                     		}
+   	//	print_r($bmark_status);
+//   check for bookmarked closed project ends		
+         ?>
         
          <?php   
          $count=1;
@@ -1707,7 +1728,7 @@ if ($profile_type == 2) {
             }
           }
         }$count++;
-   ?> <?php }else{?>
+   ?> <?php }else{ ?>
                    <div class="w3-col l12 w3-card" id="">
                     <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>No Bookmark Available.</b></div>
                   </div>
@@ -1805,7 +1826,27 @@ if ($profile_type == 2) {
     
       <div class="" style=" height:350px; overflow: auto;">
    <?php         //print_r (count($job_bookmarks));die();
-      if (count($job_bookmarks)!=0) {?>
+     if(count($job_bookmarks)!=0)
+        {
+//       check for closed bookmark job 	
+        $bmarkjob_status=array();
+   		foreach($job_bookmarks as $bmark){
+   			if($bmark['status']=='500'){
+   				$bmarkjob_status[]='1';
+   			}
+   			else{
+   				$bmarkjob_status[]='0';
+   			}
+   		}
+   		
+   		if(!in_array('0', $bmarkjob_status)){
+                 echo '  <div class="w3-col l12 w3-card" id="">
+                    <div class=" w3-light-grey w3-text-grey w3-small w3-padding-small bluishGreen_bg" style ="text-align: center;"><b>No Bookmark Available.</b></div>
+                  </div>';
+                     		}
+   		//print_r($bmarkjob_status);
+     //      check for closed bookmark job end
+      	?>
         
          <?php   
          $count=1;
@@ -1818,7 +1859,7 @@ if ($profile_type == 2) {
            
            //  print_r($val);
             foreach ($val as $book) {
-
+				//print_r($book);die();
               ?>
               <div class="w3-col l12  w3-card " >
                 <div class="col-lg-2 col-xs-3">
@@ -1834,7 +1875,7 @@ if ($profile_type == 2) {
 
                 <div class="col-lg-2 col-xs-3 w3-center">
                     <label class="w3-tiny w3-text-grey">Posted time</label>
-                  <p><b><?php echo "posted ".timeago($book['jm_posting_date']);?></b></p>
+                  <p><b><?php echo "posted ".timeago($book['jm_posted_date']);?></b></p>
 
                 </div>
                 <div class="col-lg-3 col-xs-3 w3-center">

@@ -240,22 +240,23 @@ if((isset($_GET['payload'])=='ApplyJob') && ($_GET['payload'] !='') && ($_GET['v
 							<div class="col-lg-12" id="Login_RegisterDiv">
 								<form id="login_form" role="form" method='post' enctype='multipart/form-data' style="display: block;">
 									<div class="w3-col l12 " id="login_err"></div>
-									<div class="form-group">
+									<div class="form-group"><?php echo $cookie_profile;?>
 										<select name="login_profile_type" id="login_profile_type" tabindex="1" class="form-control">
 											<option class="w3-light-grey" selected <?php if($this->uri->segment(2)=='') echo 'selected'; ?> value="0">Select profile type</option>
-											<option class="<?php echo $hide_option_free; ?>" value="1" <?php if($this->input->get('profile', TRUE)==1) echo 'selected'; echo $disable_free;?>>Freelancer</option>
-											<option class="<?php echo $hide_option_freeEmployer; ?>" value="2" <?php if($this->input->get('profile', TRUE)==2) echo 'selected'; echo $disable_freeEmployer; ?>>Freelance Employer</option>
-											<option class="<?php echo $hide_option_jseeker; ?>" value="3" <?php if($this->input->get('profile', TRUE)==3) echo 'selected'; echo $disable_jseeker; ?>>Job Seeker</option>
-											<option class="<?php echo $hide_option_jemployer; ?>" value="4" <?php if($this->input->get('profile', TRUE)==4) echo 'selected'; echo $disable_jemployer; ?>>Job Employer</option>
+											<option class="<?php echo $hide_option_free; ?>" value="1" <?php if($_COOKIE['cookie_profile']=='1'){echo "selected"; }  if($this->input->get('profile', TRUE)==1) echo 'selected'; echo $disable_free;?>>Freelancer</option>
+											<option class="<?php echo $hide_option_freeEmployer; ?>" value="2" <?php if($_COOKIE['cookie_profile']==2){echo "selected"; } if($this->input->get('profile', TRUE)==2) echo 'selected'; echo $disable_freeEmployer; ?>>Freelance Employer</option>
+											<option class="<?php echo $hide_option_jseeker; ?>" value="3" <?php if($_COOKIE['cookie_profile']==3){echo "selected"; } if($this->input->get('profile', TRUE)==3) echo 'selected'; echo $disable_jseeker; ?>>Job Seeker</option>
+											<option class="<?php echo $hide_option_jemployer; ?>" value="4" <?php if($_COOKIE['cookie_profile']==4){echo "selected"; } if($this->input->get('profile', TRUE)==4) echo 'selected'; echo $disable_jemployer; ?>>Job Employer</option>
 										</select>
 									</div>
 									<div class="form-group">
+									
 										<input type="text" name="login_username" id="login_username" tabindex="2" class="form-control" placeholder="Username" value="<?php
-echo $_COOKIE['remember_me']; ?>" required>
+echo $_COOKIE['cookie_uname']; ?>" required>
 									</div>
 									<div class="form-group">
 										<input type="password" name="login_password" id="login_password" tabindex="3" class="form-control" placeholder="Password" value="<?php
-echo $_COOKIE['remember_me']; ?>" required>
+ ?>" required>
 									</div>
 									<div class="form-group text-center">
 										<input type="checkbox" tabindex="4" class="" name="login_remember"  id="login_remember">
@@ -316,7 +317,7 @@ echo $_COOKIE['remember_me']; ?>" required>
 										<input type="password" name="register_password" id="register_password" tabindex="4" class="form-control" placeholder="Password" minlength="8" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="register_confirm_password" id="register_confirm_password" tabindex="5" onkeyup="checkPassword();" class="form-control" maxlength="8" placeholder="Confirm Password" required>
+										<input type="password" name="register_confirm_password" id="register_confirm_password" tabindex="5" onkeyup="checkPassword();" class="form-control" minlength="8" placeholder="Confirm Password" required>
 									</div>
 									<div id="message"></div>
 									<div class="form-group">
@@ -336,11 +337,13 @@ echo $_COOKIE['remember_me']; ?>" required>
 	</div>
 	<script>
 		$(function() {
-
 			$('#login_form-link').click(function(e) {
 				$("#login_form").delay(100).fadeIn(100);
 				$("#register_form").fadeOut(100);
 				$("#forget_password").fadeOut(100);
+				//$('#mainBody').load(location.href + " #mainBody>*", ""); 
+				$('#login_form-link').html('<i class="fa fa-unlock-alt"></i> Login');
+				//window.location.reload();
 				$('#register_form-link').removeClass('active');
 				$(this).addClass('active');
 				e.preventDefault();
@@ -362,7 +365,6 @@ echo $_COOKIE['remember_me']; ?>" required>
 				$(this).addClass('active');
 				e.preventDefault();
 			});
-
 		});
 
 	</script>

@@ -405,6 +405,7 @@ $search_cat=$this->input->get('search_param', TRUE);
     var timeout = null;
     $('input[name="search"]').on('keyup',function(event){
       //alert("sujeet");
+      $('#showResult').html('<center><i class="fa fa-spinner fa-spin w3-jumbo w3-margin" style="font-size:24px;"></i></center>');  
       event.preventDefault();
       skill = $('#skills_filtered').val();
       var str = $('#strsearch').val();
@@ -421,9 +422,7 @@ $search_cat=$this->input->get('search_param', TRUE);
       if(str.length != 1 || event.keyCode != 32){
 
         timeout = setTimeout(function(){
-    $('#showResult').html('<center><i class="fa fa-spinner fa-spin w3-jumbo w3-margin" style="font-size:24px;"></i></center>');              
-
-         $.ajax({
+          $.ajax({
           url :BASE_URL+'jobseeker/explore_jobseeker/filterSeeker',
           type : 'POST',
           dataType : 'text',

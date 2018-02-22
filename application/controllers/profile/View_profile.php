@@ -31,9 +31,25 @@ class View_profile extends CI_Controller
 		$this->load->view('pages/profile/view_profile',$data);
 		$this->load->view('includes/footer.php');	
 
-	}	
-	
-	//--------------------add portfolio to profile-----------------------//
+	}
+        
+	public function getEmployer_Details(){
+        extract($_POST);
+        
+        $path = base_url();
+        $url = $path . 'api/Dashboard_api/getEmployer_Details?emp_id='.$emp_id.'&profile_type='.$profile_type;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+        print_r($response_json);
+        //echo $response;
+        //return $response;
+    }
+
+        //--------------------add portfolio to profile-----------------------//
 	public function add_portfolio()
 	{
 		$user_id=$this->session->userdata('user_id');

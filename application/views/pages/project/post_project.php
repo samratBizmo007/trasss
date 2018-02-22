@@ -134,7 +134,6 @@ error_reporting(E_ERROR | E_PARSE);
 								<a href="#" id="register_form-link">Register</a>
 							</div>
 						</div>
-						<hr>
 					</div>
 					<div class="panel-body">
 						<div class="row">
@@ -143,15 +142,15 @@ error_reporting(E_ERROR | E_PARSE);
 									<div class="w3-col l12 " id="login_err"></div>
 									<div class="form-group">
 										<select name="login_profile_type" id="login_profile_type" tabindex="1" class="form-control">
-											<option class="w3-red" selected <?php if($this->uri->segment(2)=='') echo 'selected'; ?> value="0">Select profile type</option>
+											<option class="w3-light-grey" selected <?php if($this->uri->segment(2)=='') echo 'selected'; ?> value="0">Select profile type</option>
 											<option value="2" selected>Freelance Employer</option>
 										</select>
 									</div>
 									<div class="form-group">
-										<input type="text" name="login_username" id="login_username" tabindex="2" class="form-control" placeholder="Username" value="">
+										<input type="text" name="login_username" id="login_username" tabindex="2" class="form-control" placeholder="Username" value="" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="login_password" id="login_password" tabindex="3" class="form-control" placeholder="Password">
+										<input type="password" name="login_password" id="login_password" tabindex="3" class="form-control" placeholder="Password" required>
 									</div>
 									<div class="form-group text-center">
 										<input type="checkbox" tabindex="4" class="" name="login_remember" id="login_remember">
@@ -160,7 +159,7 @@ error_reporting(E_ERROR | E_PARSE);
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="login_login_submit" id="login_login_submit" tabindex="5" class="form-control w3-blue btn btn-login" value="Log In">
+												<input type="submit" name="login_login_submit" id="login_login_submit" tabindex="5" class="form-control btn btn-login bluishGreen_bg" value="Log In">
 											</div>
 										</div>
 									</div>
@@ -168,40 +167,60 @@ error_reporting(E_ERROR | E_PARSE);
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="text-center">
-													<a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
+													<a href="#" tabindex="5" id="forget_link" class="forgot-password">Forgot Password?</a>
 												</div>
 											</div>
 										</div>
 									</div>
 								</form>
-								<form id="register_form" role="form" style="display: none;">
-									<div class="w3-col l12 " id="registration_err"></div>
+
+								<form id="forget_password" action="" method="post" role="form" style="display: none;">
 									<div class="form-group">
-										<select name="register_profile_type" id="register_profile_type" tabindex="1" class="form-control">
-											<option class="w3-red" selected <?php if($this->uri->segment(2)=='') echo 'selected'; ?> value="0">Select profile type</option>
-											<option value="1" <?php if($this->input->get('profile', TRUE)==1) echo 'selected'; ?>>Freelancer</option>
-											<option value="2" <?php if($this->input->get('profile', TRUE)==2) echo 'selected'; ?>>Freelance Employer</option>
-											<option value="3" <?php if($this->input->get('profile', TRUE)==3) echo 'selected'; ?>>Job Seeker</option>
-											<option value="4" <?php if($this->input->get('profile', TRUE)==4) echo 'selected'; ?>>Job Employer</option>
+										<select name="forget_profile_type" id="forget_profile_type" tabindex="1" class="form-control">
+											<option class="w3-light-grey" value="0">Select profile type</option>
+											<option class="" value="2" selected>Freelance Employer</option>
 										</select>
 									</div>
 									<div class="form-group">
-										<input type="text" name="register_username" id="register_username" tabindex="2" class="form-control" placeholder="Username" value="">
+										<input type="email" name="forget_email" id="femail" tabindex="1" class="form-control" placeholder="Enter your Email Address" value="" required>
+									</div>
+									<div class="col-sm-6 col-sm-offset-3">
+										<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn bluishGreen_bg" value="Submit">
+									</div>
+								</form>
+
+								<form id="register_form" role="form" style="display: none;">
+									<div class="w3-col l12 " id="registration_err"></div>
+									<div class="form-group">
+										<select name="register_profile_type" id="register_profile_type" tabindex="1" class="form-control" required>
+											<option class="w3-light-grey" selected <?php if($this->uri->segment(2)=='') echo 'selected'; ?> value="0">Select profile type</option>
+											<option value="2" selected>Freelance Employer</option>
+
+											<!-- <option class="w3-light-grey" selected <?php if($this->uri->segment(2)=='') echo 'selected'; ?> value="0">Select profile type</option>
+											<option value="1" <?php if($this->input->get('profile', TRUE)==1) echo 'selected'; ?>>Freelancer</option>
+											<option value="2" <?php if($this->input->get('profile', TRUE)==2) echo 'selected'; ?>>Freelance Employer</option>
+											<option value="3" <?php if($this->input->get('profile', TRUE)==3) echo 'selected'; ?>>Job Seeker</option>
+											<option value="4" <?php if($this->input->get('profile', TRUE)==4) echo 'selected'; ?>>Job Employer</option> -->
+										</select>
 									</div>
 									<div class="form-group">
-										<input type="email" name="register_email" id="register_email" tabindex="4" class="form-control" placeholder="Email address">
+										<input type="text" name="register_username" id="register_username" tabindex="2" class="form-control" placeholder="Username" value="" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="register_password" id="register_password" tabindex="4" class="form-control" placeholder="Password">
+										<input type="email" name="register_email" id="register_email" tabindex="4" class="form-control" placeholder="Email address" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="register_confirm_password" id="register_confirm_password" tabindex="5" onkeyup="checkPassword();" class="form-control" placeholder="Confirm Password">
+										<input type="password" name="register_password" id="register_password" tabindex="4" class="form-control" placeholder="Password" minlength="8" required>
 									</div>
+									<div class="form-group">
+										<input type="password" name="register_confirm_password" id="register_confirm_password" tabindex="5" onkeyup="checkPassword();" class="form-control" minlength="8" placeholder="Confirm Password" required>
+									</div>
+
 									<div id="message"></div>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="register_register_submit" id="register_register_submit" tabindex="5" class="form-control w3-blue btn btn-register" value="Register Now">
+												<input type="submit" name="register_register_submit" id="register_register_submit" tabindex="5" class="form-control  btn btn-register bluishGreen_bg" value="Register Now">
 											</div>
 										</div>
 									</div>
@@ -219,6 +238,8 @@ error_reporting(E_ERROR | E_PARSE);
 			$('#login_form-link').click(function(e) {
 				$("#login_form").delay(100).fadeIn(100);
 				$("#register_form").fadeOut(100);
+				$("#forget_password").fadeOut(100);
+				$('#login_form-link').html('<i class="fa fa-unlock-alt"></i> Login');
 				$('#register_form-link').removeClass('active');
 				$(this).addClass('active');
 				e.preventDefault();
@@ -226,6 +247,16 @@ error_reporting(E_ERROR | E_PARSE);
 			$('#register_form-link').click(function(e) {
 				$("#register_form").delay(100).fadeIn(100);
 				$("#login_form").fadeOut(100);
+				$("#forget_password").fadeOut(100);
+				$('#login_form-link').removeClass('active');
+				$(this).addClass('active');
+				e.preventDefault();
+			});
+			$('#forget_link').click(function(e) {
+				$("#forget_password").delay(100).fadeIn(100);
+				$("#login_form").fadeOut(100);
+				$('#login_form-link').html('<i class="fa fa-unlock"></i> Forget Password');
+				$('#register_form-link').html('');
 				$('#login_form-link').removeClass('active');
 				$(this).addClass('active');
 				e.preventDefault();
@@ -235,6 +266,39 @@ error_reporting(E_ERROR | E_PARSE);
 
 	</script>
 
+	<script>
+		$(function () {
+			$("#forget_password").submit(function (e) {
+				e.preventDefault();
+				dataString = $("#forget_password").serialize();
+
+				$("#spinnerDiv").html('<center><img width="70%" height="auto" src="'+BASE_URL+'css/logos/reg.gif"/></center>');
+				$.ajax({
+					type: "POST",
+					url: BASE_URL+"auth/login/get_forget_password",
+					dataType : 'text',
+					data: dataString,
+	            return: false, //stop the actual form post !important!
+	            success: function (data)
+	            {
+	            	//alert(data);
+	            	var key=JSON.parse(data);
+	            	
+	            	$("#spinnerDiv").html('');
+	            	if(key.status == 200){                    
+	            		
+	            		$('#Login_RegisterDiv').load(location.href + " #Login_RegisterDiv>*", ""); 
+	            		$("#messageDiv").html('<div class="alert alert-success" style="margin-bottom:5px"><strong>'+key.status_message+'</strong></div><div class="col-lg-12 alert alert-info alert-dismissable fade in"><a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a><span><strong><i class="fa fa-warning"></i></strong>Please Check your Email... We have sent your password on your Registered Email-ID..!</span></div>');	            		
+
+	            	}else{ 
+	            		$("#messageDiv").html('<div class="alert alert-danger" style="margin-bottom:5px"><strong>'+key.status_message+'</strong></div>');
+	            	}
+	            }
+	        });
+	        return false;  //stop the actual form post !important!
+	    });
+		});
+	</script>
 	<script>
 	//  -------------------REGISTER FORM------------------------ //
 	$(function () {
@@ -248,7 +312,7 @@ error_reporting(E_ERROR | E_PARSE);
 				data: dataString,
             return: false, //stop the actual form post !important!
             success: function (data){  
-            	alert(data); 
+            	//alert(data); 
             	var key=JSON.parse(data);
             	$("#spinnerDiv").html('');
             	if(key.status=='200'){
@@ -285,19 +349,19 @@ error_reporting(E_ERROR | E_PARSE);
             	$("#spinnerDiv").html('');
             	if(key.status=='200'){
             		var formData = new FormData($('#post_project')[0]);
-					formData.append('jm_project_file', $('input[type=file]')[0].files[0]);
+            		formData.append('jm_project_file', $('input[type=file]')[0].files[0]);
 
             		$.ajax({
-						type: "POST",
-						url: BASE_URL+"project/post_project_Controller/get_allproject",
-						data:  formData,
-						contentType: false,
-						cache: false,
-						processData:false,
-		               	success: function (data){
-		               		$.alert(data);
-		               	}
-		            });
+            			type: "POST",
+            			url: BASE_URL+"project/post_project_Controller/get_allproject",
+            			data:  formData,
+            			contentType: false,
+            			cache: false,
+            			processData:false,
+            			success: function (data){
+            				$.alert(data);
+            			}
+            		});
             		// $("#session_values").load(location.href + " #session_values>*", "");
             		// $("#postProject_div").show();
             		// $("#loginDiv_beforeLogin").hide();
@@ -377,17 +441,17 @@ error_reporting(E_ERROR | E_PARSE);
 				</div>
 
 				<div class="col-lg-12 w3-margin-top">
-				<div class="form-group">
-					<label class="project-legend">How do you want to pay?</label>
-					<span class="w3-text-red">*</span>
+					<div class="form-group">
+						<label class="project-legend">How do you want to pay?</label>
+						<span class="w3-text-red">*</span>
 
-					<label class="container" style="padding-left:30px">Fixed price project
-						<input  type="radio" class="checkmark" name="jm_project_type" checked="checked" value="Fixed_Price">
-					</label>
-					<label class="container" style="padding-left:30px">Hourly project
-						<input  type="radio" id="jm_project_type" class="checkmark" value="Hourly" name="jm_project_type" required >
-					</label>
-				</div>
+						<label class="container" style="padding-left:30px">Fixed price project
+							<input  type="radio" class="checkmark" name="jm_project_type" checked="checked" value="Fixed_Price">
+						</label>
+						<label class="container" style="padding-left:30px">Hourly project
+							<input  type="radio" id="jm_project_type" class="checkmark" value="Hourly" name="jm_project_type" required >
+						</label>
+					</div>
 				</div>
 				<div class="col-md-12">
 					<div class="form-group">
@@ -501,10 +565,10 @@ error_reporting(E_ERROR | E_PARSE);
 					contentType: false,
 					cache: false,
 					processData:false,
-	               	success: function (data){
-	               		$.alert(data);
-	               	}
-	            });
+					success: function (data){
+						$.alert(data);
+					}
+				});
 			}
          return false;  //stop the actual form post !important!
      });

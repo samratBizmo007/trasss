@@ -34,7 +34,8 @@ public function filterSeeker($data){
     if($data['mode']['mode'] == 'jobseeker_list'){ 
             //echo 'sujeet';exit;
             $cond = "";
-                        $cond .= " u.jm_profile_type = '3' ";
+            $join_tabs='jm_user_tab as u join jm_userprofile_tab as ut on(ut.jm_user_id = u.jm_user_id)';
+            $cond .= " u.jm_profile_type = '3' ";
 
             if($data['fileds']){
                 //print_r($data);die();
@@ -47,6 +48,7 @@ public function filterSeeker($data){
                         
                         if($valArr[1] != 'LIKE'){
                             $cond .= "AND us.".$k." ".$valArr[1]." '[".$valArr[0]."]' ";
+                            $join_tabs='jm_user_tab as u join jm_userskills_tab as us join jm_userprofile_tab as ut on(u.jm_user_id = us.jm_user_id AND ut.jm_user_id = u.jm_user_id)';
                         }else{
                         if($count==1){
                             $cond .= "AND (ut.".$k." ".$valArr[1]." '%".$valArr[0]."%'  ";
@@ -63,8 +65,8 @@ public function filterSeeker($data){
                 
                 //echo $cond;exit;
                 
-                $query = "SELECT * FROM jm_user_tab as u join jm_userskills_tab as us join jm_userprofile_tab as ut on(u.jm_user_id = us.jm_user_id AND ut.jm_user_id = u.jm_user_id) WHERE $cond ORDER BY u.jm_username ASC";
-                echo $query;die();
+                $query = "SELECT * FROM $join_tabs WHERE $cond ORDER BY u.jm_username ASC";
+                //echo $query;die();
             //exit;
                 $q=$this->db->query($query);  
                 // $this->db->order_by('jm_project_id', 'DESC');

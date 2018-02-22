@@ -67,18 +67,21 @@ switch ($profile_type) {
 <body class="">
   <?php 
   $user_feedbackCount=0;
+ // print_r($all_userFeedback);
   if($all_userFeedback['status']==200){
     $user_feedbackCount=count($all_userFeedback['status_message']);
   }
   ?>
   <?php
+  //print_r($all_userDetails);
   if($all_userDetails['status']==200){
     foreach ($all_userDetails['status_message'] as $details) {
+        //print_r($details);
             if ($details['jm_user_name']=='')
             {
                 ?><div class="w3-col l12 w3-margin-top container">              
                     <div class="w3-center">
-                         <span><strong>Please Update your Profile</strong></span>
+                         <span><strong>Please Update your Profile Before Share..!</strong></span>
                      </div>
                     <div class="w3-center">
                          <span> Go To: dashboard -> profile ->Edit Profile</span>  
@@ -120,12 +123,13 @@ switch ($profile_type) {
 
             if($all_userInfo['status']=='200'){
               foreach ($all_userInfo['status_message'] as $key) {
+                  //print_r($key);
                 $user_name=$key['jm_username'];
                 $avg_rating=$key['jm_avg_rating'];
                 $membership_rating=$key['jm_membership_rating'];
                 $project_cost=$key['jm_project_cost'];
                 $project_completed=$key['jm_project_completed'];
-
+                $joiningdate = $key['joining_date'];
                 if($key['payment_verified']!=0){
                   $payment_verified='w3-green';
                   $payment_verified_text='Verified';
@@ -171,8 +175,8 @@ switch ($profile_type) {
                       <?php 
                       if($details['jm_userCity']!=''){
                         ?>
-                        <span class="w3-small"><i class="w3-large fa fa-map-marker"></i> <?php echo $details['jm_userCity'].', '.$details['jm_userState'].', '.$details['jm_userCountry']; ?>.</span><br>
-                        <span class="w3-tiny w3-text-grey">Member since <?php echo date('M d,Y', strtotime($details['joining_date'])); ?>.</span>
+                        <span class="w3-small"><i class="w3-large fa fa-map-marker"></i> <?php echo $details['jm_userCity'].', '.$details['jm_userState'].', '.$all_userDetails['country']; ?>.</span><br>
+                        <span class="w3-tiny w3-text-grey">Member since <?php echo date('M d,Y', strtotime($joiningdate)); ?>.</span>
                         <?php } 
                         else{
                           echo '<span class="w3-small"><i class="w3-large fa fa-map-marker"></i> where are you from?</span><br>
@@ -661,6 +665,8 @@ switch ($profile_type) {
         <!-- div ended -->
 
         <!-- div for show feedback and reviews row -->
+        <?php if($profile_type == 1 || $profile_type == 2) {?>
+        <!-- div for show feedback and reviews row -->
         <div class="w3-row w3-margin-bottom w3-text-black">
           <div class="w3-col l12 w3-padding">
             <br>
@@ -675,43 +681,51 @@ switch ($profile_type) {
 
               <div class="w3-col l12">
                 <?php 
+                
                 if($all_userFeedback['status']!=200){
                   echo '<center class="w3-light-grey w3-padding"><label class="w3-medium w3-text-grey">'.$all_userFeedback['status_message'].'</label></center>';
                 }                    
                 else {
                   foreach ($all_userFeedback['status_message'] as $key) {
+                      //print_r($key);
                     ?>
                     <div class="w3-col l6 w3-padding-small w3-margin-bottom">
-                      <div class="w3-col l12 w3-border w3-padding ">
+                      <div class="w3-col l12 w3-card-2 w3-padding ">
                         <div class="w3-col l2">
-                          <div class="w3-col l12 w3-light-grey w3-circle w3-margin-top feedback_pic bg_imageConfig" style="background-image: url('<?php echo base_url(); ?>images/default_male.png');"></div>
+                          <div id="image_<?php echo $key['jm_project_id']; ?>" class="w3-col l12 s3 w3-light-grey w3-circle w3-margin-top feedback_pic bg_imageConfig" style="background-image: url('<?php echo base_url(); ?>images/default_male.png');"></div>
                         </div>
                         <div class="w3-col l10">
                           <div class="w3-col l12 w3-padding">
-                            <div class="w3-col l12" style="height: 120px;overflow: hidden">
+                            <div class="w3-col l12 w3-padding-bottom" style="height: 100px;overflow: hidden">
                               <h5><?php echo $key['jm_project_title'] ?></h5>
-                              <p class="w3-small w3-text-grey" ><i class="fa fa-quote-left">
-                                &nbsp;<?php echo $key['jm_project_description'] ?>.&nbsp;<i class="fa fa-quote-right"></i></i>
+                              <p class="w3-medium w3-text-grey" ><i class="fa fa-quote-left">
+                                &nbsp;<?php echo $key['jm_feedback_comment']; ?>.&nbsp;<i class="fa fa-quote-right"></i></i>
                               </p>
                             </div>
-                            <div class="w3-col l12">
-                              <div class="w3-col l7">
-                                <span class="w3-tiny"><i>By Demo_user on December 2017.</i></span>
+                              <script>
+                                $(document).ready(function() {
+                                var profile_type = <?php echo $profile_type; ?>;
+                                if(profile_type == 1){
+                                    getEmployer_Details('<?php echo $key['jm_emp_id']; ?>','<?php echo $key['jm_project_id']; ?>','<?php echo $profile_type; ?>');
+                                }else{
+                                    getEmployer_Details('<?php echo $key['jm_freelance_id']; ?>','<?php echo $key['jm_project_id']; ?>','<?php echo $profile_type; ?>');
+                                }
+                                });
+                              </script>
+                            <div class="w3-col l12 w3-margin-top">
+                              <div class="w3-col l7" id="emaployerDetails_<?php echo $key['jm_project_id']; ?>">
+<!--                                <span class="w3-tiny" id=""><i>By Demo_user on December 2017.</i></span>-->
                               </div>
-                              <div class="w3-col l5">
-                                <span class="w3-small"><i class="w3-large fa fa-map-marker"></i> Pune, India.</span><br>
+                              <div class="w3-col l5" id="employerCity_<?php echo $key['jm_project_id']; ?>">
+<!--                                <span class="w3-small"><i class="w3-large fa fa-map-marker"></i> Pune, India.</span><br>-->
                               </div>
                             </div>
-                            <div class="w3-col l5 w3-padding-top">
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star-o"></span>
-                              <span class="fa fa-star-o"></span>
-                              <span class="badge">4.8</span><br>
+                            <div class="w3-col l5 w3-padding-top" id="employerRatings_<?php echo $key['jm_project_id']; ?>">
+                              <span class="stars" id="rating_<?php echo $key['jm_project_id'];?>" data-rating="" data-num-stars="5" ></span><br>
+                              <span class="badge"></span><br>
                             </div>
                             <div class="w3-col l7 w3-padding-top">
-                              <span class="w3-small"><i class="fa fa-inr"></i> 30 INR/hr</span><br>
+                              <span class="w3-small"><i class="fa fa-inr"></i> <?php echo $details['jm_ratePerHr']; ?> INR/hr</span><br>
                             </div>
                           </div>
                         </div>
@@ -728,7 +742,9 @@ switch ($profile_type) {
             <div class="col-lg-2"></div>       
           </div>
         </div>
+        <?php } ?>
         <!-- div ended -->
+
         <?php 
       }
     }
@@ -737,3 +753,72 @@ switch ($profile_type) {
 
   </body>
   </html>
+<script>
+  function getEmployer_Details(emp_id,project_id,profile_type){
+      //alert(emp_id);
+    $.ajax({
+    type: "POST",
+    url: "<?php echo base_url(); ?>profile/View_profile/getEmployer_Details",
+    dataType: "text",
+    data: {
+      emp_id: emp_id,
+      project_id: project_id,
+      profile_type: profile_type
+    },
+    cache: false,
+    success: function(data) {
+        //alert(data);
+      //('#SkillId_'+job_id).html('');       
+      var key=JSON.parse(data);
+      for(i=0; i< key.length; i++){   
+      var userName = '';
+      if(key[i].jm_user_name == ''){
+         userName = 'N/A'; 
+      }else {
+         userName = key[i].jm_user_name; 
+      }
+      var postingDate = '';
+      if(key[i].jm_posting_date == ''){
+         postingDate = 'N/A'; 
+      }else {
+         postingDate = key[i].jm_posting_date; 
+      }
+      var rating = '';
+      if(key[i].freelancerRatings == ''){
+         rating = 0; 
+      }else {
+         rating = parseFloat(key[i].freelancerRatings).toFixed(1); 
+      }
+      var image = '';
+      if(key[i].jm_profile_image == ''){
+         image = 'images/default_male.png'; 
+      }else {
+         image = key[i].jm_profile_image; 
+      }
+      $('#emaployerDetails_'+project_id).html('<span class="w3-tiny"><i>By '+ userName +' on '+ postingDate +'.</i></span>');
+         $('#employerCity_'+project_id).html('<span class="w3-small"><i class="w3-large fa fa-map-marker"></i> '+key[i].jm_userCity+' .</span><br>');
+         $('#employerRatings_'+project_id).html('<span class="stars" data-rating='+rating+' data-num-stars="5" ></span><br><span class="badge"> '+rating+' </span><br>');
+         $('#image_'+project_id).css("background-image", "url("+BASE_URL+""+image+")");
+         rate_stars();
+        }
+      }
+    });
+  }
+  </script>
+   <!-- script to dispaly stars -->
+                        <script>
+                 function rate_stars(){
+                          $.fn.stars = function() {
+                            return $(this).each(function() {
+                              var rating = $(this).data("rating");
+                              var numStars = $(this).data("numStars");
+                              var fullStar = new Array(Math.floor(rating + 1)).join('<i class="fa fa-star" style="margin-right:3px"></i>');
+                              var halfStar = ((rating%1) !== 0) ? '<i class="fa fa-star-half-empty" style="margin-right:3px"></i>': '';
+                              var noStar = new Array(Math.floor(numStars + 1 - rating)).join('<i class="fa fa-star-o" style="margin-right:3px"></i>');
+                              $(this).html(fullStar + halfStar + noStar);
+                            });
+                          }
+                          $('.stars').stars();
+                          }
+                        </script>
+                        <!-- script to dispaly stars ends-->

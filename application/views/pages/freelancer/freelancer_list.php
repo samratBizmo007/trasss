@@ -508,11 +508,11 @@ $search_cat=$this->input->get('search_param', TRUE);
         skill=skill_selected;
       }
       else{
-        // ----------check skill already added or not
-        if(skill.includes(skill_selected))
-        {
-          return false; 
-        }
+        // // ----------check skill already added or not
+        // if(skill.includes(skill_selected))
+        // {
+        //   return false; 
+        // }
         
         skill = skill+'|'+skill_selected;
       }
@@ -598,7 +598,7 @@ function delSkill(id){
   }
   
   var str = $('#strsearch').val();
-
+  $('#showResult').html('<center><i class="fa fa-spinner fa-spin w3-jumbo w3-margin" style="font-size:24px;"></i></center>');
   timeout = setTimeout(function(){
    $.ajax({
     url :BASE_URL+'project/project_listing/filterProject',

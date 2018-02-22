@@ -266,7 +266,7 @@ public function sort_projectb_type()
     //print_r($data);die();
     $result['result'] = $this->project->filterProject($data);
     $result['user_details']=Project_listing::get_userDetails();
-    //echo '<pre>';print_r($result);die();
+    //echo '<pre>';print_r($result['result']);die();
     if($result['result'] == 'N/A'){
       echo '
       <div class="w3-col 12 w3-padding w3-margin">              

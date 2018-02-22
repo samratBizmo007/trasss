@@ -10,7 +10,7 @@ class Explore_jobseeker extends CI_Controller {
     public function __construct() {
         parent::__construct();
         
-        $this->load->model('Jobseeker_model/Jobseeker_list_model');
+        $this->load->model('jobseeker_model/Jobseeker_list_model');
         // //start session		
         // $user_id = $this->session->userdata('user_id');
         // $user_name = $this->session->userdata('user_name');

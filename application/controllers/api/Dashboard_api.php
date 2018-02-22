@@ -19,6 +19,11 @@ class Dashboard_api extends REST_Controller
 	// 	return $this->response($result);			
 	// }
 	//---------------------USER LOGIN END------------------------------//
+        public function getEmployer_Details_get(){
+            extract($_GET);
+            $result = $this->dashboard_model->getEmployer_Details($emp_id,$profile_type);
+	    return $this->response($result);
+        }
         public function get_job_get(){
             extract($_GET);
             $result = $this->dashboard_model->get_job($job_id);
@@ -55,7 +60,7 @@ class Dashboard_api extends REST_Controller
 	//-------------------------------------------------------------//
 	public function addRow_get(){
 		extract($_GET);
-		$result = $this->dashboard_model->addRow($user_id);
+		$result = $this->dashboard_model->addRow($user_id,$profile_type);
 		return $this->response($result);			
 	}
 	//---------------------ALL SKILLS END------------------------------//

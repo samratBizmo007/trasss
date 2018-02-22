@@ -126,9 +126,10 @@ class Dashboard extends CI_Controller
 
   public function addRow(){
     $user_id=$this->session->userdata('user_id');
-
+    $profile_type=$this->session->userdata('profile_type');
+    
     $path = base_url();
-    $url = $path . 'api/Dashboard_api/addRow?user_id='.$user_id;
+    $url = $path . 'api/Dashboard_api/addRow?user_id='.$user_id.'&profile_type='.$profile_type;
         //echo $url;die();
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HTTPGET, true);
