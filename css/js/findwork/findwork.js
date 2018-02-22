@@ -32,6 +32,7 @@ $(document).ready(function(){
 	setUserSkill();//end of user skill
 	
 	$('#hit').on('click',function(event){
+		 $('#showResult').html('<center><i class="fa fa-spinner fa-spin w3-jumbo w3-margin" style="font-size:24px;"></i></center>');
 		event.preventDefault();
 		var str = $('#term').val();
 
@@ -176,6 +177,7 @@ $(document).ready(function(){
 	});
 
 	$('input[name="search"]').on('keyup',function(event){
+		 $('#showResult').html('<center><i class="fa fa-spinner fa-spin w3-jumbo w3-margin" style="font-size:24px;"></i></center>');
 		event.preventDefault();
 		skill = $('#skills_filtered').val();
 		//alert(skill);
@@ -235,6 +237,7 @@ $(document).ready(function(){
 	});
 
 	$('input[name="rangetype"]').on('change',function(event){
+		 $('#showResult').html('<center><i class="fa fa-spinner fa-spin w3-jumbo w3-margin" style="font-size:24px;"></i></center>');
 		event.preventDefault();
 		skill = $('#skills_filtered').val();
 		var rang = $('#myRange').val();
@@ -292,6 +295,7 @@ $(document).ready(function(){
 	});
 
 	$('select[name="searchby"]').on('change',function(event){
+		 $('#showResult').html('<center><i class="fa fa-spinner fa-spin w3-jumbo w3-margin" style="font-size:24px;"></i></center>');
 		event.preventDefault();
 		skill = $('#skills_filtered').val();
 		var rang = $('#myRange').val();
