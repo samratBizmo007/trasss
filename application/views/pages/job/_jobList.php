@@ -91,12 +91,17 @@ if ($job_bookmarks['status'] == 200) {
                   <div class="w3-col l11 s11 m11">
                       <a href="<?php echo $apply_link;?>"><span class="bluishGreen_txt w3-padding-left w3-margin-right" style=" font-size: 25px;"><b><?php echo $key['jm_job_post_name']?></b></span></a>
                   </div> 
+
+                  <?php 
+                  if (($user_id != '') || ($user_name != '') || ($profile_type != '')) { ?> 
                   <div class="w3-col l1 s1 m1 w3-right w3-medium">
                       <a class="w3-right w3-padding-left" data-toggle="fa" onclick="add_bookmarkForJob('<?php echo $user_id; ?>','<?php echo $key['jm_jobpost_id']; ?>')" title="<?php echo $title; ?>">
                       <i id="job_<?php echo $key['jm_jobpost_id']; ?>" class="fa <?php echo $class; ?>" style="font-size:25px; color: black;">                                                       
                       </i>
                     </a>
-                  </div>  
+                  </div> 
+                   <?php } ?> 
+                    
                 </div>
 
                 <div class="row w3-col l12 w3-padding-left">

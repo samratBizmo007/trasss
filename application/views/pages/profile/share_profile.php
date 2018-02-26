@@ -97,10 +97,10 @@ switch ($profile_type) {
               // echo $details['jm_profile_image']; 
               $prof_image=base_url().$details['jm_profile_image'];
               if($details['jm_profile_image']==''){
-                echo '<div class="col-lg-12 w3-circle prof_pic bg_imageConfig" style="background-image: url(\''.base_url().'images/default_male.png\'); heigth: 130px; width: 130px;"></div>';
+                echo '<div class="col-lg-12 w3-circle prof_pic bg_imageConfig" style="background-image: url(\''.base_url().'images/default_male.png\'); max-height: 130px; width: 130px;"></div>';
               }              
               else{
-                echo '<div class="col-lg-12 w3-circle prof_pic bg_imageConfig" style="background-image: url(\''.base_url().$details['jm_profile_image'].'\'); heigth: 130px; width: 130px;"></div>';
+                echo '<div class="col-lg-12 w3-circle prof_pic bg_imageConfig" style="background-image: url(\''.base_url().$details['jm_profile_image'].'\'),url(\''.base_url().'images/default_male.png\'); height: 130px; width: 130px;"></div>';
               }
 
               ?>              
@@ -724,9 +724,11 @@ switch ($profile_type) {
                               <span class="stars" id="rating_<?php echo $key['jm_project_id'];?>" data-rating="" data-num-stars="5" ></span><br>
                               <span class="badge"></span><br>
                             </div>
+                           <?php if($profile_type == 1) {?>
                             <div class="w3-col l7 w3-padding-top">
                               <span class="w3-small"><i class="fa fa-inr"></i> <?php echo $details['jm_ratePerHr']; ?> INR/hr</span><br>
                             </div>
+                           <?php } ?>
                           </div>
                         </div>
                       </div>

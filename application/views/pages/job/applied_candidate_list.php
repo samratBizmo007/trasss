@@ -53,6 +53,7 @@ error_reporting(E_ERROR | E_PARSE);
         $posted_date = '';
         $isActive = '';
         foreach ($jobDetails['status_message'] as $key) {
+            //print_r($key);
             $job_id = $key['jm_jobpost_id'];
             $Postedby = $key['jm_user_id'];
             $profile_type = $key['jm_profile_type'];
@@ -150,11 +151,14 @@ error_reporting(E_ERROR | E_PARSE);
             <div class="w3-col l12 ">
                 <label class="w3-padding-small" style=""><h5 class="" style=" color: black;">Hired Candidate List</h5>
                  </label>
+                <?php if($isActive != 0){?>
+                <button class="btn btn-default w3-text-black w3-margin-right w3-right" onclick="CloseJob('<?php echo $job_id; ?>');" type="button" style=" margin-top: 7px;">Close Job</button>
+                <?php } ?>
                 <div class="w3-col l12 w3-padding-small">
                 <span class="w3-tiny w3-text-red">NOTE: List of Hired Candidates.</span>
                 </div>
               <div class="col-md-12 w3-padding-small w3-margin-bottom" id="">
-                            <div class="" id="candidate_Div" name="candidate_Div" style="max-height: 600px; overflow: scroll;">
+                            <div class="w3-col l12" id="candidate_Div" name="candidate_Div" style="max-height: 600px; overflow: scroll;">
                                 <table class="table table-striped table-responsive w3-small"> 
                                     <!-- table starts here -->
                                     <thead class="w3-text-white">
@@ -272,6 +276,24 @@ error_reporting(E_ERROR | E_PARSE);
     </body>
 </html>
 <script>
+function CloseJob(job_id){
+    $.confirm({
+      title: '<label class="w3-large w3-text-red"><i class="fa fa-envelope"></i> Delete Job.</label>',
+      content: '<span class="w3-medium">Do You really want to delete this Job?</span>',
+      buttons: {
+        confirm: function () {
+          $.ajax({
+            type:'get',
+            url:BASE_URL+'job/Job_listings/CloseJob?job_id='+job_id,                                    
+            success:function(data) {
+              $.alert(data);                          
+            }
+          });
+        },
+        cancel: function () {}
+      }
+    });
+  }    
  function FetchSkills(job_id, Skills) {
             $.ajax({
                 type: "POST",

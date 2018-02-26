@@ -205,10 +205,11 @@ public function numRows() {
 public function getAllJobs($limit, $offset) {
     $result = $this->db->select('*')
     ->from('jm_post_job')
-    ->where('is_active', 1)
+    ->where('is_active', '1')
     ->order_by('jm_posted_date', 'DESC')
     ->limit($limit, $offset)
     ->get();
+    //print_r($result);die();
 //$result = $this->db->query($SqlSelect);
     if ($result->num_rows() <= 0) {
         $response = array(
@@ -319,7 +320,7 @@ public function CloseJob($job_id){
     } else {
         $response = array(
             'status' => 500,
-            'status_message' => 'Records Not Closed...!');
+            'status_message' => 'Something Went Wrong...!');
     }
     return $response;
 }

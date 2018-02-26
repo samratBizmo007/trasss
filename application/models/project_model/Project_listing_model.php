@@ -106,7 +106,7 @@ class Project_listing_model extends CI_Model
 									$p_cond .= " AND $k ".$valArr[1]." '".$valArr[0]."' ";
 								}
 								else{
-									$p_cond .= "$k ".$valArr[1]." '[".$valArr[0]."]' AND ";
+									$p_cond .= "$k ".$valArr[1]." '".$valArr[0]."' AND ";
 								}
 							}
 						}
@@ -143,8 +143,8 @@ class Project_listing_model extends CI_Model
 					if($valArr[0] != ''){
 						
 						if($valArr[1] != 'LIKE'){
-							$cond .= "AND us.".$k." ".$valArr[1]." '[".$valArr[0]."]' ";
-							$join_tabs='jm_user_tab as u join jm_userskills_tab as us join jm_userprofile_tab as ut on(u.jm_user_id = us.jm_user_id AND ut.jm_user_id = u.jm_user_id)';
+							$cond .= "AND us.".$k." ".$valArr[1]." '".$valArr[0]."' ";
+							$join_tabs='jm_user_tab as u join jm_userSkills_tab as us join jm_userprofile_tab as ut on(u.jm_user_id = us.jm_user_id AND ut.jm_user_id = u.jm_user_id)';
 						}else{
 						if($count==1){
 							$cond .= "AND (ut.".$k." ".$valArr[1]." '%".$valArr[0]."%'  ";

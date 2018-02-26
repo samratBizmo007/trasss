@@ -352,12 +352,12 @@ public function addRow($user_id,$profile_type){
 
 //         // -------------add user entry in skill table------------------
 //  if($profile_type=='1' || $profile_type=='3'){
-//     $query_skilTab = "SELECT * FROM jm_userskills_tab WHERE jm_user_id='$user_id'";
+//     $query_skilTab = "SELECT * FROM jm_userSkills_tab WHERE jm_user_id='$user_id'";
 
 //     $resul_skilTabt = $this->db->query($query_skilTab);
 
 //     if ($result_skilTab->num_rows() <= 0) {
-//         $insert_query_skilTab = "INSERT INTO jm_userskills_tab(jm_user_id,jm_profile_type) values('$user_id','$profile_type')";
+//         $insert_query_skilTab = "INSERT INTO jm_userSkills_tab(jm_user_id,jm_profile_type) values('$user_id','$profile_type')";
 //         //echo $query; die();
 //         $this->db->query($insert_query_skilTab);
 //     }

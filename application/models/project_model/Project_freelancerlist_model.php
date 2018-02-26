@@ -11,7 +11,7 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
  
  	public function get_freelancinglist()
  	{
-			$query="SELECT * FROM jm_user_tab as user JOIN jm_userskills_tab as u JOIN jm_userprofile_tab as pro JOIN jm_freelancer_rating_table as f ON u.jm_user_id=pro.jm_user_id AND u.jm_user_id=f.jm_freelancer_id AND u.jm_profile_type=pro.jm_profile_type WHERE u.jm_profile_type='1' ";
+			$query="SELECT * FROM jm_user_tab as user JOIN jm_userSkills_tab as u JOIN jm_userprofile_tab as pro JOIN jm_freelancer_rating_table as f ON u.jm_user_id=pro.jm_user_id AND u.jm_user_id=f.jm_freelancer_id AND u.jm_profile_type=pro.jm_profile_type WHERE u.jm_profile_type='1' ";
 			//echo $query;die();
 			
 			$result=$this->db->query($query);
@@ -113,7 +113,7 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
  	
  	public function getUser_skill($user_id,$profile_type)
  	{
- 		$query = "SELECT * FROM jm_userskills_tab WHERE jm_user_id='$user_id' AND jm_profile_type='$profile_type'";
+ 		$query = "SELECT * FROM jm_userSkills_tab WHERE jm_user_id='$user_id' AND jm_profile_type='$profile_type'";
 		//echo $query;die();
 		$result=$this->db->query($query); 
 		//print_r($result);die();

@@ -19,10 +19,9 @@ $(function () {
 //-------------------fucntion to post portfolio-----------------//
 $(function () {
   $("#post_form").submit(function (e) {
-    var $textarea = $("#jm_portfolio_details"); 
-    $textarea.text($textarea.richText("getText")); 
+    var textarea = $("#jm_portfolio_details"); 
+    //$textarea.text($textarea.richText("getText")); 
     dataString = $("#post_form").serialize();
-
     e.preventDefault();
     $.ajax({
       type: "POST",
@@ -35,7 +34,8 @@ $(function () {
       {
           //$.alert(data);
           $('#msg').html(data);
-          location.reload();
+          //alert(data);
+          //location.reload();
           //$("#portfolio_list").load(location.href + " #portfolio_list>*", "");
         }
 

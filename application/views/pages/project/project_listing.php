@@ -225,9 +225,13 @@ if(isset($_GET['jm_job_type'])){
         }
         $user_id=$this->session->userdata('user_id');
         echo '<div class="w3-col 12 w3-padding" id="spinnerDiv_'.$key['jm_project_id'].'">              
-        <div class="w3-col l12 w3-border-bottom">
-        <div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].');" data-toggle="fa" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>
-        <div class="col-lg-8">
+        <div class="w3-col l12 w3-border-bottom">';
+
+        if (($user_id != '') || ($user_name != '') || ($profile_type != '')) {  
+        echo 
+        '<div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].');" data-toggle="fa" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>';
+      }
+        echo '<div class="col-lg-8">
         <h4>'.$key['jm_project_title'].'</h4>
         <div>
         <p>

@@ -244,7 +244,7 @@ $search_cat=$this->input->get('search_param', TRUE);
               <td class="text-center"><?php if($value['jm_userCity']!='') {echo $value['jm_userCity'];}else{ echo '<b>N/A</b>';} ?></td>
               <td class="text-center"><?php echo $value['jm_email_id']; ?></td>
               <td class="text-center"><?php  ?>
-                  <a style="padding:2px" class="w3-medium btn " title="View Profile Card" ><i class="fa fa-address-card-o" style="color: #1fbea9" data-toggle="modal" data-target="#Profile_<?php echo $value['jm_user_id']; ?>" onclick="getpercenteageDetails('<?php echo $value['jm_user_id']; ?>');" ></i> </a>
+                  <a style="padding:2px" class="w3-medium btn " title="View Profile Card" ><i class="fa fa-address-card-o" style="color: #1fbea9" data-toggle="modal" data-target="#Profile_<?php echo $value['jm_user_id']; ?>" onclick="getpercenteageDetails('<?php echo $value['jm_user_id']; ?>');getUserFeedback('<?php echo $value['jm_user_id']; ?>');" ></i> </a>
                 <a href="" style="padding:2px" class="w3-medium btn " title="Chat with"><i class="fa fa-weixin" style="color: #1fbea9"></i> </a></td>
               </tr>
 
@@ -274,7 +274,7 @@ $search_cat=$this->input->get('search_param', TRUE);
                            echo '<br>
                            <span class="w3-tiny w3-text-grey">Member since '.date('M d,Y', strtotime($value['joining_date'])).'</span>';
                            ?>                                
-                         </div>
+                         </div>                        
                        </div> 
                        <div class="w3-col l12 w3-white w3-round w3-padding">
                         <div class="w3-col l6 ">
@@ -299,7 +299,7 @@ $search_cat=$this->input->get('search_param', TRUE);
                               <div class="w3-padding-top"><h2><i class="fa fa-inr"></i> <?php echo $value['jm_ratePerHr']; ?></h2>
                                 <span>INR/hr</span></div>
                               </div>
-                              <div class="w3-col l12 w3-center">                  
+                              <div class="w3-col l12 w3-center" >                  
                                 <span class="stars" data-rating="<?php echo $value['jm_avg_rating']; ?>" data-num-stars="5" ></span><br>
 
                                 <!-- script to dispaly stars -->
@@ -317,7 +317,7 @@ $search_cat=$this->input->get('search_param', TRUE);
                                   $('.stars').stars();
                                 </script>
                                 <!-- script to dispaly stars ends-->
-                                <span class="w3-text-grey w3-small"><?php echo $value['jm_avg_rating']; ?> Feedback</span>
+                                <span class="w3-text-grey w3-small" id="feedback_<?php echo $value['jm_user_id']; ?>"></span>
                               </div>
                             </div>
 		      <div class="w3-col l6  w3-tiny">
@@ -385,7 +385,22 @@ $search_cat=$this->input->get('search_param', TRUE);
 
 
     <script>
-    function getpercenteageDetails(user_id){  
+        function getUserFeedback(user_id){
+            //alert(user_id);
+            $.ajax({
+	    type: "POST",
+	    url: "<?php echo base_url(); ?>freelancer/Freelancer_list/getUserFeedback",
+            data: {
+                    user_id: user_id
+                  },
+            return: false,  
+	    success: function(data){ 
+                //alert(data);
+                $('#feedback_'+user_id).html(data+' Feedback');
+            }
+          });
+       }
+       function getpercenteageDetails(user_id){  
     	            $.ajax({
 			type: "POST",
 			url: "<?php echo base_url(); ?>freelancer/Freelancer_list/get_bars_value",
@@ -405,6 +420,7 @@ $search_cat=$this->input->get('search_param', TRUE);
                         $('#time_'+user_id).css('width',+time+'%');
                         $('#timecomplete_'+user_id).html('<b>&nbsp;'+time+'%</b>');
     	            }
+                         
     	        });
         }
       $(document).ready(function() {

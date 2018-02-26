@@ -697,7 +697,6 @@ public function sort_projectb_type()
 //print_r($po);die();
 
     if($po=='N/A'){
-
       echo '
       <div class="w3-col 12 w3-padding w3-margin">              
       <div class="w3-col l12">

@@ -12,10 +12,10 @@ class Jobseeker_list_model extends CI_Model {
 //    get all job seeker list for explore jobseeker
     
     public function all_jobSeeker(){
-     $sqlSelect = "SELECT * FROM jm_user_tab JOIN jm_userprofile_tab ON jm_userprofile_tab.jm_user_id=jm_user_tab.jm_user_id WHERE jm_user_tab.jm_profile_type = '3' ORDER BY jm_user_tab.jm_username ASC ";
+       $sqlSelect = "SELECT * FROM jm_user_tab JOIN jm_userprofile_tab ON jm_userprofile_tab.jm_user_id=jm_user_tab.jm_user_id WHERE jm_user_tab.jm_profile_type = '3' ORDER BY jm_user_tab.jm_username ASC ";
 
-     $result = $this->db->query($sqlSelect);
-     if ($result->num_rows() <= 0) {
+       $result = $this->db->query($sqlSelect);
+       if ($result->num_rows() <= 0) {
         $response = array(
             'status' => 500,
             'status_message' => 'Job Seeker list is empty.');
@@ -33,23 +33,23 @@ public function filterSeeker($data){
 
     if($data['mode']['mode'] == 'jobseeker_list'){ 
             //echo 'sujeet';exit;
-            $cond = "";
-            $join_tabs='jm_user_tab as u join jm_userprofile_tab as ut on(ut.jm_user_id = u.jm_user_id)';
-            $cond .= " u.jm_profile_type = '3' ";
+        $cond = "";
+        $join_tabs='jm_user_tab as u join jm_userprofile_tab as ut on(ut.jm_user_id = u.jm_user_id)';
+        $cond .= " u.jm_profile_type = '3' ";
 
-            if($data['fileds']){
+        if($data['fileds']){
                 //print_r($data);die();
-                $count=1;
-                foreach ($data['fileds'] as $k => $val) {
+            $count=1;
+            foreach ($data['fileds'] as $k => $val) {
 
-                    $valArr = explode('/', $val);
-                    
-                    if($valArr[0] != ''){
-                        
-                        if($valArr[1] != 'LIKE'){
-                            $cond .= "AND us.".$k." ".$valArr[1]." '[".$valArr[0]."]' ";
-                            $join_tabs='jm_user_tab as u join jm_userskills_tab as us join jm_userprofile_tab as ut on(u.jm_user_id = us.jm_user_id AND ut.jm_user_id = u.jm_user_id)';
-                        }else{
+                $valArr = explode('/', $val);
+
+                if($valArr[0] != ''){
+
+                    if($valArr[1] != 'LIKE'){
+                        $cond .= "AND us.".$k." ".$valArr[1]." '".$valArr[0]."' ";
+                        $join_tabs='jm_user_tab as u join jm_userSkills_tab as us join jm_userprofile_tab as ut on(u.jm_user_id = us.jm_user_id AND ut.jm_user_id = u.jm_user_id)';
+                    }else{
                         if($count==1){
                             $cond .= "AND (ut.".$k." ".$valArr[1]." '%".$valArr[0]."%'  ";
                             $count++;
@@ -57,25 +57,25 @@ public function filterSeeker($data){
                         else{
                             $cond .= "OR ut.".$k." ".$valArr[1]." '%".$valArr[0]."%'  )";
                         }                       
-                            
-                        }                       
-                    }
 
+                    }                       
                 }
-                
+
+            }
+
                 //echo $cond;exit;
-                
-                $query = "SELECT * FROM $join_tabs WHERE $cond ORDER BY u.jm_username ASC";
+
+            $query = "SELECT * FROM $join_tabs WHERE $cond ORDER BY u.jm_username ASC";
                 //echo $query;die();
             //exit;
-                $q=$this->db->query($query);  
+            $q=$this->db->query($query);  
                 // $this->db->order_by('jm_project_id', 'DESC');
                 // $q = $this->db->get($data['table']['table']);
-            }else{
-                $err='N/A';
-                return $err;
-            }
+        }else{
+            $err='N/A';
+            return $err;
         }
+    }
 
         //echo $this->db->last_query();
         //print_r($q->num_rows());exit;
@@ -106,37 +106,35 @@ public function filterJob($data){
                     //print_r(count($data['fileds']));
                 $valArr = explode('/', $val);
                 if($valArr[0] != ''){
+                    //print_r($valArr);
                     if($valArr[1] == 'LIKE'){
-                        if($filed_count!=1 ){
-                            $cond .= "$k ".$valArr[1]." '".$valArr[0]."%' OR ";
+                        if($filed_count!=1 ){                            
+                            $cond .= " ($k ".$valArr[1]." '".$valArr[0]."%' OR ";
                         }
                         else{
-                            $cond .= "$k ".$valArr[1]." '".$valArr[0]."%'  ";
+                            $cond .= "$k ".$valArr[1]." '".$valArr[0]."%') AND ";
                         }
 
                     }else{
-                        $cond .= "$k ".$valArr[1]." '".$valArr[0]."' ";
+                        $cond .= "$k ".$valArr[1]." '".$valArr[0]."' AND ";
                     }
 
                 }
                 $filed_count--;
             }
-                //$cond .= " 1=1";
 
-                //echo $cond;exit;
-                //$query = "SELECT * FROM jm_user_tab INNER JOIN jm_userprofile_tab ON jm_userprofile_tab.jm_user_id=jm_user_tab.jm_user_id INNER JOIN jm_userskills_tab ON jm_userskills_tab.jm_user_id=jm_user_tab.jm_user_id WHERE $cond ORDER BY jm_user_tab.jm_username ASC";
             if($cond!= ''){
-             $query = "SELECT * FROM jm_post_job WHERE $cond AND is_active='1'";
-         }else{
-             $query = "SELECT * FROM jm_post_job  WHERE is_active='1'";
+               $query = "SELECT * FROM jm_post_job WHERE $cond is_active='1' ORDER BY jm_jobpost_id DESC";
+           }else{
+               $query = "SELECT * FROM jm_post_job  WHERE is_active='1' ORDER BY jm_jobpost_id DESC";
 
-         }
-               // echo $query;die();
+           }
+                //echo $query;die();
             //exit;
-         $q=$this->db->query($query);  
+           $q=$this->db->query($query);  
                 // $this->db->order_by('jm_project_id', 'DESC');
                 // $q = $this->db->get($data['table']['table']);
-     }else{
+       }else{
         $err='N/A';
         return $err;
     }

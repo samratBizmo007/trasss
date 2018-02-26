@@ -102,14 +102,25 @@ class Job_listings extends CI_Controller {
         $response = json_decode($response_json, true);
         //print_r($response_json);die();
         if ($response['status'] == 200) {
-            echo'<div class="alert alert-success w3-margin" style="text-align: center;">
-            <strong>' . $response['status_message'] . '</strong> 
-            </div>    
-            ';
+            echo '<h3 class="bluish-green w3-margin"><i class="fa fa-check"></i> '.$response['status_message'].'</h3>   
+            <script>
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+                window.location.href="'.base_url().'profile/dashboard";
+            }, 800);
+            </script>';
         } else {
-            echo'<div class="alert alert-danger w3-margin" style="text-align: center;">
-            <strong>' . $response['status_message'] . '</strong> 
-            </div>';
+            echo'<h3 class="w3-text-red w3-margin"><i class="fa fa-warning"></i>'.$response['status_message'].'</h3>
+            <script>
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+                location.reload();
+            }, 800);
+            </script>';
         }
     }
     public function getOpen_Jobs(){

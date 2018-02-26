@@ -107,7 +107,7 @@ switch ($selected_profile_type) {
                 echo '<div class="col-lg-12 w3-circle prof_pic bg_imageConfig" style="background-image: url(\''.base_url().'images/default_male.png\');"></div>';
               }              
               else{
-                echo '<div class="col-lg-12 w3-circle prof_pic bg_imageConfig" style="background-image: url(\''.base_url().$details['jm_profile_image'].'\');"></div>';
+                echo '<div class="col-lg-12 w3-circle prof_pic bg_imageConfig" style="background-image: url(\''.base_url().$details['jm_profile_image'].'\'),url(\''.base_url().'images/default_male.png\');"></div>';
               }
 
               ?>              
@@ -382,7 +382,7 @@ switch ($selected_profile_type) {
                     </div>
                     <div class="w3-col l6 w3-padding <?php if($profile_type==1 || $profile_type== 2){echo '';}else{ echo 'w3-hide';} ?>">
                       <!-- progress bar div -->
-<!--                      <?php print_r($percentage);?>-->
+                      <?php //print_r($percentage);?>
                       <div class="w3-col l12 w3-small  w3-padding-small">
                         <span><i class="w3-medium fa fa-check-square-o"></i>&nbsp;Jobs Completed</span> 
                         <div class="w3-col l10" style="padding-top: 7px">
@@ -673,7 +673,7 @@ switch ($selected_profile_type) {
                                 <div class="w3-col l7">
                                   <label class="w3-label  w3-text-black w3-margin-top w3-medium">Add Description:</label>
                                   <div class="page-wrapper scrolly box-content" style="padding-right: 5px;max-height: 350px;">
-                                    <textarea id="jm_portfolio_details" class="content " name="jm_portfolio_details"  rows="7" placeholder="Describe you here..." ></textarea> 
+                                    <textarea id="jm_portfolio_details" class="content " name="jm_portfolio_details"  rows="7" placeholder="Describe you here..."></textarea> 
                                     <span class="help-block"></span>
                                   </div>
                                 </div>
@@ -756,9 +756,11 @@ switch ($selected_profile_type) {
                               <span class="stars" id="rating_<?php echo $key['jm_project_id'];?>" data-rating="" data-num-stars="5" ></span><br>
                               <span class="badge"></span><br>
                             </div>
+                              <?php if($profile_type == 1) {?>
                             <div class="w3-col l7 w3-padding-top">
                               <span class="w3-small"><i class="fa fa-inr"></i> <?php echo $details['jm_ratePerHr']; ?> INR/hr</span><br>
                             </div>
+                              <?php } ?>
                           </div>
                         </div>
                       </div>

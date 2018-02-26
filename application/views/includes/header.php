@@ -13,6 +13,7 @@ $profile_type=$this->session->userdata('profile_type');
   .alert{
     margin-bottom: 0px !important; 
   }
+  
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap/bootstrap.min.css">
@@ -99,6 +100,89 @@ $profile_type=$this->session->userdata('profile_type');
 .dropdown:hover .dropbtn {
   /*background-color: #3e8e41;*/
 }
+
+.btn-warning{color:#fff !important; font-size:14px !important; font-weight:600; text-transform:none;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ff7725+0,ff7725+50,ec4b17+50,ec4b17+100 */
+background: #ff7725; /* Old browsers */
+background: -moz-linear-gradient(top, #ff7725 0%, #ff7725 50%, #ec4b17 50%, #ec4b17 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #ff7725 0%,#ff7725 50%,#ec4b17 50%,#ec4b17 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #ff7725 0%,#ff7725 50%,#ec4b17 50%,#ec4b17 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7725', endColorstr='#ec4b17',GradientType=0 ); /* IE6-9 */
+}
+
+.waves-effect {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  vertical-align: middle;
+  z-index: 1;
+  will-change: opacity, transform;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.waves-effect .waves-ripple {
+  position: absolute;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.7s ease-out;
+  -moz-transition: all 0.7s ease-out;
+  -o-transition: all 0.7s ease-out;
+  -ms-transition: all 0.7s ease-out;
+  transition: all 0.7s ease-out;
+  -webkit-transition-property: -webkit-transform, opacity;
+  -moz-transition-property: -moz-transform, opacity;
+  -o-transition-property: -o-transform, opacity;
+  transition-property: transform, opacity;
+  -webkit-transform: scale(0);
+  -moz-transform: scale(0);
+  -ms-transform: scale(0);
+  -o-transform: scale(0);
+  transform: scale(0);
+  pointer-events: none;
+}
+
+.waves-effect.waves-light .waves-ripple {
+  background-color: rgba(255, 255, 255, 0.45);
+}
+
+.waves-effect.waves-red .waves-ripple {
+  background-color: rgba(244, 67, 54, 0.7);
+}
+
+.waves-effect.waves-yellow .waves-ripple {
+  background-color: rgba(255, 235, 59, 0.7);
+}
+
+.waves-effect.waves-orange .waves-ripple {
+  background-color: rgba(255, 152, 0, 0.7);
+}
+
+.waves-effect.waves-purple .waves-ripple {
+  background-color: rgba(156, 39, 176, 0.7);
+}
+
+.waves-effect.waves-green .waves-ripple {
+  background-color: rgba(76, 175, 80, 0.7);
+}
+
+.waves-effect.waves-teal .waves-ripple {
+  background-color: rgba(0, 150, 136, 0.7);
+}
 </style>
 </head>
 <body id="home" class="homepage">
@@ -176,13 +260,18 @@ $profile_type=$this->session->userdata('profile_type');
 
             <?php 
             if(isset($user_name) && isset($user_name)!=''){
-              echo '<a href="'.base_url().'auth/login/logout" class="btn w3-left">Logout <i class="fa fa-sign-out"></i></a>';
+              echo '
+              <div class="ui-group-buttons">
+              <a href="'.base_url().'auth/login/logout" class="btn  waves-effect waves-light w3-margin-top w3-black w3-round-xlarge w3-text-white" style="margin-left: 30px">Logout <i class="fa fa-sign-out" ></i></a>
+             
+              </div>';
             }
             else{ ?>
             <div class="ui-group-buttons">
-              <a href="<?php echo base_url().'auth/login'; ?>" style="" class="btn w3-border-right ">Log in</a>
-
-              <a href="<?php echo base_url().'auth/login'; ?>" style="" class="btn w3-border-left">Sign up</a>
+              <a href="'.base_url().'auth/login" class="btn btn-warning waves-effect waves-light w3-margin-top w3-orange w3-round-xlarge w3-text-white" style="margin-left: 30px"><b>Login &nbsp;/&nbsp;SignUp</b> <i class="fa fa-sign-in"></i></a>
+              
+<!-- 
+              <a href="<?php echo base_url().'auth/login'; ?>" style="" class="btn btn-warning waves-effect waves-light w3-margin-top w3-orange w3-round-xlarge w3-text-white">Sign up</a> -->
             </div>
             <!-- echo '<a class="btn w3-left" href="'.base_url().'auth/login" >Login | Sign Up</a>'; -->
             <?php }
@@ -237,10 +326,10 @@ $profile_type=$this->session->userdata('profile_type');
            <div class="w3-left ">
             <?php 
             if(isset($user_name) && isset($user_name)!=''){
-              echo '<a href="'.base_url().'auth/login/logout" class="btn w3-margin-top w3-black w3-round-xlarge w3-text-white">Logout <i class="fa fa-sign-out"></i></a>';
+              echo '<a href="'.base_url().'auth/login/logout" class="btn waves-effect waves-light w3-margin-top w3-black w3-round-xlarge w3-text-white">Logout <i class="fa fa-sign-out"></i></a>';
             }
             else{
-              echo '<a href="'.base_url().'auth/login" class="btn w3-margin-top w3-orange w3-round-xlarge w3-text-white"><b>Login &nbsp;/&nbsp;SignUp</b> <i class="fa fa-sign-in"></i></a>';
+              echo '<a href="'.base_url().'auth/login" class="btn btn-warning waves-effect waves-light w3-margin-top w3-orange w3-round-xlarge w3-text-white"><b>Login &nbsp;/&nbsp;SignUp</b> <i class="fa fa-sign-in"></i></a>';
             }
             ?>                        
           </div>

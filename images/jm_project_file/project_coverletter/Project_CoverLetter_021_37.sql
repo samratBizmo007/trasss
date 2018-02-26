@@ -100,10 +100,10 @@ CREATE TABLE `jm_userprofile_tab` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jm_userskills_tab`
+-- Table structure for table `jm_userSkills_tab`
 --
 
-CREATE TABLE `jm_userskills_tab` (
+CREATE TABLE `jm_userSkills_tab` (
   `jm_userSkill_id` int(11) NOT NULL,
   `jm_user_id` int(11) NOT NULL,
   `jm_profile_type` int(11) NOT NULL,
@@ -112,10 +112,10 @@ CREATE TABLE `jm_userskills_tab` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `jm_userskills_tab`
+-- Dumping data for table `jm_userSkills_tab`
 --
 
-INSERT INTO `jm_userskills_tab` (`jm_userSkill_id`, `jm_user_id`, `jm_profile_type`, `jm_skills`, `status`) VALUES
+INSERT INTO `jm_userSkills_tab` (`jm_userSkill_id`, `jm_user_id`, `jm_profile_type`, `jm_skills`, `status`) VALUES
 (2, 1, 1, '["1","2"]', 0),
 (3, 1, 2, '["3","4"]', 0),
 (4, 2, 3, '[]', 0),
@@ -209,9 +209,9 @@ ALTER TABLE `jm_userprofile_tab`
   ADD PRIMARY KEY (`user_profileId`);
 
 --
--- Indexes for table `jm_userskills_tab`
+-- Indexes for table `jm_userSkills_tab`
 --
-ALTER TABLE `jm_userskills_tab`
+ALTER TABLE `jm_userSkills_tab`
   ADD PRIMARY KEY (`jm_userSkill_id`);
 
 --
@@ -246,9 +246,9 @@ ALTER TABLE `jm_skills_tab`
 ALTER TABLE `jm_userprofile_tab`
   MODIFY `user_profileId` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `jm_userskills_tab`
+-- AUTO_INCREMENT for table `jm_userSkills_tab`
 --
-ALTER TABLE `jm_userskills_tab`
+ALTER TABLE `jm_userSkills_tab`
   MODIFY `jm_userSkill_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `jm_usertransaction_tab`

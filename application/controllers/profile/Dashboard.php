@@ -15,6 +15,8 @@ class Dashboard extends CI_Controller
 		if(($user_id=='') || ($user_name=='') || ($profile_type=='')){
 			redirect('auth/login');
 		}
+
+    
 	}
 
 	public function index(){
@@ -422,21 +424,21 @@ public function freelancePrevious_Projects(){
      }
 
      echo'<div class="w3-col l12">
-     <div class="w3-col l3 m3 s3">
+     <div class="col-lg-3 m3 col-xs-4">
      <label class="w3-tiny w3-text-grey">Project&nbsp;Name</label>
      <label class="w3-small datainfo"><b>'.$key['jm_project_title'].'</b></label>
      <label class="w3-tiny w3-text-grey">By- '.$username.'</label>
      </div>
-     <div class="w3-col l3 m3 s3">
+     <div class="col-lg-3 m3 col-xs-4">
      <label class="w3-tiny w3-text-grey">Project Amount</label><br>
      <label class="w3-small"><b>'.$key['jm_project_price'].'</b></label>
      </div>
-     <div class="w3-col l3 m3 s3">
+     <div class="col-lg-3 m3 col-xs-4">
      <label class="w3-tiny w3-text-grey">Time</label>                
      <label class="w3-small"><b>posted '.timeago($key['jm_posting_date']).'</b></label>
      </div>
-     <div class="w3-col l3 m3 s3 w3-margin-top " >
-     <a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-right w3-black w3-round-xlarge w3-padding-tiny btn">View Details</a></div>   
+   <div class="col-lg-3  w3-padding-bottom m3 col-xs-12 w3-margin-top " >
+     <a href="'.base_url().'project/view_project/'.base64_encode($key['jm_project_id']).'" class="w3-small w3-right  w3-black  w3-round-xlarge w3-padding-tiny btn">View details</a></div>   
      </div>
      <div>
      ';

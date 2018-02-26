@@ -33,11 +33,27 @@ class Jobseeker_lists extends CI_Controller {
             'per_page' => 5,
             'total_rows' => $this->Job_listing_model->numRows(),
         ];
-        $config['first_tag_open'] = $config['last_tag_open']= $config['next_tag_open']= $config['prev_tag_open'] = $config['num_tag_open'] = '';
-        $config['first_tag_close'] = $config['last_tag_close']= $config['next_tag_close']= $config['prev_tag_close'] = $config['num_tag_close'] = '';
+        $config['full_tag_open'] = "<ul class='pagination' style='color:black'>";
+        $config['full_tag_close'] = '</ul>';
+        $config['num_tag_open'] = '<li style="color:black">';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active" style="background-color: #4CAF50;"><a href="#" style="color:white">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['prev_tag_open'] = '<li style="color:black">';
+        $config['prev_tag_close'] = '</li>';
+        $config['first_tag_open'] = '<li style="color:black">';
+        $config['first_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li style="color:black">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['prev_link'] = '<i class="fa fa-long-arrow-left" ></i> Previous';
+        $config['prev_tag_open'] = '<li style="color:black">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_link'] = 'Next <i class="fa fa-long-arrow-right" ></i>';
+        $config['next_tag_open'] = '<li style="color:black">';
+        $config['next_tag_close'] = '</li>';
         
-        $config['cur_tag_open'] = "";
-        $config['cur_tag_close'] = "";
         //-----initialise pagination library with passing parameter config-----------//
         $this->pagination->initialize($config);
         //-----initialise pagination library with passing parameter config-----------//
@@ -57,8 +73,9 @@ class Jobseeker_lists extends CI_Controller {
             $data['jobs'] = Jobseeker_lists::getAllJob_Details_param($search_cat);
         }
         //return $response;
-        //print_r($data);   
+       //print_r($response_json);   
         $data['job_bookmarks'] = Jobseeker_lists::getAll_BookmarkedJobs();
+        $data['all_skills'] = Jobseeker_lists::get_allSkills();
         $this->load->view('includes/header.php');
         $this->load->view('pages/jobseeker/jobseeker_joblist.php', $data);
         $this->load->view('includes/footer.php');
@@ -80,7 +97,7 @@ class Jobseeker_lists extends CI_Controller {
         $this->load->view('pages/jobseeker/job_application.php',$data);
         $this->load->view('includes/footer.php');
     }
-   public function get_allSkills() {
+    public function get_allSkills() {
 
         //Connection establishment, processing of data and response from REST API
         $path = base_url();
@@ -127,7 +144,7 @@ class Jobseeker_lists extends CI_Controller {
         //-----initialise pagination library with passing parameter config-----------//
         $data["links"] = $this->pagination->create_links();
         //$data['jobs'] = $this->Job_listing_model->getAllJobs($config['per_page'], $this->uri->segment(4));
-                
+
         $path = base_url();
         $url = $path . 'api/JobListing_api/getAllJob_Details_param?per_page='.$config['per_page'].'&offset='.$this->uri->segment(4).'&param='.$search_cat;
         $ch = curl_init($url);
@@ -140,16 +157,16 @@ class Jobseeker_lists extends CI_Controller {
     }
 
     //-------------------add bookmark----------------------//
-public function add_bookmarkForJob(){
-  extract($_POST);
-  $path=base_url();
-  $url = $path.'api/JobListing_api/add_bookmarkForJob?user_id='.$user_id.'&job_id='.$job_id; 
-  $ch = curl_init($url);
-  curl_setopt($ch, CURLOPT_HTTPGET, true);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $response_json = curl_exec($ch);
-  curl_close($ch);
-  $response=json_decode($response_json, true);
+    public function add_bookmarkForJob(){
+      extract($_POST);
+      $path=base_url();
+      $url = $path.'api/JobListing_api/add_bookmarkForJob?user_id='.$user_id.'&job_id='.$job_id; 
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_HTTPGET, true);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      $response_json = curl_exec($ch);
+      curl_close($ch);
+      $response=json_decode($response_json, true);
  // print_r($response);die();
 //  
 //  if($response['status'] == 200){
@@ -165,38 +182,38 @@ public function add_bookmarkForJob(){
 //		</script>';
 //        }
 //  
-}
+  }
 //-------------------function ends----------------------//
 
-    public function del_bookmarkForJob(){
-        extract($_POST);
-        $path = base_url();
-        $url = $path.'api/JobListing_api/del_bookmarkForJob?user_id='.$user_id.'&job_id='.$job_id;
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_HTTPGET, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response_json = curl_exec($ch);
-        curl_close($ch);
-        $response = json_decode($response_json, true);
-    }
+  public function del_bookmarkForJob(){
+    extract($_POST);
+    $path = base_url();
+    $url = $path.'api/JobListing_api/del_bookmarkForJob?user_id='.$user_id.'&job_id='.$job_id;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_HTTPGET, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response_json = curl_exec($ch);
+    curl_close($ch);
+    $response = json_decode($response_json, true);
+}
 
 
-    public function getJob_Details($job_id) {
-        $user_id = $this->session->userdata('user_id'); 
-        $profile_type = $this->session->userdata('profile_type');
-        $path = base_url();
-        $url = $path . 'api/JobApplications_api/getJob_Details?job_id='.$job_id.'&user_id='.$user_id.'&profile_type='.$profile_type;
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_HTTPGET, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response_json = curl_exec($ch);
-        curl_close($ch);
-        $response = json_decode($response_json, true);
+public function getJob_Details($job_id) {
+    $user_id = $this->session->userdata('user_id'); 
+    $profile_type = $this->session->userdata('profile_type');
+    $path = base_url();
+    $url = $path . 'api/JobApplications_api/getJob_Details?job_id='.$job_id.'&user_id='.$user_id.'&profile_type='.$profile_type;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_HTTPGET, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response_json = curl_exec($ch);
+    curl_close($ch);
+    $response = json_decode($response_json, true);
         //print_r($response_json);die();
-        return $response;
-    }
+    return $response;
+}
 
-   
+
 
 
 }

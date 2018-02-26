@@ -136,7 +136,7 @@ print_r($response_json);
             //print_r($_POST);die();
             //echo json_encode($skill);
         $salary='';
-        if($Salary_range == 0){
+        if($Salary_range == '0'){
             $Salary_range = 'Not Disclosed';
         }
         $data = $_POST;
@@ -203,6 +203,7 @@ public function getAll_BookmarkedJobs() {
 
      // ---------------explore job seeker filter--------------//
     public function filterJobs(){ 
+        //print_r($_POST);die();
     $this->load->model('jobseeker_model/Jobseeker_list_model','jobs');
     $data = $this->input->post();
     $result['result'] = $this->jobs->filterJob($data);

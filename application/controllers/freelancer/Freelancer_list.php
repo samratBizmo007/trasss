@@ -64,7 +64,19 @@ class Freelancer_list extends CI_Controller
     }
 
     //----------------------function ends-------------------------------------//
-	
+    public function getUserFeedback(){
+        extract($_POST);
+        //Connection establishment, processing of data and response from REST API
+        $path = base_url();
+        $url = $path . 'api/Freelancer_api/getUserFeedback?user_id='.$user_id;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response_json = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response_json, true);
+        print_r($response);
+    }
 }
 
 ?>

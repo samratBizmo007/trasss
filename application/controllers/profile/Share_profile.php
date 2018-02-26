@@ -17,17 +17,10 @@ class Share_profile extends CI_Controller
    
    public function share_profile_data($var = '')
    {
-   		//echo $var;die();
    		$obj = base64_decode($var);
-   		//echo $obj;die();
-   		
    		$arr= explode('|',$obj);
-   		//echo $arr;die();
    		$user_id = $arr[1];
    		$profile_type = $arr[2];
-   		//die();
-   		//extract($_GET);
-   		//print_r($user_id);die();
    		$data['New_userID'] = $user_id;
    		$data['New_profile_type'] = $profile_type;
    		$data['all_skills']=Share_profile::get_allSkills($user_id);
@@ -36,13 +29,11 @@ class Share_profile extends CI_Controller
 		$data['all_userInfo']=Share_profile::get_userInfo($user_id);
 		$data['all_userTransaction']=Share_profile::get_userTransaction($user_id);
 		$data['all_userDetails']=Share_profile::get_userDetails($user_id);
-		
-                //print_r($data['all_userFeedback']);die();
 		$data['all_userPortfolio']=Share_profile::get_userPortfolio($user_id);
 		$data['percentage']=Share_profile::get_bars_value($user_id,$profile_type);
-		$this->load->view('pages/profile/Share_profile',$data);
-		//$this->load->view('includes/footer.php');	
+		$this->load->view('pages/profile/share_profile',$data);
    }
+   ///---------------------------------fun for employer details-------------------------------------//
    public function getEmployer_Details(){
         extract($_POST);
         
@@ -58,6 +49,7 @@ class Share_profile extends CI_Controller
         //echo $response;
         //return $response;
     }
+    //--------------fun is ends here-----------------------------------------------------------------------//
    //------------Function to get all skills to add in user list------------//
 		public function get_allSkills($user_id){
 

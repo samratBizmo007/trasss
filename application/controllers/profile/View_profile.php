@@ -61,10 +61,22 @@ class View_profile extends CI_Controller
 
 		extract($_POST);
 		$data = $_POST;
+		// --------------------------------if portfolio description is blank check------------------------------------//
+		if($data['jm_portfolio_details']=='' || $data['jm_portfolio_details']=='<br>' || $data['jm_portfolio_details']=='<div></div>' || $data['jm_portfolio_details']=='<div><br></div>')
+		{
+			echo '<div class="alert alert-danger alert-dismissable fade in">
+		  	<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		  	<span><strong>Warning!</strong> Please provide atleast short description for your project!!!</span>
+		  	</div>		  	
+		  	';
+		  	die();
+		}
+		// --------------------------------if portfolio description is blank check------------------------------------//
+
 		$data['user_id']=$user_id;
 		$data['profile_type']=$profile_type;
 		$image_path='';
-
+//print_r($data['jm_portfolio_details']);die();
 		$userPf=View_profile::get_userPortfolio();
 		//print_r($userPf);die();
 		if($userPf['status']!=200){
@@ -137,6 +149,7 @@ class View_profile extends CI_Controller
 		  	window.setTimeout(function() {
 		  		$(".alert").fadeTo(500, 0).slideUp(500, function(){
 		  			$(this).remove(); 
+		  			location.reload();
 		  		});
 		  	}, 1000);
 		  	</script>

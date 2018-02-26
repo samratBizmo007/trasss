@@ -12,7 +12,7 @@
 	<script src="<?php echo base_url(); ?>css/js/jquery-2.1.1.js"></script>
 	<script src="<?php echo base_url(); ?>css/js/modernizr.js"></script>
 	<script src="<?php echo base_url(); ?>css/js/main.js"></script>
-
+    <script type="text/javascript" src="<?php echo base_url(); ?>css/js/jquery.min.js"></script> 
 	<title>Membership Table</title>
 
 	<style>
@@ -94,10 +94,14 @@
 	<div class="w3-container">
 		<div class="col-lg-2"></div>
 		<div class="w3-small w3-medium w3-col l12 w3-center w3-margin-top w3-margin-bottom">
-			<div class="btn-group btn-toggle  w3-margin-bottom"> 
-   			 <button class="btn btn-lg btn-default" onclick="switchVisible();">Monthly</button>
-    		 <button class="btn btn-lg btn-primary w3-text-white bluishGreen_bg" onclick="switchVisible();">Yearly</button>
-  			</div>
+			<div class="btn-group w3-margin-bottom">
+			<button class="btn  btn-lg bluishGreen_bg" style="margin-right:2px" id="Monthly_changeDiv">Monthly</button>
+			<button class="btn btn-lg" id="Yearly_changeDiv">Yearly</button>
+			</div>
+<!--			<div class="btn-group btn-toggle  w3-margin-bottom"> -->
+<!--   			 <button class="btn btn-lg btn-default" onclick="switchVisible();">Monthly</button>-->
+<!--    		 <button class="btn btn-lg btn-primary w3-text-white bluishGreen_bg" onclick="switchVisible();">Yearly</button>-->
+<!--  			</div>-->
 			<!-- <div class="w3-col l12 w3-center w3-margin-top w3-margin-bottom" >
 				<button id="button" class="toggler toggler--is-active"onclick="switchVisible();">Monthly/yearly</button> 
 			</div> -->
@@ -348,41 +352,58 @@
  </div> 
 </div> 
 	
+<script>
+$(document).ready(function(){
+    $("#Monthly_changeDiv").click(function(){
+        $("#hide_div").show();
+        $("#show_div").hide();
+        $("#Monthly_changeDiv").addClass('bluishGreen_bg');
+        $("#Yearly_changeDiv").removeClass('bluishGreen_bg');
+    });
+    $("#Yearly_changeDiv").click(function(){
+        $("#hide_div").hide();
+        $("#show_div").show();
+        $("#Yearly_changeDiv").addClass('bluishGreen_bg');
+        $("#Monthly_changeDiv").removeClass('bluishGreen_bg');
+    });
+});
+</script>
+	
 <script type="text/javascript">
 // $(document).ready(function() {
 // 	$("#button").click(function () {
 // 	$("#hide_div").toggle()
 // 	});
 // 	});
-function switchVisible() {
-	$('.btn-toggle').click(function() {
-    $(this).find('.btn').toggleClass('active');  
-    
-    if ($(this).find('.btn-primary').size()>0) {
-    	$(this).find('.btn').toggleClass('btn-primary');
-    
-	if (document.getElementById('hide_div')) {
-
-		if (document.getElementById('hide_div').style.display == 'none')
-		{
-			document.getElementById('hide_div').style.display = 'block';
-			document.getElementById('show_div').style.display = 'none';
-		}
-		else {
-			document.getElementById('hide_div').style.display = 'none';
-			document.getElementById('show_div').style.display = 'block';
-		}
-	}
-}
- $(this).find('.btn').toggleClass('btn-default');
-       
-});
+//function switchVisible() {
+//	$('.btn-toggle').click(function() {
+//    $(this).find('.btn').toggleClass('active');  
+//    
+//    if ($(this).find('.btn-primary').size()>0) {
+//    	$(this).find('.btn').toggleClass('btn-primary');
+//    
+//	if (document.getElementById('hide_div')) {
+//
+//		if (document.getElementById('hide_div').style.display == 'none')
+//		{
+//			document.getElementById('hide_div').style.display = 'block';
+//			document.getElementById('show_div').style.display = 'none';
+//		}
+//		else {
+//			document.getElementById('hide_div').style.display = 'none';
+//			document.getElementById('show_div').style.display = 'block';
+//		}
+//	}
+//}
+// $(this).find('.btn').toggleClass('btn-default');
+//       
+//});
 
 // $('form').submit(function(){
 // 	alert($(this["options"]).val());
 //     return false;
 //});
-}
+//}
 </script>
 <script>
 	

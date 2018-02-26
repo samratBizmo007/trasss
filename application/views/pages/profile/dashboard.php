@@ -952,7 +952,7 @@ foreach($FreelancEmployer_ratings['status_message'] as $key){
     </div>
     <div class="w3-col l12 <?php echo $hideView_plans; ?>">
       <center class="w3-margin-top">
-       <a href="<?php echo base_url(); ?>profile/membership_control" class="btn w3-medium w3-text-black"><i class="fa fa-eye"></i>  <b>View Plans</b></a><br>                  
+       <a href="<?php echo base_url(); ?>profile/membership_control" class="btn w3-medium w3-text-black"><i class=""></i>  <b>View Plans</b></a><br>                  
      </center>
    </div>
 
