@@ -45,11 +45,11 @@ class Feedback_form extends CI_Controller
   		$response_json = curl_exec($ch);	  
   		curl_close($ch);
   		$response = json_decode($response_json, true); 
-  		//print_r($response_json);die();
+  		print_r($response_json);die();
   		//echo $response['status_message'];
   		 if ($response['status'] == 200) {
             echo'
-            <h4 class="bluish-green w3-margin"><i class="fa fa-check"></i> '.$response['status_message'].'</h4>
+            <label class="bluish-green w3-padding w3-xlarge"><i class="fa fa-check "></i> Success!</label> <p class="w3-text-grey w3-medium w3-padding">'.$response['status_message'].'</p>
             <script>
             window.setTimeout(function() {
                 $(".alert").fadeTo(500, 0).slideUp(500, function(){
@@ -60,16 +60,7 @@ class Feedback_form extends CI_Controller
             </script>    
             ';
         } else {
-            echo'<h4 class="w3-text-red w3-margin"><i class="fa fa-warning"></i> '.$response['status_message'].'</h4>
-            <script>
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                    $(this).remove(); 
-                });
-                window.location.href="'.base_url().'profile/dashboard";
-            }, 1000);
-            </script>  
-            ';
+            echo '<label class="w3-text-red w3-padding w3-xlarge"><i class="fa fa-warning "></i> Warning!</label><p class="w3-text-grey w3-medium w3-padding">'.$response['status_message'].'</p>';
         }
  	}
 //-------------------------end function----------------------------------//
@@ -106,7 +97,7 @@ class Feedback_form extends CI_Controller
   		//echo $response['status_message'];
   		 if ($response['status'] == 200) {
             echo'
-            <h4 class="bluish-green w3-margin"><i class="fa fa-check"></i> '.$response['status_message'].'</h4>
+            <label class="bluish-green w3-padding w3-xlarge"><i class="fa fa-check "></i> Success!</label> <p class="w3-text-grey w3-medium w3-padding">'.$response['status_message'].'</p>
             <script>
             window.setTimeout(function() {
                 $(".alert").fadeTo(500, 0).slideUp(500, function(){
@@ -117,16 +108,7 @@ class Feedback_form extends CI_Controller
             </script>    
             ';
         } else {
-            echo'<h4 class="w3-text-red w3-margin"><i class="fa fa-warning"></i> '.$response['status_message'].'</h4>
-            <script>
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                    $(this).remove(); 
-                });
-                window.location.href="'.base_url().'profile/dashboard";
-            }, 1000);
-            </script>  
-            ';
+            echo '<label class="w3-text-red w3-padding w3-xlarge"><i class="fa fa-warning "></i> Warning!</label><p class="w3-text-grey w3-medium w3-padding">'.$response['status_message'].'</p>';
         }
  	}
 //-------------------------end function----------------------------------//

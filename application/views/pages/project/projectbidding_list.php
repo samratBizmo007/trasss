@@ -653,8 +653,9 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
     function closeProject(project_id)
     {
         $.confirm({
-          title: '<label class="w3-large w3-text-red"><i class="fa fa-warning w3-xxlarge"></i> Warning.</label>',
-          content: '<span class="w3-medium">Do you really want to close this project permanantly?</span>',
+          title: '<label class="w3-text-red w3-xlarge"><i class="fa fa-warning "></i> Alert!</label>',
+      content: '<span class="w3-medium w3-text-grey w3-medium ">Do you really want to close this project permanantly?</span>',
+      type:'red',
           buttons: {
             confirm: function () {
               $.ajax({
@@ -703,7 +704,7 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
             if($is_closed=='0'){
                 $hide='w3-hide';
             }
-            if($freelancer_id==$value['jm_user_id']){
+            if($freelancer_id==$value['jm_user_id'] && $is_closed=='1'){
                 $hide='';
             }
 

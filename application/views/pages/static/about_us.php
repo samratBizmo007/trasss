@@ -140,14 +140,14 @@ $user_name=$this->session->userdata('user_name');
                         <?php } ?></li>
 
 
-                        <li> <?php if($profile_type == '' || $profile_type == 2 || $profile_type == 1 ){ ?>
+                        <li> <?php if($profile_type == '' || $profile_type == 2 ){ ?>
                           <a class="waves-effect waves-light" href="<?php echo base_url(); ?>project/post_project_Controller">Post Project</a>
                           <?php } ?> 
                         </li>   
                         <li>
                           <?php 
                           if(isset($user_name) && isset($user_name)!=''){
-                            echo '<a href="'.base_url().'auth/login/logout" class="btn w3-black btn-warning btn-rounded ">Logout <i class="fa fa-sign-out"></i></a>';
+                            echo '<a href="'.base_url().'auth/login/logout" class="btn w3-black btn-warning btn-rounded " style="margin-top:2px;margin-bottom:2px;padding-top:7px;padding-bottom:7px">Logout <i class="fa fa-sign-out"></i></a>';
                           }
                           else{?>
                           <div class="">

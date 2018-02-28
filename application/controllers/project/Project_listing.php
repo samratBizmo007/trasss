@@ -808,7 +808,7 @@ public function sort_projectb_type()
         $response_json = curl_exec($ch);
         curl_close($ch);
         $response = json_decode($response_json, true); 
-        //print_r($response_json);die();
+        print_r($response_json);die();
        // echo ($response['status_message']);
        echo'<div class="alert alert-success w3-margin" style="text-align: center;">
             <strong>' . $response['status_message'] . '</strong> 
@@ -817,6 +817,7 @@ public function sort_projectb_type()
       }
     // -----------------Award Poroject function---------------//
 
+  
     //---------------cloase project permanntly function---------------------//
       public function closeProject() {
         extract($_POST);

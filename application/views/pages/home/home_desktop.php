@@ -1025,12 +1025,13 @@
 
                  <!-- script to add comet chat script info -->
                  <script>
-                  var chat_name = 'samrat';
-                  var chat_id = '1';
-                  var chat_avatar = '';
-                  var chat_link = 'LOGGEDIN_USERS_PROFILE_LINK';
-                  var chat_role = 'developer';
-                </script>
+var chat_name = 'Samrat';
+var chat_id = 'S1010';
+var chat_avatar = 'LOGGEDIN_PROFILE_IMAGE';
+var chat_link = 'LOGGEDIN_USERS_PROFILE_LINK';
+var chat_role = 'USER_ROLE';
+</script>
+                <!-- <script type="text/javascript" charset="utf-8" src="//fast.cometondemand.net/50319x_x3a1bc.js"></script> --> 
                 <script type="text/javascript" charset="utf-8" src="//fast.cometondemand.net/50319x_x3a1bc.js"></script>
                 <link type="text/css" rel="stylesheet" media="all" href="//fast.cometondemand.net/50319x_x3a1bc.css" />
                 <!-- script ends here -->

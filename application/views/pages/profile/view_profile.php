@@ -810,17 +810,27 @@ switch ($selected_profile_type) {
          userName = key[i].jm_user_name; 
       }
       var postingDate = '';
-      if(key[i].jm_posting_date == ''){
+      if(key[i].dated == ''){
          postingDate = 'N/A'; 
       }else {
-         postingDate = key[i].jm_posting_date; 
+         postingDate = key[i].dated; 
       }
+      var rate = parseFloat(key[i].freelancerRatings).toFixed(1);
+      var ratings = rate.split('.');
       var rating = '';
-      if(key[i].freelancerRatings == ''){
-         rating = 0; 
-      }else {
-         rating = parseFloat(key[i].freelancerRatings).toFixed(1); 
+      if(ratings[1] == '0'){
+          rating = Math.round(rate);
+      }else{
+          rating = rate;
       }
+
+      var city = '';
+      if(key[i].jm_userCity == ''){
+         city = 'N/A'; 
+      }else {
+         city = key[i].jm_userCity; 
+      }
+      
       var image = '';
       if(key[i].jm_profile_image == ''){
          image = 'images/default_male.png'; 
@@ -828,7 +838,7 @@ switch ($selected_profile_type) {
          image = key[i].jm_profile_image; 
       }
       $('#emaployerDetails_'+project_id).html('<span class="w3-tiny"><i>By '+ userName +' on '+ postingDate +'.</i></span>');
-         $('#employerCity_'+project_id).html('<span class="w3-small"><i class="w3-large fa fa-map-marker"></i> '+key[i].jm_userCity+' .</span><br>');
+         $('#employerCity_'+project_id).html('<span class="w3-small"><i class="w3-large fa fa-map-marker"></i> '+city+' .</span><br>');
          $('#employerRatings_'+project_id).html('<span class="stars" data-rating='+rating+' data-num-stars="5" ></span><br><span class="badge"> '+rating+' </span><br>');
          $('#image_'+project_id).css("background-image", "url("+BASE_URL+""+image+")");
          rate_stars();

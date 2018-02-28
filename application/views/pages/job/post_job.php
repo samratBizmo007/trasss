@@ -25,29 +25,29 @@
     <!---<script src="bootstrap/dist/js/bootstrap.min.js"></script>-->
     <script type="text/javascript" src="<?php echo base_url(); ?>css/alert/jquery-confirm.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>dist/editor.js"></script>
-<!--    <script type="text/javascript" src="<?php echo base_url(); ?>css/js/country2.js"></script>-->
+    <!--    <script type="text/javascript" src="<?php echo base_url(); ?>css/js/country2.js"></script>-->
 
 
-<!--    <script>-->
-<!--        $(document).ready(function () {-->
-<!--            print_country("job_country");-->
-<!--        });-->
-<!--    </script>-->
-    <style>
-    .scrolly::-webkit-scrollbar
-    {
-        width: 4px;  /* for vertical scrollbars */
-    }
-    .scrolly::-webkit-scrollbar-track {
-        background-color: rgba(0, 0, 0, 0.1);;
+    <!--    <script>-->
+        <!--        $(document).ready(function () {-->
+        <!--            print_country("job_country");-->
+        <!--        });-->
+        <!--    </script>-->
+        <style>
+        .scrolly::-webkit-scrollbar
+        {
+            width: 4px;  /* for vertical scrollbars */
+        }
+        .scrolly::-webkit-scrollbar-track {
+            background-color: rgba(0, 0, 0, 0.1);;
 
-    }
-    
-    .scrolly::-webkit-scrollbar-thumb
-    {
-        background: rgba(0, 0, 0, 0.5);
-    }
-</style>
+        }
+
+        .scrolly::-webkit-scrollbar-thumb
+        {
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
 <!-- <script>
     $(document).ready(function() {
         $('.content').richText();
@@ -192,7 +192,7 @@
                                         <input type="email" name="register_email" id="register_email" tabindex="4" class="form-control" placeholder="Email address" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="register_password" id="register_password" tabindex="4" class="form-control" placeholder="Password" minlength="8" required>
+                                        <input type="password" name="register_password" onkeyup="checkPassword();" id="register_password" tabindex="4" class="form-control" placeholder="Password" minlength="8" required>
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="register_confirm_password" id="register_confirm_password" tabindex="5" onkeyup="checkPassword();" class="form-control" minlength="8" placeholder="Confirm Password" required>
@@ -267,8 +267,9 @@
                     
                     $("#spinnerDiv").html('');
                     if(key.status == 200){                    
-                        
+
                         $('#Login_RegisterDiv').load(location.href + " #Login_RegisterDiv>*", ""); 
+                        $('#login_form-link').html('<i class="fa fa-unlock-alt"></i> Login');
                         $("#messageDiv").html('<div class="alert alert-success" style="margin-bottom:5px"><strong>'+key.status_message+'</strong></div><div class="col-lg-12 alert alert-info alert-dismissable fade in"><a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a><span><strong><i class="fa fa-warning"></i></strong>Please Check your Email... We have sent your password on your Registered Email-ID..!</span></div>');                       
 
                     }else{ 
@@ -375,9 +376,9 @@
     |                                                                                                        |  
 -->
 <div class="container w3-margin-bottom w3-padding-bottom" id="postJobDiv">
-	<label><h2 class="bluishGreen_txt w3-margin-left w3-padding-left"><b>Post Job</b></h2></label>
-    
-    
+	<label><h2 class="bluishGreen_txt w3-margin-left w3-padding-left"><b><i class="fa fa-briefcase"></i> Post Job</b></h2></label>
+
+
 
     <div class="w3-col l12 ">
         <div class="col-lg-2"></div>
@@ -386,7 +387,7 @@
             <div class=" w3-margin-top" id="post_job">
                 <!--/////////////// div for project description////////////////////////////-->
                 <form id="post_jobForm" name="post_jobForm" >
-                    <div class="w3-col l12">
+                    <div class=" w3-container">
                         <div class="w3-col l12">
                             <div class="col-lg-6">
                                 <label class="w3-small">Job Name :</label>
@@ -400,168 +401,127 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 ">
+                    <div class="w3-container" style="padding: 28px">
                         <label class="w3-small  " >Educational Qualification :</label>
-<!--                        <div class="col-lg-12 scrolly page-wrapper box-content" style="padding-right: 5px;max-height: 350px;">-->
+                        <!--                        <div class="col-lg-12 scrolly page-wrapper box-content" style="padding-right: 5px;max-height: 350px;">-->
                             <textarea id="Requirements" name="Requirements" class="content" rows="4 " cols="50" placeholder="Describe Requirements..." ></textarea> 
-<!--                        </div>-->
-                    </div>
-
-                    <div class="col-lg-12">
-                        <label class=" w3-small w3-margin-top" style="margin-top:30px;">Responsibility :</label>
-<!--                        <div class="col-lg-12 scrolly page-wrapper  w3-padding box-content" style="padding-right: 5px;max-height: 350px;">-->
-                          <textarea id="Responsibility" name="Responsibility" class="content" rows="4 " cols="50" placeholder="Describe Responsibilities..." ></textarea> 
-<!--                        </div>-->
-                    </div>
-                    <div class="w3-col l12">
-
-                        <div class="col-lg-6">
-                            <label class=" w3-small w3-margin-top">Choose Categories :</label>
-                            <span class="w3-text-red">*</span>                                    
-                            <select id="categories" name="categories" class="form-control" placeholder="Select Job Type..." required>
-                                <?php foreach ($all_categories['status_message'] as $row) { ?>  
-                                <option value="<?php echo $row['category_id']; ?>"><?php echo $row['jm_category_name']; ?></option>
-                                <?php } ?>            
-                            </select>    
+                            <!--                        </div>-->
                         </div>
 
-                    </div>
-                    <div class="w3-col l12 w3-margin-top">
-
-                        <div class="col-lg-6" id="selectDiv">
-                            <label class=" w3-small">Required Skills :</label>
-                            <span class="w3-text-red">*</span>                                  
-                            <select id="select-skill" style="width: 100%; top: 36px; height: 34px; left: 0px;" name="skill[]" multiple class="selectized" placeholder="Select a skill..." required>
-                                <!--<option value="">Select skill</option>-->
-                                <?php //foreach ($all_skills['status_message'] as $row) { ?>	
-                                <!--<option value="<?php //echo $row['jm_skill_id']; ?>"><?php //echo $row['jm_skill_name']; ?></option>-->
-                                <?php //} ?>
-                            </select>
-                            
-                           <script >
-                                    // SELECT BOX DEPENDENCY CODE
-                                    $(document).ready(function()
-                                    {
-                                      $('#select-skill').selectize({});
-                                      $("#categories").change(function()
-                                      {
-                                       $("#selectDiv").load(location.href + " #selectDiv>*", "");  
-                                       //$("#select-skill").load(location.href + " #select-skill>*", "");  
-                                        var category_id=$(this).val();
-                                        //alert(category_id);
-                                        var dataString = 'category_id='+ category_id;
-
-                                        $.ajax
-                                        ({
-                                          type: "POST",
-                                          url: BASE_URL+"job/post_jobs/getSkill_byCategory",
-                                          data: dataString,
-                                          cache: false,
-                                          //dataType: "text",
-                                          success: function(data)
-                                          {
-                                            var key=JSON.parse(data);
-                                            //alert(key['status_message'][0]['jm_skill_name']);
-                                            if(key['status'] == '200'){
-                                            for(var i=0; i<(key['status_message']).length; i++){                                              
-                                            $('#select-skill').append('<option value="'+key['status_message'][i]['jm_skill_id']+'"><b>'+key['status_message'][i]['jm_skill_name']+'</b></option>');
-                                        }
-                                         $('#select-skill').selectize({});
-                                    }
-                                    }
-                                    }).done(function() {
-                                        $('#select-skill').selectize({});
-                                        });                                    
-                                    });
-
-                                  });
-                                  
-                              </script>
-                              <script>
-                                //$('#select-skill').selectize({});
-                            </script>
+                        <div class="w3-container" style="padding: 28px">
+                            <label class=" w3-small w3-margin-top" style="margin-top:30px;">Responsibility :</label>
+                            <!--                        <div class="col-lg-12 scrolly page-wrapper  w3-padding box-content" style="padding-right: 5px;max-height: 350px;">-->
+                              <textarea id="Responsibility" name="Responsibility" class="content" rows="4 " cols="50" placeholder="Describe Responsibilities..." ></textarea> 
+                              <!--                        </div>-->
                           </div>
-                          <div class="col-lg-6">
-                            <label class=" w3-small">Job Type :</label>
-                            <span class="w3-text-red">*</span>                                    
-                            <select id="select_jobType" name="select_jobType"  class="form-control" placeholder="Select Job Type..." required>
-                                <option value="Full_Time">Full Time</option>
-                                <option value="Part_Time">Part Time</option>
-                                <option value="Intern">Intern</option>                                        
-                            </select>                                    
+                          <div class=" w3-container">
+
+                            <div class="col-lg-6">
+                                <label class=" w3-small w3-margin-top">Choose Categories :</label>
+                                <span class="w3-text-red">*</span>                                    
+                                <select id="categories" name="categories" class="form-control" placeholder="Select Job Type..." required>
+                                    <?php foreach ($all_categories['status_message'] as $row) { ?>  
+                                    <option value="<?php echo $row['category_id']; ?>"><?php echo $row['jm_category_name']; ?></option>
+                                    <?php } ?>            
+                                </select>    
+                            </div>
+
                         </div>
+                        <div class="w3-container" w3-margin-top">
 
-                    </div>
-                    <div class="col-lg-12" >
-                        <label class="w3-small">Date & Venue Address :</label>
-<!--                        <div class="col-lg-12 page-wrapper  box-content" style="padding-right: 5px;max-height: 350px;">-->
-                            <textarea id="Address" name="Address" class="content" rows="4 " cols="50" placeholder="Describe Job Address And Date..." ></textarea> 
-<!--                        </div>-->
-                    </div>
-                    <div class="w3-col l12 w3-margin-top">
-                        <div class="w3-col l12">
-                            <div class="col-lg-6 w3-padding-right">
-                                <label class="w3-small">Salary Range :</label>
-                                <span class="w3-text-red">*</span>
-                                <select required id="Salary_range" name="Salary_range" class="form-control" placeholder="Select a skill..." >
-                                    <option value="0">Select Salary</option>
-                                    <option value="0-1 LPA">0-1 LPA</option>
-                                    <option value="1-2 LPA">1-2 LPA</option>
-                                    <option value="2-3 LPA">2-3 LPA</option>
-                                    <option value="3-4 LPA">3-4 LPA</option>
-                                    <option value="4-5 LPA">4-5 LPA</option>
-                                    <option value="More Than 5 LPA">More Than 5 LPA</option>
+                            <div class="col-lg-6" id="selectDiv">
+                                <label class=" w3-small">Required Skills :</label>
+                                <span class="w3-text-red"> </span>                                  
+                                <select id="select-skill" style="width: 100%; top: 36px; height: 34px; left: 0px;" name="skill[]" multiple class="selectized" placeholder="Select a skill...">
+                                   <!--  <?php 
+                                    foreach ($all_skills['status_message'] as $row) { ?>	
+                                    <option value="<?php echo $row['jm_skill_id']; ?>"><?php 
+                                    echo $row['jm_skill_name']; ?></option>
+                                    <?php } ?> -->
                                 </select>
-                                <span class="w3-tiny" style=" color: #00B59D;"><b>NOTE:</b>&nbsp;If you Dont Select Range It Default Value Is 'As Per The Company Norms.'</span>
+                                <!-- <script>$('#select-skill').selectize({});</script> -->
                             </div>
-                            <div class="col-lg-6 ">
-                                <label class="w3-small">Positions:</label>
-                                <span class="w3-text-red">*</span>                                        
-                                <input  type="number" name="Positions" id="Positions" min="1" class="form-control" placeholder="No Of Positions..." required>
+                            <div class="col-lg-6">
+                                <label class=" w3-small">Job Type :</label>
+                                <span class="w3-text-red">*</span>                                    
+                                <select id="select_jobType" name="select_jobType"  class="form-control" placeholder="Select Job Type..." required>
+                                    <option value="Full_Time">Full Time</option>
+                                    <option value="Part_Time">Part Time</option>
+                                    <option value="Intern">Intern</option>                                        
+                                </select>                                    
                             </div>
+
                         </div>
-                    </div>
-                    <div class="w3-col l12 ">
-                        <div class="w3-col l12">
-                            <div class="col-lg-4">
-                                <label class="w3-small">Country:</label>
-                                <span class="w3-text-red">*</span>
-                                <!--         	<span id = "countrydata" name = "countrydata" style = "color:red; display: block;">&nbsp;</span>-->
-                                <select class=" form-control"   id="user_country" name="user_country" required>
-                                 <?php 
-          						foreach ($country['status_message'] as $key){?>
-             					<option value="<?php echo $key['id']; ?>"  <?php if($jm_userCountry == $key['id']){ echo 'selected=selected'; } ?> ><?php echo $key['name']; ?></option>
-        						 <?php }
-          						?>
-                                </select>
+                        <div class=" w3-container" style="padding: 28px" >
+                            <label class="w3-small">Date & Venue Address :</label>
+                            <!--                        <div class="col-lg-12 page-wrapper  box-content" style="padding-right: 5px;max-height: 350px;">-->
+                                <textarea id="Address" name="Address" class="content" rows="4 " cols="50" placeholder="Describe Job Address And Date..." ></textarea> 
+                                <!--                        </div>-->
                             </div>
+                            <div class="w3-container w3-margin-top">
+                                <div class="w3-col l12">
+                                    <div class="col-lg-6 w3-padding-right">
+                                        <label class="w3-small">Salary Range :</label>
+                                        <span class="w3-text-red">*</span>
+                                        <select required id="Salary_range" name="Salary_range" class="form-control" placeholder="Select a skill..." >
+                                            <option value="0">Do Not Disclose</option>
+                                            <option value="0-1 LPA">0-1 LPA</option>
+                                            <option value="1-2 LPA">1-2 LPA</option>
+                                            <option value="2-3 LPA">2-3 LPA</option>
+                                            <option value="3-4 LPA">3-4 LPA</option>
+                                            <option value="4-5 LPA">4-5 LPA</option>
+                                            <option value="More Than 5 LPA">More Than 5 LPA</option>
+                                        </select>
 
-                            <div class="col-lg-4">
-                                <label class="w3-small">State:</label>
-                                <span class="w3-text-red">*</span>
-                                <!--         	<span id = "statedata" name = "statedata" style = "color:red; display: block;">&nbsp;</span>-->
-                                <select class="form-control" name="user_state" id="user_state" required>
-                                 <?php if($jm_userState != ''){?>
-          						 <option value="<?php echo $jm_userState ?>"><?php echo $jm_userState ?></option>
-         						 <?php } //echo $jm_userState; ?>
-                                </select>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <label class="w3-small">Positions:</label>
+                                        <span class="w3-text-red">*</span>                                        
+                                        <input  type="number" name="Positions" id="Positions" min="1" class="form-control" placeholder="No Of Positions..." required>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="w3-container">
+                                <div class="w3-col l12">
+                                    <div class="col-lg-4">
+                                        <label class="w3-small">Country:</label>
+                                        <span class="w3-text-red">*</span>
+                                        <!--         	<span id = "countrydata" name = "countrydata" style = "color:red; display: block;">&nbsp;</span>-->
+                                        <select class=" form-control"   id="user_country" name="user_country" required>
+                                         <?php 
+                                         foreach ($country['status_message'] as $key){?>
+                                         <option value="<?php echo $key['id']; ?>"  <?php if($jm_userCountry == $key['id']){ echo 'selected=selected'; } ?> ><?php echo $key['name']; ?></option>
+                                         <?php }
+                                         ?>
+                                     </select>
+                                 </div>
 
-                            <div class="col-lg-4">
+                                 <div class="col-lg-4">
+                                    <label class="w3-small">State:</label>
+                                    <span class="w3-text-red">*</span>
+                                    <!--         	<span id = "statedata" name = "statedata" style = "color:red; display: block;">&nbsp;</span>-->
+                                    <select class="form-control" name="user_state" id="user_state" required>
+                                     <?php if($jm_userState != ''){?>
+                                     <option value="<?php echo $jm_userState ?>"><?php echo $jm_userState ?></option>
+                                     <?php } //echo $jm_userState; ?>
+                                 </select>
+                             </div>
+
+                             <div class="col-lg-4">
                                 <label class="w3-small">City:</label>
                                 <span class="w3-text-red">*</span>
                                 <input class="form-control" type="text" placeholder="Enter your city" id="Job_Location" name="Job_Location" value="" required>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 w3-margin-top">
+                    <div class="w3-container w3-margin-top">
                         <div class="col-lg-12 w3-center">                            
-                            <input type="submit" class="btn w3-text-white w3-center" value="Post Job" style=" background-color: #00B59D;">               										
+                            <input type="submit" class="btn btn-lg w3-text-white w3-center" value="Submit Job" style=" background-color: #00B59D;">               										
                             <span class=""></span>
                         </div>
                     </div>
                 </form>
-                
+
             </div>
         </div>
     </div>
@@ -618,18 +578,18 @@ $(function () {
 </script>
 <script>   
   $(document).ready(function () {
-  $("#user_country").change(function(){
+      $("#user_country").change(function(){
         var country_id = $('#user_country').val();
         //$("#state").load(location.href + " #state>*", "");
         //alert(country_id);
         $('#user_state').html('');
         $.ajax({
-        type: "POST",
-        url: BASE_URL + "job/Post_jobs/getStateby_country",
-        data: {
-           country_id: country_id 
-        },  
-        dataType: "text",
+            type: "POST",
+            url: BASE_URL + "job/Post_jobs/getStateby_country",
+            data: {
+               country_id: country_id 
+           },  
+           dataType: "text",
         return: false, //stop the actual form post !important!
         success: function (data)
         {
@@ -638,18 +598,80 @@ $(function () {
             //alert(obj.status_message[0].name);
             for(var i=0; i<(obj.status_message).length; i++){
                 $('#user_state').append('<option value="'+obj.status_message[i].name+'">'+obj.status_message[i].name+'</option>');
-            }
-            //$('#user_state').append('<option value=""></option>');
-//             for (var i = 0; i < (response.data).length; i++)
-//                {
-//                    $("#driverName").append("<option value='" + response.data[i].drivername + "'>" + response.data[i].drivername + "</option>");
-//
-//                }
+            }           
         }
     });
     return false; //stop the actual form post !important!
+});
   });
-  });
-  </script>
+</script>
+<script >
+    // SELECT BOX DEPENDENCY CODE
+    $(document).ready(function()
+    {
+        $("#categories").change(function()
+        {
+            $("#selectDiv").load(location.href+" #selectDiv>*", "");  
+            var category_id=$('#categories').val();
+            var dataString = 'category_id='+category_id;
+            $('#selectDiv').html('<span class="w3-text-grey w3-small"><i class="fa fa-circle-o-notch fa-spin"></i> Loading skills</span>');
+            $.ajax
+            ({
+              type: "POST",
+              url: BASE_URL+"job/post_jobs/getSkill_byCategory",
+              data: dataString,
+              //cache: false,
+              //dataType: "text",
+              success: function(data)
+              {
+                var key=JSON.parse(data);
+
+                if(key['status'] == '200'){
+                    for(var i=0; i<(key['status_message']).length; i++){                                              
+                        $('#select-skill').append('<option value="'+key['status_message'][i]['jm_skill_id']+'"><b>'+key['status_message'][i]['jm_skill_name']+'</b></option>');
+                    }
+                    $('#select-skill').selectize({});
+                }
+            }
+        }).done(function() {
+        });                                    
+    });
+
+    });
+
+</script>
+<!-- <script >
+    // SELECT BOX DEPENDENCY CODE
+    $(document).ready(function()
+    {
+            $("#selectDiv").load(location.href+" #selectDiv>*", "");  
+            var category_id=$('#categories').val();
+            var dataString = 'category_id='+category_id;
+
+            $.ajax
+            ({
+              type: "POST",
+              url: BASE_URL+"job/post_jobs/getSkill_byCategory",
+              data: dataString,
+              cache: false,
+              //dataType: "text",
+              success: function(data)
+              {
+                alert(data);
+                var key=JSON.parse(data);
+
+                if(key['status'] == '200'){
+                    for(var i=0; i<(key['status_message']).length; i++){                                              
+                        $('#select-skill').append('<option value="'+key['status_message'][i]['jm_skill_id']+'"><b>'+key['status_message'][i]['jm_skill_name']+'</b></option>');
+                    }
+                    $('#select-skill').selectize({});
+                }
+            }
+        }).done(function() {
+        });                                    
+
+    });
+
+</script> -->
 </body>
 </html>

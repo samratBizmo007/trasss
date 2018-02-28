@@ -712,7 +712,7 @@ switch ($profile_type) {
                                 }
                                 });
                               </script>
-                            <div class="w3-col l12 w3-margin-top">
+                            <div class="w3-col l12 w3-margin-top" id="data_<?php echo $key['jm_project_id']; ?>">
                               <div class="w3-col l7" id="emaployerDetails_<?php echo $key['jm_project_id']; ?>">
 <!--                                <span class="w3-tiny" id=""><i>By Demo_user on December 2017.</i></span>-->
                               </div>
@@ -760,7 +760,7 @@ switch ($profile_type) {
       //alert(emp_id);
     $.ajax({
     type: "POST",
-    url: "<?php echo base_url(); ?>profile/View_profile/getEmployer_Details",
+    url: "<?php echo base_url(); ?>profile/share_profile/getEmployer_Details",
     dataType: "text",
     data: {
       emp_id: emp_id,
@@ -770,7 +770,7 @@ switch ($profile_type) {
     cache: false,
     success: function(data) {
         //alert(data);
-      //('#SkillId_'+job_id).html('');       
+      //$('#data_'+project_id).html(data);       
       var key=JSON.parse(data);
       for(i=0; i< key.length; i++){   
       var userName = '';
@@ -780,16 +780,25 @@ switch ($profile_type) {
          userName = key[i].jm_user_name; 
       }
       var postingDate = '';
-      if(key[i].jm_posting_date == ''){
+      if(key[i].dated == ''){
          postingDate = 'N/A'; 
       }else {
-         postingDate = key[i].jm_posting_date; 
+         postingDate = key[i].dated; 
       }
+      var rate = parseFloat(key[i].freelancerRatings).toFixed(1);
+      var ratings = rate.split('.');
       var rating = '';
-      if(key[i].freelancerRatings == ''){
-         rating = 0; 
+      if(ratings[1] == '0'){
+          rating = Math.round(rate);
+      }else{
+          rating = rate;
+      }
+
+      var city = '';
+      if(key[i].jm_userCity == ''){
+         city = 'N/A'; 
       }else {
-         rating = parseFloat(key[i].freelancerRatings).toFixed(1); 
+         city = key[i].jm_userCity; 
       }
       var image = '';
       if(key[i].jm_profile_image == ''){
@@ -798,7 +807,7 @@ switch ($profile_type) {
          image = key[i].jm_profile_image; 
       }
       $('#emaployerDetails_'+project_id).html('<span class="w3-tiny"><i>By '+ userName +' on '+ postingDate +'.</i></span>');
-         $('#employerCity_'+project_id).html('<span class="w3-small"><i class="w3-large fa fa-map-marker"></i> '+key[i].jm_userCity+' .</span><br>');
+         $('#employerCity_'+project_id).html('<span class="w3-small"><i class="w3-large fa fa-map-marker"></i> '+city+' .</span><br>');
          $('#employerRatings_'+project_id).html('<span class="stars" data-rating='+rating+' data-num-stars="5" ></span><br><span class="badge"> '+rating+' </span><br>');
          $('#image_'+project_id).css("background-image", "url("+BASE_URL+""+image+")");
          rate_stars();

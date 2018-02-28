@@ -216,7 +216,7 @@ public function get_biddedList($jm_project_id)
     //---------------------download coverletter for bid-----------------------
 
      //-----------------------award project to freelancer-------------------------
-public function awardProject($freelancer_id,$project_id){
+   public function awardProject($freelancer_id,$project_id){
     //echo $freelancer_id;echo $project_id;die();
     
     
@@ -225,7 +225,28 @@ public function awardProject($freelancer_id,$project_id){
     $this->db->where($update_where);            
 
     if($this->db->update('jm_project_list',$data)){
-
+    //-----fetching the project details from project table using project id-------------//
+    $sql = "SELECT * FROM jm_project_list WHERE jm_project_id ='$project_id'";
+    $result = $this->db->query($sql);
+	$project_title='';
+	
+                    foreach ($result->result_array() as $key) {
+                    	//print_r($key) ;die();
+                        $project_title = $key['jm_project_title'];    //----getting job name
+                       }
+    //-------sending mail functionality by freelancer id-------------------//
+    	$query = "SELECT * FROM jm_user_tab WHERE jm_user_id='$freelancer_id'";
+                    $output = $this->db->query($query);
+     				$email_id = '';
+                    $username = '';
+		
+                 foreach ($output->result_array() as $row) {
+                            $email_id = $row['jm_email_id'];
+                            $username = $row['jm_username'];
+                        }
+                      //  print_r($email_id);die();
+				$d=View_project_model::awardedProject_email($email_id,$username,$project_title);
+		// print_r($d);die();
     //$data=array('active'=>'1');
     $update = array('jm_project_id =' => $project_id);
     $data=array('active'=>'1');
@@ -238,6 +259,7 @@ public function awardProject($freelancer_id,$project_id){
      $this->db->where($update_whereBids);
 
      if($this->db->update('jm_project_bidding',$dataBids)){
+     
          $response = array(
             'status' => 200,
             'status_message' => 'Project awarded successfully.');
@@ -256,6 +278,73 @@ else{
 return $response;
 }
     //---------------------award project to freelancer-----------------------
+     //----------Email notification send to awarded freelancer---------------------//
+      public function awardedProject_email($email_id,$username,$project_title)
+      {
+      //	return strtoupper($email_id);die();
+      	 $config = Array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'mx1.hostinger.in',
+            'smtp_port' => '587',
+            'smtp_user' => 'customercare@jobmandi.in', // change it to yours
+            'smtp_pass' => 'Descartes@1990', // change it to yours
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'wordwrap' => TRUE
+        );
+           $config['smtp_crypto'] = 'tls';
+             
+            $current_date = date('Y-m-d');                
+            $this->load->library('email', $config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('customercare@jobmandi.in', "Admin Team");
+            $this->email->to($email_id);
+            $this->email->subject("JOBMANDI-Project Awarded");
+      		 $this->email->message('<html>
+			<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link rel="stylesheet" href="http://jobmandi.in/css/bootstrap/bootstrap.min.css">
+			<script src="http://jobmandi.in/css/bootstrap/jquery.min.js"></script>
+			<script src="http://jobmandi.in/css/bootstrap/bootstrap.min.js"></script>
+			</head>
+			<body>
+			<div class="container col-lg-8" style="box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;margin:10px; font-family:Candara;">
+			<img class="w3-border" style="width:100px;height:auto; margin-left:auto; margin-right: auto;" src="http://jobmandi.in/images/desktop/logo-main.png">
+			<h2 style="color:#4CAF50; font-size:30px">Congratulations...!</h2>
+			<h3 style="font-size:15px;">Dear '.$username.',<br>You Have Been Awarded For our project- <b>'.strtoupper($project_title).'</b>.<br></h3>
+			<div class="col-lg-12">
+			<div class="col-lg-4"></div>
+			<div class="col-lg-4">
+			<a href="'.base_url().'auth/login?profile=1" type="button" style="background-color:#4CAF50; color:white;padding:3px" class="btn btn-md">Go To Login Page</a>
+			</div>
+			<div class="col-lg-4"></div>
+			</div>
+			<hr>
+			<h4 style="font-size:15px;"><b>Questions?</b></h4>
+			<h4 style="font-size:15px;">Please let us know if there is anything we can help you with by replying this email.<br><br>Thanks, <b>Admin Team</b></h4>
+			</div>
+			</body></html>');
+                
+                
+                //$this->email->send(); //----send email function
+            if (!$this->email->send()) {
+                $response = array(
+                    'status' => 500,
+                    'status_message' => 'Mail Sending Failed!');
+            } else {
+                $response = array(
+                    'status' => 200,
+                    'status_message' => 'Email Sent Successfully...!');
+            }
+        
+        return $response;
+      
+      
+      
+      }
+      
+  //---------function end----------------------------// 
+
 
 public function Fetch_Bidding_Info($user_id,$project_id){
     $selectSql = "SELECT * FROM jm_project_bidding WHERE jm_user_id='$user_id' AND jm_project_id='$project_id'";
@@ -279,7 +368,7 @@ public function closeProject($project_id){
      $this->db->where($update_where);
 
      if($this->db->update('jm_project_list',$data)) {
-        $response = array(
+     $response = array(
             'status' => 200,
             'status_message' => 'Project is closed permanantly');
     } else {
@@ -290,4 +379,5 @@ public function closeProject($project_id){
     return $response;
 }
 //----------------------------
+ 
 }

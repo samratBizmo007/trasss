@@ -32,23 +32,22 @@ $(document).ready(function(){
 	setUserSkill();//end of user skill
 	
 	$('#hit').on('click',function(event){
-		 $('#showResult').html('<center><i class="fa fa-spinner fa-spin w3-jumbo w3-margin" style="font-size:24px;"></i></center>');
+		 //$('#showResult').html('<center><i class="fa fa-spinner fa-spin w3-jumbo w3-margin" style="font-size:24px;"></i></center>'); 
 		event.preventDefault();
 		var str = $('#term').val();
 
 		skill=$('#skills_filtered').val();
 		var skill_selected = $('#skill_list option[value="' + $('#term').val() + '"]').data('value');
-
 		if(str!=""){
 			if(skill==''){
 				skill=skill_selected;
 			}
 			else{
 				// ----------check skill already added or not
-				if(skill.includes(skill_selected))
-				{
-					return false;	
-				}
+				// if(skill.includes(skill_selected))
+				// {
+				// 	return false;	
+				// }
 
 				skill = skill+'|'+skill_selected;
 			}
@@ -66,6 +65,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		//var str = $('#term').val();
 		skill = $('#skills_filtered').val();
+
 		if(skill == ''){
 			return false;
 		}
@@ -88,6 +88,8 @@ $(document).ready(function(){
 				var field = 'jm_project_price';
 			}
 		}
+		$('#showResult').html('<center><i class="fa fa-spinner fa-spin w3-jumbo w3-margin" style="font-size:24px;"></i></center>');
+
 		setTimeout(function(){
 			$.ajax({
 				url :BASE_URL+'project/project_listing/filterProject',

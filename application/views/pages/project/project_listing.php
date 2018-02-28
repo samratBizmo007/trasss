@@ -228,9 +228,9 @@ if(isset($_GET['jm_job_type'])){
         <div class="w3-col l12 w3-border-bottom">';
 
         if (($user_id != '') || ($user_name != '') || ($profile_type != '')) {  
-        echo 
-        '<div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].');" data-toggle="fa" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>';
-      }
+          echo 
+          '<div class="w3-right w3-margin-right w3-padding-right"><a onclick="add_bookmark('.$user_id.','.$key['jm_project_id'].');" data-toggle="fa" title="'.$title.'"><i id="project_'.$key['jm_project_id'].'" class="fa '.$class.'" style="font-size:25px; color: black"></i></a></div>';
+        }
         echo '<div class="col-lg-8">
         <h4>'.$key['jm_project_title'].'</h4>
         <div>
@@ -287,8 +287,17 @@ if(isset($_GET['jm_job_type'])){
      }
 
    }
-
-   ?>
+   else{     
+    echo '
+    <div class="w3-col 12 w3-padding w3-margin">              
+    <div class="w3-col l12">
+    <div class="w3-center">
+    <img src="'.base_url().'css/logos/no_data.png" width="auto" class="img"/>
+    </div>
+    </div>             
+    </div>';
+  }
+  ?>
 
 <!--      <div class="pagination">
   		  <a href="#">&laquo;</a>
@@ -325,7 +334,7 @@ if(isset($_GET['jm_job_type'])){
           <div style="display:inline">
             <form>
               <input type="hidden" class="" id="skills_filtered">
-              <input list="skill_list" type="text" name="allSkill" id="term" class="latest_search uneditable-input" placeholder="search skills..." style="padding-left: 10px;width: 165px">
+              <input list="skill_list" type="text" name="allSkill" id="term" class="latest_search uneditable-input" placeholder="search skills..." style="padding-left: 10px;width: 165px" required>
               <datalist id="skill_list">
                 <?php 
                 foreach($all_skills['status_message'] as $result) { ?>
@@ -340,9 +349,9 @@ if(isset($_GET['jm_job_type'])){
       </div>
       <div class="budget">
         <div style="display:inline">
-          <div><b>Budget : &nbsp;&nbsp;&nbsp;<span id="demo"></span></b></div>
+          <div><b>Budget :   less than <i class="fa fa-rupee"></i> <span id="demo"></span></b></div>
           <div class="slidecontainer"><input type="range" min="100" max="2500000" value="1" class="slider" id="myRange" name="rangetype"></div>
-          <div><p class="w3-label">Range 100-2500000</p></div>
+          <div><p class="w3-label">Range <i class="fa fa-rupee"></i> 100 - <i class="fa fa-rupee"></i> 2500000 <i class="w3-tiny">(default is <i class="fa fa-rupee"></i>100)</i></p></div>
           <button type="button" class="view_button" onclick="window.location.reload();" id="reset" name="reset"><i class="fa fa-refresh"></i> Reset Filter</button>
         </div>
       </div>

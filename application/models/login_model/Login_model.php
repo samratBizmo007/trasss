@@ -119,8 +119,34 @@ class Login_model extends CI_Model{
 		$this->email->from('customercare@jobmandi.in', "Admin Team");
 		$this->email->to($email,$username);  
 		$this->email->subject("JOBMANDI-Email Verification");
-		$this->email->message("Dear ".$username.",\nPlease click on below URL or paste into your browser to verify your Email Address\n\n <a href='".base_url()."auth/login/verify_email/".base64_encode($email)."?profile=".$profile_type."'>".base_url()."auth/login/verify_email/".base64_encode($email)."?profile=".$profile_type."</a>\n"."\n\nThanks\nAdmin Team");
-
+		//$this->email->message("Dear ".$username.",\nPlease click on below URL or paste into your browser to verify your Email Address\n\n <a href='".base_url()."auth/login/verify_email/".base64_encode($email)."?profile=".$profile_type."'>".base_url()."auth/login/verify_email/".base64_encode($email)."?profile=".$profile_type."</a>\n"."\n\nThanks\nAdmin Team");
+		
+		$this->email->message('<html>
+			<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link rel="stylesheet" href="http://jobmandi.in/css/bootstrap/bootstrap.min.css">
+			<script src="http://jobmandi.in/css/bootstrap/jquery.min.js"></script>
+			<script src="http://jobmandi.in/css/bootstrap/bootstrap.min.js"></script>
+			</head>
+			<body>
+			<div class="container col-lg-8" style="box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;margin:10px; font-family:Candara;">
+			<img class="w3-border" style="width:100px;height:auto; margin-left:auto; margin-right: auto;" src="http://jobmandi.in/images/desktop/logo-main.png">
+			<h2 style="color:#4CAF50; font-size:30px">Thank You For Registering With Jobmandi!!</h2>
+			<h3 style="font-size:15px;">Hello '.$username.',<br>Please click on below URL or paste into your browser to verify your Email Address</h3>
+			<div class="col-lg-12">
+			<div class="col-lg-4"></div>
+			<div class="col-lg-4">
+			
+			<a href="'.base_url().'auth/login/verify_email/'.base64_encode($email).'?profile='.$profile_type.'">'.base_url().'auth/login/verify_email/'.base64_encode($email).'?profile='.$profile_type.'</a>
+			</div>
+			<div class="col-lg-4"></div>
+			</div>
+			<hr>
+			<h4 style="font-size:15px;"><b>Questions?</b></h4>
+			<h4 style="font-size:15px;">Please let us know if there is anything we can help you with by replying this email.<br><br>Thanks, <b>Admin Team</b></h4>
+			</div>
+			</body></html>');
+		
 		if ($this->email->send()) {
 			$response=array(
 				'status' => 200,	//---------email sending succesfully 

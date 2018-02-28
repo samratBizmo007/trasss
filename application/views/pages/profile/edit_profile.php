@@ -173,7 +173,7 @@ switch ($selected_profile_type) {
       <div class="w3-col l6 w3-padding">
         <label class="control-label ">First name:</label>
         <span class="w3-text-red">*</span>
-        <input class="w3-input" type="text" name="jm_user_name" value="<?php echo $fname; ?>" placeholder="Name" required>
+        <input class="w3-input" type="text" name="jm_user_name" value="<?php echo $fname; ?>" placeholder="Name" <?php if($fname==''){ echo 'autofocus';} ?> required>
       </div> 
       <div class="w3-col l6 w3-padding">
         <label class="control-label">Last name:</label>
@@ -429,14 +429,14 @@ $count++;
                         <div class="w3-col l6">
                             <label class="w3-padding-left">Your Password: </label>
                             <div class="w3-margin-bottom w3-padding-left input-group">
-                                <input class="form-control" placeholder="Enter Password" id="user_password" name="user_password" type="password" maxlength="8" value="<?php echo $password; ?>" required>
+                                <input class="form-control" placeholder="Enter Password" id="user_password" name="user_password" type="password" minlength="8" value="<?php echo $password; ?>" required>
                                 <span class="input-group-btn"><a class="btn btn-default" onclick="show_pass(this);">Show</a></span>
                             </div>
                         </div>
                         <div class="w3-col l6">
                             <label class="w3-padding-left">Confirm Password: </label>
                             <div class=" w3-padding-left">
-                                <input class="form-control input-group" placeholder="Re-enter your password" id="user_passwordConfirm" name="user_passwordConfirm" type="password" maxlength="8"  required>
+                                <input class="form-control input-group" placeholder="Re-enter your password" id="user_passwordConfirm" name="user_passwordConfirm" type="password" minlength="8"  required>
                             </div>
                             <div class=" w3-padding-left"><label id="message"></label></div>
                         </div>                    
@@ -488,6 +488,17 @@ $('#edit_btn').click(function () {
 			$('#edit_btn').prop("disabled", true);
 		}
 	});
+
+  $('#user_password').on('keyup', function () {
+    if ($('#user_password').val() == $('#user_passwordConfirm').val()) {
+      $('#edit_btn').prop("disabled", false);
+      $('#message').html('');
+
+    } else {
+      $('#message').html('Password Not Matching').css('color', 'red');
+      $('#edit_btn').prop("disabled", true);
+    }
+  });
 </script>
 <!--script end -->
 <!-- script script to hide or show password input field -->

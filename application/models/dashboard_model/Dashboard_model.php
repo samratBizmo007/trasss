@@ -390,8 +390,8 @@ public function get_allSkills(){
 	// -----------------------GET ALL SKILLS  BY CATEGORY MODEL----------------------//
 	//-------------------------------------------------------------//
 public function getSkill_byCategory($category_id){
-  $query = "SELECT * FROM jm_skills_tab WHERE category_id = '$category_id'";
-                //echo $query;die();
+  $query = "SELECT * FROM jm_skills_tab WHERE category_id = $category_id";
+               // echo $query;die();
   $result = $this->db->query($query);
 
   if ($result->num_rows() <= 0) {
@@ -544,16 +544,15 @@ return $response;
 public function getEmployer_Details($emp_id,$profile_type){
     if($profile_type == 1){
         $sql = "SELECT AVG((fr.jm_communication+fr.jm_ontimedelivery+fr.jm_valueformoney+fr.jm_expertise+fr.jm_hire_again)/5) as freelancerRatings,"
-        . "ut.jm_user_name,ut.jm_userCity,pl.jm_posting_date,ut.jm_profile_image "
+        . "ut.jm_user_name,ut.jm_userCity,fr.dated,ut.jm_profile_image "
         . "FROM jm_freelancer_rating_table as fr join jm_project_list as pl join jm_userprofile_tab as ut "
         . "on(pl.jm_project_id = fr.jm_project_id AND ut.jm_user_id = pl.jm_posted_user_id) "
         . "WHERE fr.jm_emp_id = '$emp_id'";
     }
     if($profile_type == 2){
-        $sql = "SELECT AVG((er.jm_communication+er.jm_payment_prompt+er.jm_acc_of_requirement+er.jm_work_again)/4) as freelancerRatings,
-        ut.jm_user_name,ut.jm_userCity,pl.jm_posting_date,ut.jm_profile_image 
+        $sql = "SELECT AVG((er.jm_communication+er.jm_payment_prompt+er.jm_acc_of_requirement+er.jm_work_again)/4) as freelancerRatings, ut.jm_user_name,ut.jm_userCity,er.dated,ut.jm_profile_image 
         FROM jm_employer_rating_table as er join jm_project_list as pl join jm_userprofile_tab as ut 
-        on(pl.jm_project_id = er.jm_project_id) WHERE er.jm_freelance_id = '$emp_id'";    
+        on(pl.jm_project_id = er.jm_project_id AND ut.jm_user_id = pl.jm_freelancer_user_id) WHERE er.jm_freelance_id ='$emp_id'";    
     }
     $result = $this->db->query($sql);
 

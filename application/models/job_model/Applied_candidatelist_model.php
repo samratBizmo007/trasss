@@ -218,22 +218,49 @@ public function sendMail_ToSelected_Candidates($email_id,$job_name,$company_name
             $this->email->from('customercare@jobmandi.in', "Admin Team");
             $this->email->to($email_id);
             $this->email->subject("JOBMANDI-Job Selection");
-            $this->email->message('<html>'
-                . '<head>'
-                . '<title>Congratulations...!</title>'
-                . '</head>'
-                . '<body>'                        
-                . '<form action="/action_page.php">'
-                . '<fieldset>'
-                . '<legend>Congratulations...! - '.$username.'</legend>'
-                . '<p><label>You Have Been Selected For Your Applied Job Position- '.$job_name.'</label></p>'
-                . '<p><label>Company Name- '.$company_name.'</label></p>'
-                . '<a class="btn" href="'. base_url().'auth/login?profile=3">login</a>'
-                . '</fieldset>'
-                . '</form>'
-                . '</body>'
-                . '</html>');
+//            $this->email->message('<html>'
+//                . '<head>'
+//                . '<title>Congratulations...!</title>'
+//                . '</head>'
+//                . '<body>'                        
+//                . '<form action="/action_page.php">'
+//                . '<fieldset>'
+//                . '<legend>Congratulations...! - '.$username.'</legend>'
+//                . '<p><label>You Have Been Selected For Your Applied Job Position- '.$job_name.'</label></p>'
+//                . '<p><label>Company Name- '.$company_name.'</label></p>'
+//                . '<a class="btn" href="'. base_url().'auth/login?profile=3">login</a>'
+//                . '</fieldset>'
+//                . '</form>'
+//                . '</body>'
+//                . '</html>');
 
+                
+            $this->email->message('<html>
+			<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link rel="stylesheet" href="http://jobmandi.in/css/bootstrap/bootstrap.min.css">
+			<script src="http://jobmandi.in/css/bootstrap/jquery.min.js"></script>
+			<script src="http://jobmandi.in/css/bootstrap/bootstrap.min.js"></script>
+			</head>
+			<body>
+			<div class="container col-lg-8" style="box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;margin:10px; font-family:Candara;">
+			<img class="w3-border" style="width:100px;height:auto; margin-left:auto; margin-right: auto;" src="http://jobmandi.in/images/desktop/logo-main.png">
+			<h2 style="color:#4CAF50; font-size:30px">Congratulations...!</h2>
+			<h3 style="font-size:15px;">Hello '.$username.',<br>You Have Been Selected For Your Applied Job Position- <b>'.strtoupper($job_name).'</b>.<br><br>Company Name- :<b>'.strtoupper($company_name).'</b></h3>
+			<div class="col-lg-12">
+			<div class="col-lg-4"></div>
+			<div class="col-lg-4">
+			<a href="'.base_url().'auth/login?profile=3" type="button" style="background-color:#4CAF50; color:white;padding:3px" class="btn btn-md">Go To Login Page</a>
+			</div>
+			<div class="col-lg-4"></div>
+			</div>
+			<hr>
+			<h4 style="font-size:15px;"><b>Questions?</b></h4>
+			<h4 style="font-size:15px;">Please let us know if there is anything we can help you with by replying this email.<br><br>Thanks, <b>Admin Team</b></h4>
+			</div>
+			</body></html>');
+                
+                
                 //$this->email->send(); //----send email function
             if (!$this->email->send()) {
                 $response = array(

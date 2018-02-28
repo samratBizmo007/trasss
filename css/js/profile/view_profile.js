@@ -54,6 +54,7 @@ function del_portfolio(portfolio_id){
        $.confirm({
         title: '<label class="w3-large w3-text-red"><i class="fa fa-stack-exchange"></i> Delete Portfolio.</label>',
         content: '<span class="w3-medium">Do you want to delete this Portfolio permanantly?</span>',
+        type:'red',
         buttons: {
           confirm: function () {
             $.ajax({

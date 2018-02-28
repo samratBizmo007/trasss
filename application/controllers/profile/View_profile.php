@@ -15,6 +15,10 @@ class View_profile extends CI_Controller
 		if(($user_id=='') || ($user_name=='') || ($profile_type=='')){
 			redirect('auth/login');
 		}
+		$userInfo=View_profile::get_userDetails();
+		if($userInfo['status_message'][0]['jm_user_name']==''){
+			redirect('profile/edit_profile');
+		}
 	}
 
 	public function index(){

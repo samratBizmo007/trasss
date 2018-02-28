@@ -69,18 +69,26 @@ class Contact_us extends CI_Controller {
             $this->email->from('customercare@jobmandi.in', "Admin Team");
             $this->email->to($email);
             $this->email->subject("JOBMANDI-Customer Care");
-            $this->email->message("<html>"
-                    . "<head>"
-                    . "<title></title>"
-                    . "</head>"
-                    . "<body>"
-                    . "<p><label><h3><b>JOBMANDI Customer Support</label></b></h3></p>"
-                    . "<p><label>Your message was successfully sent!</label></p>"
-                    . "<p><label>Thank you for contacting us, we will reply to your inquiry as soon as possible!</label></p>"
-                    . "<p><label>Thank You..!</label></p>"
-                    . "<p><label></label></p>"
-                    . "</body>"
-                    . "</html>");
+			$this->email->message( '<html>
+			<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link rel="stylesheet" href="http://jobmandi.in/css/bootstrap/bootstrap.min.css">
+			<script src="http://jobmandi.in/css/bootstrap/jquery.min.js"></script>
+			<script src="http://jobmandi.in/css/bootstrap/bootstrap.min.js"></script>
+			</head>
+			<body>
+			<div class="container col-lg-8" style="box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;margin:10px; font-family:Candara;">
+			<img class="w3-border" style="width:100px;height:auto; margin-left:auto; margin-right: auto;" src="http://jobmandi.in/images/desktop/logo-main.png">
+			<h2 style="color:#4CAF50; font-size:30px">JOBMANDI Customer Support</h2>
+			<h3 style="font-size:15px;"> Your message was successfully sent!.<br><br>Thank you for contacting us, we will reply to your inquiry as soon as possible!</h3>
+			<div class="col-lg-12">
+			<div class="col-lg-4"></div>
+			<div class="col-lg-4"></div>
+			</div>
+			<h4 style="font-size:15px;"><b>Thank You..!</b></h4>
+			</div>
+			</body></html>');
+                    
             if ($this->email->send()) {
                 echo '<div class="alert alert-success" style="margin-bottom:5px">
             <strong>Message Sent Successfully..!</strong> 

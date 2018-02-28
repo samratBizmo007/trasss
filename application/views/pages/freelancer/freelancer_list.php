@@ -578,7 +578,7 @@ $search_cat=$this->input->get('search_param', TRUE);
     },
   }).
     done(function(data){
-      console.log(data);
+      //console.log(data);
       $('#showResult').html(data);
     });//end of ajax
 

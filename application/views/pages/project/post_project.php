@@ -210,7 +210,7 @@ error_reporting(E_ERROR | E_PARSE);
 										<input type="email" name="register_email" id="register_email" tabindex="4" class="form-control" placeholder="Email address" required>
 									</div>
 									<div class="form-group">
-										<input type="password" name="register_password" id="register_password" tabindex="4" class="form-control" placeholder="Password" minlength="8" required>
+										<input type="password" name="register_password" onkeyup="checkPassword();" id="register_password" tabindex="4" class="form-control" placeholder="Password" minlength="8" required>
 									</div>
 									<div class="form-group">
 										<input type="password" name="register_confirm_password" id="register_confirm_password" tabindex="5" onkeyup="checkPassword();" class="form-control" minlength="8" placeholder="Confirm Password" required>
@@ -288,6 +288,7 @@ error_reporting(E_ERROR | E_PARSE);
 	            	if(key.status == 200){                    
 	            		
 	            		$('#Login_RegisterDiv').load(location.href + " #Login_RegisterDiv>*", ""); 
+	            		$('#login_form-link').html('<i class="fa fa-unlock-alt"></i> Login');
 	            		$("#messageDiv").html('<div class="alert alert-success" style="margin-bottom:5px"><strong>'+key.status_message+'</strong></div><div class="col-lg-12 alert alert-info alert-dismissable fade in"><a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a><span><strong><i class="fa fa-warning"></i></strong>Please Check your Email... We have sent your password on your Registered Email-ID..!</span></div>');	            		
 
 	            	}else{ 

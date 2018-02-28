@@ -12,9 +12,18 @@ function timeago($date) {
             for($i = 0; $diff >= $length[$i] && $i < count($length)-1; $i++) {
             $diff = $diff / $length[$i];
             }
-
-            $diff = round($diff);
+			$unit='';
+			$unit = $strTime[$i];
+			$diff = round($diff);
+           
+          
+       if($unit=='hour'){
+				return 'today';
+			}
+			else{
             return $diff." ".$strTime[$i]."(s) ago ";
+				
+			}
        }
     }
 ?>
