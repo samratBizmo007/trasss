@@ -8,9 +8,7 @@ class Login extends CI_Controller
 	public function __construct(){
 		parent::__construct();
 		
-		//start session		
-		$user_id=$this->session->userdata('user_id');
-		$profile_type=$this->session->userdata('profile_type');
+	
 
 		$this->load->helper('cookie');
 
@@ -68,7 +66,16 @@ class Login extends CI_Controller
 	}
 
 	public function index(){
-
+		
+		//start session		
+		$user_id=$this->session->userdata('user_id');
+		$profile_type=$this->session->userdata('profile_type');
+		$user_name=$this->session->userdata('user_name');
+		//check session variable set or not, otherwise logout
+		if(($user_id!='') || ($user_name!='') || ($profile_type!='')){
+			redirect('profile/dashboard');
+		}
+		
 		$this->load->view('includes/header.php');
 		$this->load->view('pages/login/login');
 		$this->load->view('includes/footer.php');
@@ -306,7 +313,7 @@ class Login extends CI_Controller
 	}
 // ---------------------function ends----------------------------------//
 
-	// ---------------function to logout all role------------------------//
+	// ---------------function for verify email------------------------//
 	public function verify_email($code=NULL){
 		$profile_type= $this->input->get('profile', TRUE);
 		$error='';

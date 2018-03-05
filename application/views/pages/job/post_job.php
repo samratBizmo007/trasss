@@ -420,7 +420,7 @@
                                 <label class=" w3-small w3-margin-top">Choose Categories :</label>
                                 <span class="w3-text-red">*</span>                                    
                                 <select id="categories" name="categories" class="form-control" placeholder="Select Job Type..." required>
-                                    <?php foreach ($all_categories['status_message'] as $row) { ?>  
+                            		<?php foreach ($all_categories['status_message'] as $row) { ?>  
                                     <option value="<?php echo $row['category_id']; ?>"><?php echo $row['jm_category_name']; ?></option>
                                     <?php } ?>            
                                 </select>    
@@ -431,8 +431,8 @@
 
                             <div class="col-lg-6" id="selectDiv">
                                 <label class=" w3-small">Required Skills :</label>
-                                <span class="w3-text-red"> </span>                                  
-                                <select id="select-skill" style="width: 100%; top: 36px; height: 34px; left: 0px;" name="skill[]" multiple class="selectized" placeholder="Select a skill...">
+                                <span class="w3-text-red">*</span>                                  
+                                <select id="select-skill" style="width: 100%; top: 36px; height: 34px; left: 0px;" name="skill[]" multiple class="selectized" placeholder="Select a skill..." required>
                                    <!--  <?php 
                                     foreach ($all_skills['status_message'] as $row) { ?>	
                                     <option value="<?php echo $row['jm_skill_id']; ?>"><?php 
@@ -463,7 +463,7 @@
                                     <div class="col-lg-6 w3-padding-right">
                                         <label class="w3-small">Salary Range :</label>
                                         <span class="w3-text-red">*</span>
-                                        <select required id="Salary_range" name="Salary_range" class="form-control" placeholder="Select a skill..." >
+                                        <select required id="Salary_range" name="Salary_range" class="form-control" placeholder="Select a skill..." required>
                                             <option value="0">Do Not Disclose</option>
                                             <option value="0-1 LPA">0-1 LPA</option>
                                             <option value="1-2 LPA">1-2 LPA</option>
@@ -510,7 +510,7 @@
                              <div class="col-lg-4">
                                 <label class="w3-small">City:</label>
                                 <span class="w3-text-red">*</span>
-                                <input class="form-control" type="text" placeholder="Enter your city" id="Job_Location" name="Job_Location" value="" required>
+                                <input class="form-control" type="text" pattern="^[_A-z]{1,}$" oninvalid="this.setCustomValidity('No whitespaces, special characters and numeric values allowed.')" oninput="setCustomValidity('')" placeholder="Enter your city" id="Job_Location" name="Job_Location" value="" required>
                             </div>
                         </div>
                     </div>

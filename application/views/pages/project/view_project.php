@@ -378,9 +378,11 @@ $bypost_user_id = $details['status_message'][0]['jm_posted_user_id'];
         <div class="w3-padding row w3-col l12">
           <div class="w3-col l2 ">
             <label>Your Bid For Project.</label>
+            <span class="w3-text-red">*</span>
             <div class="input-group">
-              <input type="number" class="form-control input-md" name="Project_Bid" id="Project_Bid" required>
+              <input type="number" class="form-control input-md" min="1" name="Project_Bid" id="Project_Bid" required>
               <span class="input-group-addon w3-text-white" id="basic-addon">INR</span>
+             
             </div>
           </div>
           <div class="w3-padding">

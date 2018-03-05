@@ -23,6 +23,7 @@ class Dashboard extends CI_Controller
 
         $data['all_skills'] = Dashboard::get_allSkills();
         $data['addedRow'] = Dashboard::addRow();
+        
         //print_r($data['addedRow']);
         $data['all_userSkills'] = Dashboard::get_userSkills();
         $data['all_userFeedback'] = Dashboard::get_userFeedback();
@@ -532,10 +533,11 @@ public function change_role(){
 public function add_userSkills(){
 		//print_r($_POST);die();
   extract($_POST);
-  if($skill_id=='undefined' || $skill_id==500){
+  if(!isset($skill_id) || $skill_id=='undefined'){
    echo '<label class="w3-small w3-padding-small"><i class="fa fa-warning"></i> Undefined Skill !!!</label>';
    die();
  }
+ //die();
  $user_id=$this->session->userdata('user_id');
  if(($this->session->userdata('selected_profile_type'))!=''){
    $profile_type=$this->session->userdata('selected_profile_type');

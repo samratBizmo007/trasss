@@ -214,11 +214,11 @@
                             <input type="hidden" name="user_name" id="user_name" value="<?php echo $user_name; ?>">                     <div class="w3-padding-left">    
                             <div class="row w3-col l12 ">
                                 <div class="w3-col l5 w3-left">
-                                    <label>Candidate Name :</label>
+                                    <label>Candidate Name :   <span class="w3-text-red">*</span></label>
                                     <input  type="text" name="candidate_name" id="candidate_name" class="form-control" placeholder="Candidate Name..." required>
                                 </div>
                                 <div class="w3-col l5 w3-right ">
-                                    <label>Candidate Email :</label>
+                                    <label>Candidate Email :  <span class="w3-text-red">*</span></label>
                                     <input  type="email" name="Email_id" id="Email_id" class="form-control" placeholder="Email..." required>
                                 </div>
                             </div>
@@ -235,7 +235,7 @@
                             </div>
                             <div class="row w3-col l12 w3-padding-bottom  w3-margin-bottom ">
                                 <div class="w3-col l8">
-                                    <label>Attach Resume</label>
+                                    <label>Attach Resume  <span class="w3-text-red">*</span></label>
                                     <div class="w3-padding" style="border: 0.5px dashed;">
                                         <input type="file" class="" id="resume" name="resume" required/> 
                                     </div>

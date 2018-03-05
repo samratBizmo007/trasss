@@ -60,7 +60,7 @@ class Transaction extends CI_Controller
             
              $hashstring = $MERCHANT_KEY . '|' . $txnid . '|' . $amount . '|' . $product_info . '|' . $customer_name . '|' . $customer_emial . '|' . $udf1 . '|' . $udf2 . '|' . $udf3 . '|' . $udf4 . '|' . $udf5 . '||||||' . $SALT;
              $hash = strtolower(hash('sha512', $hashstring));
-             //print_r($hash);
+             //print_r($hashstring);
            $success = base_url() . 'payment/status';  
             $fail = base_url() . 'payment/status';
             $cancel = base_url() . 'payment/status';
@@ -81,6 +81,7 @@ class Transaction extends CI_Controller
                 'failure' => $fail,
                 'cancel' => $cancel            
             );
+           //  print_r($data);
              $this->load->view('includes/header.php');       
              $this->load->view('pages/payment/transaction', $data);  
              $this->load->view('includes/footer.php');

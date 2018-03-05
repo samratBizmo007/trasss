@@ -261,21 +261,21 @@
 											<img src="<?php echo base_url() ?>css/logos/payumoney_logo.png" class="img" width="auto" height="auto" style="float: left">
 											<div class="w3-col l12 w3-margin-top">
 												<div class="col-lg-6">
-													<label class="w3-label" style="float: left">First Name:</label>
-													<input type="text" name="firstName" class="w3-input" placeholder="Enter your First Name" value="<?php echo $firstName; ?>" required>
+													<label class="w3-label" style="float: left">First Name:<span class="w3-text-red">*</span></label>
+													<input type="text" name="firstName" class="w3-input" pattern="^[_A-z]{1,}$" oninvalid="this.setCustomValidity('No whitespaces, special characters and numeric values allowed.')" oninput="setCustomValidity('')" placeholder="Enter your First Name" value="<?php echo $firstName; ?>" required>
 												</div>
 												<div class="col-lg-6">
-													<label class="w3-label" style="float: left">Last Name:</label>
-													<input type="text" name="lastName" class="w3-input" placeholder="Enter your Last Name" value="<?php echo $lastName; ?>" required>
+													<label class="w3-label" style="float: left">Last Name:<span class="w3-text-red">*</span></label>
+													<input type="text" name="lastName" class="w3-input" pattern="^[_A-z]{1,}$" oninvalid="this.setCustomValidity('No whitespaces, special characters and numeric values allowed.')" oninput="setCustomValidity('')" placeholder="Enter your Last Name" value="<?php echo $lastName; ?>" required>
 												</div>
 											</div>
 											<div class="w3-col l12 w3-margin-top">
 												<div class="col-lg-6">
-													<label class="w3-label" style="float: left">Email-ID:</label>
+													<label class="w3-label" style="float: left">Email-ID:<span class="w3-text-red">*</span></label>
 													<input type="email" name="email" class="w3-input" placeholder="Enter your Email ID" value="<?php echo $email; ?>" required>
 												</div>
 												<div class="col-lg-6">
-													<label class="w3-label" style="float: left">Mobile No:</label>
+													<label class="w3-label" style="float: left">Mobile No:<span class="w3-text-red">*</span></label>
 													<input type="number" name="mobile" class="w3-input" placeholder="Enter your Mobile No." required>
 												</div>
 												<!-- <input type="hidden" name="membership_package" id="membership_package" value="P/Y"> -->
@@ -289,7 +289,7 @@
 													<textarea name="address" class="w3-input" rows="" placeholder="Enter your current address"></textarea>
 												</div>
 												<div class="col-lg-6">
-													<label class="w3-label" style="float: left">Total Cost <i class="fa fa-inr w3-large"></i>:</label>
+													<label class="w3-label" style="float: left">Total Cost <i class="fa fa-inr w3-large"></i>:  <span class="w3-text-red">*</span></label>
 													<input type="number" name="totalCost" class="w3-input" value="300" readonly>
 													<!-- <input type="text" name="package" class="w3-input" value="P/Y" readonly> -->
 												</div>

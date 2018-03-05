@@ -30,7 +30,7 @@ $(document).ready(function () {
     e.preventDefault();
     if (x < max_fields) {
       x++;
-      $(wrapper).append('<div class="w3-col l12"><a href="#" class="delete w3-text-grey w3-right w3-small" title="remove field"><i class="fa fa-remove"></i></a><div class="w3-col l12"><div class="col-lg-4"><label class="control-label">Course :</label><input class="w3-input" type="text" name="course[]" value=""></div><div class="col-lg-4"><label class="control-label">Passing Year :</label><input class="w3-input" type="number" name="passing_year[]"  placeholder="passing year" value="" style=""></div><div class="col-lg-4"><label class="control-label">University :</label><input class="w3-input" type="text" name="university[]" value=""></div></div></div></div>');
+      $(wrapper).append('<div class="w3-col l12"><a href="#" class="delete w3-text-grey w3-right w3-small" title="remove field"><i class="fa fa-remove"></i></a><div class="w3-col l12"><div class="col-lg-4"><label class="control-label">Course :</label><input class="w3-input" type="text" name="course[]" value=""></div><div class="col-lg-4"><label class="control-label">Passing Year :</label><input class="w3-input" type="number" min="1800" name="passing_year[]"  placeholder="passing year" value="" style=""></div><div class="col-lg-4"><label class="control-label">University :</label><input class="w3-input" type="text" name="university[]" value=""></div></div></div></div>');
     } else
     {
       $.alert('<label class="w3-label w3-text-red"><i class="fa fa-warning w3-xxlarge"></i> You Reached the maximum limit of adding 3 fields</label>'); //alert when added more than 4 input fields

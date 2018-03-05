@@ -221,8 +221,8 @@ class Edit_profile extends CI_Controller {
                 $(".alert").fadeTo(500, 0).slideUp(500, function(){
                     $(this).remove(); 
                 });
-                //window.location.href="' . base_url() . 'jobseeker/jobseeker_lists";
-                location.reload();
+                window.location.href="' . base_url() . 'profile/view_profile";
+                //location.reload();
             }, 900);
             </script>';
         }
@@ -233,6 +233,7 @@ class Edit_profile extends CI_Controller {
     public function upadteUser_Password() {
         $user_id = $this->session->userdata('user_id');
         extract($_POST);
+        //print_r($_POST);die();
         $data = $_POST;
         $data['user_id'] = $user_id;
         // print_r($data);die();

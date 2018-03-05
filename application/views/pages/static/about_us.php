@@ -143,7 +143,12 @@ $user_name=$this->session->userdata('user_name');
                         <li> <?php if($profile_type == '' || $profile_type == 2 ){ ?>
                           <a class="waves-effect waves-light" href="<?php echo base_url(); ?>project/post_project_Controller">Post Project</a>
                           <?php } ?> 
-                        </li>   
+                        </li>  
+
+                         <li> <?php if($profile_type == '' || $profile_type == 4 ){ ?>
+                          <a class="waves-effect waves-light" href="<?php echo base_url(); ?>job/post_jobs">Post Job</a>
+                          <?php } ?> 
+                        </li>  
                         <li>
                           <?php 
                           if(isset($user_name) && isset($user_name)!=''){

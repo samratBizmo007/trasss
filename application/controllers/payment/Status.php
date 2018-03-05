@@ -25,7 +25,7 @@ class Status extends CI_Controller {
     $key = $this->input->post('key');
     $productinfo = $this->input->post('productinfo');
     $email = $this->input->post('email');
-
+//print_r($firstname);
         $salt = "j93rEBf2Ah"; //  Your salt
         $add = $this->input->post('additionalCharges');
         if(isset($add)) {
@@ -56,7 +56,7 @@ class Status extends CI_Controller {
           $response = json_decode($response_json, true);
 //print_r($response_json);die();
           $data['response'] = $response;
-        if($status == 'success' || $response['status']==200){
+        if($status == 'success' && $response['status']==200){
           //echo $response_json;die();
           $this->load->view('pages/payment/success', $data);   
         }
