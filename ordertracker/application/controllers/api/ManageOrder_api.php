@@ -20,6 +20,16 @@ class ManageOrder_api extends REST_Controller
 	}
 	//---------------------ALL MY ORDERS END------------------------------//
 
+        // -----------------------ALL ORDERS API----------------------//
+	//-------------------------------------------------------------//
+	public function getAllOrders_get(){
+		extract($_GET);
+		$result = $this->manageOrder_model->getAllOrders();
+		return $this->response($result);			
+	}
+	//---------------------ALL ORDERS END------------------------------//
+
+        
 	// -----------------------ADD USER ORDER API----------------------//
 	//-------------------------------------------------------------//
 	public function addNewOrder_post(){
@@ -28,6 +38,15 @@ class ManageOrder_api extends REST_Controller
 		return $this->response($result);			
 	}
 	//---------------------ADD USER ORDER END------------------------------//
+
+	// -----------------------DELETE MY ORDERS API----------------------//
+	//-------------------------------------------------------------//
+	public function delOrder_get(){
+		extract($_GET);
+		$result = $this->manageOrder_model->delOrder($order_id);
+		return $this->response($result);			
+	}
+	//---------------------DELETE MY ORDERS END------------------------------//
 
 	
 }

@@ -8,18 +8,18 @@ class Manage_orders extends CI_controller{
     
 
     //start session   
-    // $user_id=$this->session->userdata('user_id');
-    // $user_name=$this->session->userdata('user_name');
+    $user_id=$this->session->userdata('user_id');
+    $user_name=$this->session->userdata('user_name');
     
-    // //check session variable set or not, otherwise logout
-    // if(($user_id=='') || ($user_name=='')){
-    //   redirect('login');
-    // }   
+    //check session variable set or not, otherwise logout
+    if(($user_id=='') || ($user_name=='')){
+      redirect('login');
+    }   
   }
 
   public function index(){
    $data['orders'] = Manage_orders::getMyOrders();     //-------show all Raw prods
-   //$this->load->model('inventory_model/ManageProfile_model');	
+   $this->load->view('includes/header');	
    $this->load->view('pages/orders/manage_orders',$data);
    //$this->load->view('inventory/profile/manage_profile',$data);
 
@@ -27,8 +27,8 @@ class Manage_orders extends CI_controller{
 
  //----------this function to get all my orders details-----------------------------
  public function getMyOrders() {
-  //$user_id=$this->session->userdata('user_id');
-  $user_id=1;
+  $user_id=$this->session->userdata('user_id');
+  //$user_id=1;
 
   $path = base_url();
   $url = $path . 'api/ManageOrder_api/getMyOrders?user_id='.$user_id;
@@ -266,5 +266,37 @@ public function UpdateProfile(){
   }
 }
      //-------------this fun is used to update profile information-------------------------//
+
+// ---------------function to delete orders------------------------//
+  public function delOrder(){
+    extract($_POST);
+
+    //Connection establishment to get data from REST API
+    $path=base_url();
+    $url = $path.'api/ManageOrder_api/delOrder?order_id='.$order_id; 
+    //echo $url;  
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_HTTPGET, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response_json = curl_exec($ch);
+    curl_close($ch);
+    $response=json_decode($response_json, true);
+   // print_r($response_json);die();
+    //api processing ends
+
+    //API processing end
+    if($response['status']!=200){
+      echo '<h4 class="w3-text-red w3-margin"><i class="fa fa-warning"></i> '.$response['status_message'].'</h4> 
+      ';  
+      
+    }
+    else{
+      echo '<h4 class="w3-text-green w3-margin"><i class="fa fa-check"></i> '.$response['status_message'].'</h4>   
+      ';        
+      
+    } 
+    
+  }
+// ---------------------function ends----------------------------------//
 
 }

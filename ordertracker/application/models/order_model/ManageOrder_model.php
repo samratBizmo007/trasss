@@ -12,7 +12,7 @@ class ManageOrder_model extends CI_Model{
 	//-------------------------------------------------------------//
 	public function getMyOrders($user_id){
 
-		$query = "SELECT * FROM order_tab WHERE user_id='$user_id' ORDER BY order_id DESC";
+		$query = "SELECT * FROM order_tab WHERE user_id='$user_id' AND status=1 ORDER BY order_id DESC";
 
 		$result = $this->db->query($query);
 
@@ -28,6 +28,28 @@ class ManageOrder_model extends CI_Model{
 		return $response;
 	}
 	// -----------------------GET ALL MY ORDERS MODEL----------------------//
+
+           // -----------------------GET ALL ORDERS MODEL----------------------//
+	//-------------------------------------------------------------//
+	public function getAllOrders(){
+
+		$query = "SELECT * FROM order_tab WHERE status=1 ORDER BY order_id DESC";
+
+		$result = $this->db->query($query);
+
+		if ($result->num_rows() <= 0) {
+			$response = array(
+				'status' => 500,
+				'status_message' => 'No orders found.');
+		} else {
+			$response = array(
+				'status' => 200,
+				'status_message' => $result->result_array());
+		}
+		return $response;
+	}
+	// -----------------------GET ALL ORDERS MODEL----------------------//
+
 
 
 	//-------ADD NEW ORDER FUNCTION--------------//
@@ -73,6 +95,31 @@ class ManageOrder_model extends CI_Model{
     }
 
 //-------------GET NEXT AUTO INCREMENT VALUE IN ORDER_TAB---------------*/
+
+
+    //---------------delete ORder model-------------//
+    function delOrder($order_id)
+    {
+        $query="UPDATE order_tab SET status=0 WHERE order_id=".$order_id." ";  
+        
+        if($this->db->query($query)){
+            $response=array(
+                'status' => 200,
+                'status_message' =>'Order deleted Successfully.'         
+            );
+        }
+        else
+        {
+            //insertion failure
+            $response=array(
+                'status' => 500,
+                'status_message' =>'Sorry..Order Deletion Failed!!!'         
+            );
+        }
+
+        return $response;
+    }
+    //----------------delete ORder ends--------------------------//
 
 }
 ?>
