@@ -25,10 +25,10 @@ error_reporting(E_ERROR | E_PARSE);
 
     <!-- Header -->
     <header class="w3-container" >
-      <h5><b><i class="fa fa-cubes"></i> Manage Orders</b></h5>
+      <h5><b><i class="fa fa-cubes"></i> My Orders</b></h5>
     </header>
 
-    <div class="w3-row-padding w3-margin-bottom">
+    <div class="w3-padding-left w3-margin-bottom">
      <!-- container for tab -->
      <br>
      <ul  class="nav nav-tabs">
@@ -47,7 +47,7 @@ error_reporting(E_ERROR | E_PARSE);
                 <thead>
                   <tr class="">
                     <th class="text-center">Sr. No.</th>
-                    <th class="text-center">Order NO.</th>
+                    <th class="text-center">Order No.</th>
                     <th class="text-center">Posted On</th>
                     <th class="text-center">Action</th>  
                   </tr>
@@ -164,8 +164,8 @@ error_reporting(E_ERROR | E_PARSE);
           <form id="addOrder_form" enctype="multipart/form-data">       
             <!-- Product div start -->
             <div class="w3-col l12 w3-margin-bottom w3-margin-top">
-              <header class="w3-col l12" >
-                <h6><b><i class="fa fa-first-order"></i> Place New Order</b></h6>
+              <header class="w3-col l12 " >
+                <h6><b><i class="fa fa-first-order w3-padding-left"></i> Place New Order</b></h6>
                 <span class="w3-small"></span>
               </header>
               <div class="w3-col l12 w3-margin-top">
@@ -199,7 +199,7 @@ error_reporting(E_ERROR | E_PARSE);
         </div>
         <!-- material div end -->
         <div class="w3-col l12 w3-center">
-          <button type="submit" title="Raise Order" class="w3-margin w3-button  w3-red">Raise New Order</button>
+          <button type="submit" title="Raise Order" class="w3-margin w3-medium w3-button  w3-red">Raise New Order</button>
         </div>
       </form>
     </div>
