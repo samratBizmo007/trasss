@@ -30,8 +30,8 @@ class Login extends CI_Controller {
             'register_password' => $register_password,
             'register_email' => $register_email,
             'register_mobile_no' => $register_number,
-            'register_address' => $address,
-            'register_business_field' => $business_field
+            'register_address' => $address
+            //'register_business_field' => $business_field
         );
         //print_r($data);die();
         $path = base_url();
