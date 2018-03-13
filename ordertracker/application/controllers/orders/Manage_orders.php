@@ -89,7 +89,7 @@ for($i = 0; $i < count($prod_Name); $i++){
       $config['upload_path'] = $uploadPath;
       $config['allowed_types'] = 'gif|jpg|png|jpeg'; //allowed types of images           
       $config['overwrite'] = TRUE;            
-
+     // print_r($fileData = $this->upload->data());die();
       $this->load->library('upload', $config);  //load upload file config.
       $this->upload->initialize($config);
 
@@ -107,15 +107,15 @@ for($i = 0; $i < count($prod_Name); $i++){
       'business_field' => $business_field[$i],  
       'prod_no' => $id_count,
       'prod_Name' =>  $prod_Name[$i],
-      'prod_quantity' =>($prod_quantity[$i]) ,
-      'prod_image' =>  $imagePath,
+      'prod_quantity' =>  $prod_quantity[$i],
+      'prod_image' => $imagePath,
       'prod_regret' =>  0
     );
     $id_count++;
   }
 
   $data['user_id']=$user_id;
-  $data['user_name']=$user_name;
+  //$data['user_name']=$user_name;
   $data['prod_associated']=json_encode($prod_Arr);
   //print_r($data);die();
   $path = base_url();
@@ -153,19 +153,20 @@ for($i = 0; $i < count($prod_Name); $i++){
 }
 //----------------this fun is to add order details end---------------//
 
-public function DeleteProfile(){
-  extract($_GET);
-  $path = base_url();
-  $url = $path . 'api/ManageProfile_api/DeleteProfile?profile_id='.$profile_id;
-  $ch = curl_init($url);
-  curl_setopt($ch, CURLOPT_HTTPGET, true);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  $response_json = curl_exec($ch);
-  curl_close($ch);
-  $response = json_decode($response_json, true);
-  redirect('inventory/AllProfiles');
-}
+//public function DeleteProfile(){
+//  extract($_GET);
+//  $path = base_url();
+//  $url = $path . 'api/ManageProfile_api/DeleteProfile?profile_id='.$profile_id;
+//  $ch = curl_init($url);
+//  curl_setopt($ch, CURLOPT_HTTPGET, true);
+//  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//  $response_json = curl_exec($ch);
+//  curl_close($ch);
+//  $response = json_decode($response_json, true);
+//  redirect('inventory/AllProfiles');
+//}
     //-------------this fun is used to update profile information-------------------------//
+
 
 public function UpdateProfile(){
   extract($_POST); 
