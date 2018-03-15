@@ -18,7 +18,8 @@ class Manage_orders extends CI_controller{
   }
 
   public function index(){
-   $data['orders'] = Manage_orders::getMyOrders();     //-------show all Raw prods
+   $data['orders'] = Manage_orders::getMyOrders();
+   //print_r($data);//-------show all Raw prods
    $this->load->view('includes/header');	
    $this->load->view('pages/orders/manage_orders',$data);
    //$this->load->view('inventory/profile/manage_profile',$data);
@@ -31,7 +32,7 @@ class Manage_orders extends CI_controller{
   //$user_id=1;
 
   $path = base_url();
-  $url = $path . 'api/ManageOrder_api/getMyOrders?user_id='.$user_id;
+  $url = $path.'api/ManageOrder_api/getMyOrders?user_id='.$user_id;
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_HTTPGET, true);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -47,6 +48,11 @@ class Manage_orders extends CI_controller{
 public function addOrder() { 
   extract($_POST);
   //print_r($_POST);die();
+
+  if($business_field == 0){
+     echo '<h4 class="w3-text-red"><i class="fa fa-warning"></i> Select Business Field.</h4>';
+    die();
+  }
   $user_id=$this->session->userdata('user_id');
   $user_name=$this->session->userdata('user_name');
 //print_r($_FILES['prod_image']['name'][1]);die();
@@ -95,16 +101,11 @@ for($i = 0; $i < count($prod_Name); $i++){
 
       if($this->upload->do_upload('userFile')){
         $fileData = $this->upload->data();
-        $imagePath='images/order_images/'.$fileData['file_name'];
-//        $imagePath = array(
-//       // 'type'=> ,
-//        'image'=>'images/order_images/'.$fileData['file_name']
-//        );
+        $imagePath = $fileData['file_name'];
       }
     }
 
     $prod_Arr[]=array(
-      'business_field' => $business_field[$i],  
       'prod_no' => $id_count,
       'prod_Name' =>  $prod_Name[$i],
       'prod_quantity' =>  $prod_quantity[$i],
@@ -115,7 +116,7 @@ for($i = 0; $i < count($prod_Name); $i++){
   }
 
   $data['user_id']=$user_id;
-  //$data['user_name']=$user_name;
+  $data['business_field']=$business_field;
   $data['prod_associated']=json_encode($prod_Arr);
   //print_r($data);die();
   $path = base_url();

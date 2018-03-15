@@ -7,7 +7,8 @@
 
 $(document).ready(function (e){
     $("#addOrder_form").on('submit',(function(e){       
-        e.preventDefault();        
+        e.preventDefault();   
+        $("#btnsubmit").html('<center><span class="w3-xxlarge fa fa-spinner fa-spin"></span></center>');
         $.ajax({
             url: BASE_URL + "orders/Manage_orders/addOrder",
             type: "POST",
@@ -17,6 +18,7 @@ $(document).ready(function (e){
             processData:false,
             success: function(data){
                 $.alert(data);
+                $("#btnsubmit").html('<button  type="submit" title="Raise Order" class="w3-margin w3-medium w3-button  w3-red">Raise New Order</button>');
             },
             error: function(){}             
         });
