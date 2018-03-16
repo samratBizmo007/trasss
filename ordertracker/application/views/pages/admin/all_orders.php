@@ -17,7 +17,27 @@ error_reporting(E_ERROR | E_PARSE);
   <script type="text/javascript" src="<?php echo base_url(); ?>css/js/const.js"></script>
   <script type="text/javascript" src="<?php echo base_url(); ?>css/alert/jquery-confirm.js"></script>
   <!--    <script type="text/javascript" src="<?php echo base_url(); ?>css/js/inventory/materialstock_management.js"></script>-->
+  <style>
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
 
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: black; 
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+</style>
 </head>
 <body class="w3-light-grey">
   <!-- !PAGE CONTENT! -->
@@ -655,7 +675,7 @@ error_reporting(E_ERROR | E_PARSE);
                   confirm: function () {
                     var dataS = 'order_id='+ id;
                     $.ajax({
-                      url:"<?php echo base_url(); ?>admin/dashboard/reOpen_Orders", 
+                      url:"<?php echo base_url(); ?>admin/orders/reOpen_Orders", 
                       type: "POST", 
                       data: dataS,
                       cache: false,
@@ -681,7 +701,7 @@ error_reporting(E_ERROR | E_PARSE);
                   confirm: function () {
                     var dataS = 'order_id='+ id;
                     $.ajax({
-                      url:"<?php echo base_url(); ?>admin/dashboard/reOpen_Orders", 
+                      url:"<?php echo base_url(); ?>admin/orders/reOpen_Orders", 
                       type: "POST", 
                       data: dataS,
                       cache: false,
@@ -711,7 +731,7 @@ error_reporting(E_ERROR | E_PARSE);
                   confirm: function () {
                     var dataS = 'order_id='+ id;
                     $.ajax({
-                      url:"<?php echo base_url(); ?>admin/dashboard/delOrder", 
+                      url:"<?php echo base_url(); ?>admin/orders/closeOrder", 
                       type: "POST", 
                       data: dataS,
                       cache: false,
@@ -736,7 +756,7 @@ error_reporting(E_ERROR | E_PARSE);
                   confirm: function () {
 
                     $.ajax({
-                      url:"<?php echo base_url(); ?>admin/dashboard/regretProduct", 
+                      url:"<?php echo base_url(); ?>admin/orders/regretProduct", 
                       type: "POST", 
                       data: {
                         prod_no: prod_no,

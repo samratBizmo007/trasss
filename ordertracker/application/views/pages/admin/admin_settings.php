@@ -36,7 +36,7 @@ error_reporting(E_ERROR | E_PARSE);
               <input type="email" name="admin_email" value="<?php echo $adminDetails['status_message'][0]['admin_email']; ?>" placeholder="Enter Email-ID here..." id="admin_email" class="w3-input" required>
             </div>
             <div class="w3-col l4">
-              <button type="submit" class="w3-button w3-red">Update Email</button>
+              <button type="submit" class="w3-button w3-red">Update Email-ID</button>
             </div>
           </form>
             

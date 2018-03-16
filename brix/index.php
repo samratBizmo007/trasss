@@ -33,22 +33,32 @@
             <div class="col-lg-12" style="margin-top:100px; ">
             	<center>
             	    
-				<a href="https://p.w3layouts.com/demos_new/template_demo/16-11-2017/soft_decor-demo_Free/332249187/web/index.html" class="btn btn-primary" style="margin-bottom:10px;" role="button" >Template 1</a>
+				<a href="http://qudra.webrouk.com/html/img/" class="btn btn-primary" style="margin-bottom:10px;" role="button" >Template 1</a>
 			
 				<!-- btn-primary: navy blue color -->
-				<a href="https://p.w3layouts.com/demos_new/template_demo/30-11-2017/tract_house-demo_Free/1027837936/web/index.html" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 2</a>
+				<a href=" http://templates.aucreative.co/arch/index1.html" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 2</a>
 				
 				<!-- btn-success: green color -->
-				<a href="https://p.w3layouts.com/demos_new/template_demo/11-01-2018/upholstery-demo_Free/1389542290/web/index.html" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 3</a>
+				<a href="http://templates.aucreative.co/arch/index6.html" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 3</a>
 			
 			
 				<!-- btn-info: sky blue color -->
-				<a href="https://p.w3layouts.com/demos_new/18-01-2017/adorning-demo_Free/971718405/web/index.html" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 4</a>
+				<a href=" http://templates.aucreative.co/arch/project-2col-v2.html" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 4</a>
 			
 				
 				
 				<!-- btn-warning: yellow color -->
-				<a href="https://p.w3layouts.com/demos_new/21-12-2016/interiors-demo_Free/1726877881/web/gallery.html" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 5</a>
+				<a href="http://demo.cocobasic.com/index.php?theme=park-html" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 5</a>
+				
+					<a href="https://demo.goodlayers.com/infinite/homepages/architek/" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 6</a>
+					
+					<a href=" http://html.crunchpress.com/archee/" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 7</a>
+					
+					<a href="https://thegenius.co/arczone-html/html/index-2.html" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 8</a>
+					
+						<a href="http://themeinnovation.com/demo2/html/find.arc/index-mp-layout-2.html" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 9</a>
+				
+					<a href="https://thegenius.co/arczone-html/html/index.html" class="btn btn-primary" style="margin-bottom:10px;" role="button">Template 10</a>
 			
 				</center>
 			</div>

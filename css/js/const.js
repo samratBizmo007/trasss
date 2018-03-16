@@ -1,1 +1,1 @@
-const BASE_URL ='https://bizmo-tech-admin.com';
+const BASE_URL ='https://bizmo-tech-admin.com/';

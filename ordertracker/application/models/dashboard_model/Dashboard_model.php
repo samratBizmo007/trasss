@@ -73,14 +73,14 @@ class Dashboard_model extends CI_Model {
     }
 
     // -----------------------GET ALL CLOSED ORDERS on admin dashboard MODEL----------------------//
-    //---------------delete ORder model-------------//
+    //---------------reopen ORder model-------------//
     function reOpen_Orders($order_id) {
         $query = "UPDATE order_tab SET status=2 WHERE order_id=" . $order_id . " ";
 
         if ($this->db->query($query)) {
             $response = array(
                 'status' => 200,
-                'status_message' => 'Order Opemed Successfully.'
+                'status_message' => 'Order Opened Successfully.'
             );
         } else {
             //insertion failure
@@ -93,16 +93,16 @@ class Dashboard_model extends CI_Model {
         return $response;
     }
 
-    //----------------delete ORder ends--------------------------//
-       //---------------delete ORder model-------------//
-    function delOrder($order_id)
+    //----------------reopen ORder ends--------------------------//
+       //---------------close ORder model-------------//
+    function closeOrder($order_id)
     {
         $query="UPDATE order_tab SET status=0 WHERE order_id=".$order_id." ";  
         
         if($this->db->query($query)){
             $response=array(
                 'status' => 200,
-                'status_message' =>'Order deleted Successfully.'         
+                'status_message' =>'Order closed Successfully.'         
             );
         }
         else
@@ -110,7 +110,7 @@ class Dashboard_model extends CI_Model {
             //insertion failure
             $response=array(
                 'status' => 500,
-                'status_message' =>'Sorry..Order Deletion Failed!!!'         
+                'status_message' =>'Sorry..Order closing Failed!!!'         
             );
         }
 
@@ -165,12 +165,12 @@ class Dashboard_model extends CI_Model {
 
         if ($resultupdate) {
             $response = array(
-                'status' => 1,
-                'status_message' => 'Product Regreted..!');
+                'status' => 200,
+                'status_message' => 'Product Cancelled..!');
         } else {
             $response = array(
-                'status' => 0,
-                'status_message' => 'Product did not get Regreted...!');
+                'status' => 500,
+                'status_message' => 'Product cancellation failed...!');
         }
         return $response;
     }
@@ -201,12 +201,12 @@ class Dashboard_model extends CI_Model {
         $closeCount=$close_query->num_rows();
 
         $response = array(
-                'status' => 200,
-                'status_message' => 'Count for all available orders',
-                'activeOrders'  =>  $activeCount,
-                'openOrders'  =>  $openCount,
-                'closeOrders'  =>  $closeCount,
-            );
+            'status' => 200,
+            'status_message' => 'Count for all available orders',
+            'activeOrders'  =>  $activeCount,
+            'openOrders'  =>  $openCount,
+            'closeOrders'  =>  $closeCount,
+        );
         return $response;
     }
     // -----------------------GET ALL ORDERS COUNT MODEL----------------------//
