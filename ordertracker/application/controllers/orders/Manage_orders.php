@@ -18,11 +18,20 @@ class Manage_orders extends CI_controller{
   }
 
   public function index(){
-   $data['orders'] = Manage_orders::getMyOrders();
+    $this->load->library('user_agent');
+    $data['orders'] = Manage_orders::getMyOrders();
    //print_r($data);//-------show all Raw prods
-   $this->load->view('includes/header');	
-   $this->load->view('pages/orders/manage_orders',$data);
-   //$this->load->view('inventory/profile/manage_profile',$data);
+
+    if ($this->agent->is_mobile())
+    {
+      $this->load->view('includes/mobile/header');     
+      $this->load->view('pages/orders/mobile/manage_orders',$data);
+      $this->load->view('includes/mobile/footer');
+    }
+    else{
+     $this->load->view('includes/header');	
+     $this->load->view('pages/orders/manage_orders',$data);
+   }
 
  }
 
@@ -48,13 +57,18 @@ class Manage_orders extends CI_controller{
 public function addOrder() { 
   extract($_POST);
   //print_r($_POST);die();
+  //print_r($_FILES);die();
 
+  if(!isset($prod_Name)){
+   echo '<h4 class="w3-text-red w3-medium"><i class="fa fa-warning"></i> Add at least one product.</h4>';
+   die();
+ }
   if($business_field == 0){
-     echo '<h4 class="w3-text-red"><i class="fa fa-warning"></i> Select Business Field.</h4>';
-    die();
-  }
-  $user_id=$this->session->userdata('user_id');
-  $user_name=$this->session->userdata('user_name');
+   echo '<h4 class="w3-text-red w3-medium"><i class="fa fa-warning"></i> Select Business field first.</h4>';
+   die();
+ }
+ $user_id=$this->session->userdata('user_id');
+ $user_name=$this->session->userdata('user_name');
 //print_r($_FILES['prod_image']['name'][1]);die();
   $prod_Arr=array();  //prod_image array
   $allowed_types=['gif','jpg','png','jpeg','JPG','GIF','JPEG','PNG'];
