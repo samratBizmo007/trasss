@@ -5,11 +5,22 @@ class ManageOrder_model extends CI_Model {
     public function __construct() {
         parent::__construct();
         //$this->load->model('search_model');
+        $this->load->model('admin_model/settings_model');
     }
 
+    
+public function numRows($user_id) {
+    $query = $this->db->select('*')
+    ->from('order_tab')
+    ->where('user_id', $user_id)
+    ->order_by('order_id', 'DESC')
+    ->get();
+    return $query->num_rows();
+}
+    
     // -----------------------GET ALL MY ORDERS MODEL----------------------//
     //-------------------------------------------------------------//
-    public function getMyOrders($user_id) {
+    public function getMyOrders($user_id,$limit,$offset) {
 
         if (!(is_numeric($user_id))) {
             if ($user_id == '') {
@@ -27,19 +38,22 @@ class ManageOrder_model extends CI_Model {
             }
         }
 
-        $query = "SELECT * FROM order_tab WHERE user_id='$user_id' AND status!=0 ORDER BY order_id DESC";
+         $query = $this->db->select('*')
+                ->from('order_tab')
+                ->where('user_id', $user_id)
+                ->order_by('order_id', 'DESC')
+                ->limit($limit, $offset)                 
+                ->get();
 
-        $result = $this->db->query($query);
-
-        if ($result->num_rows() <= 0) {
+        if ($query->num_rows() <= 0) {
             $response = array(
                 'status' => 500,
                 'status_message' => 'No orders found.');
         } else {
             $response = array(
                 'status' => 200,
-                'imageBasePath' => 'http://ordertracker.bizmo-tech-admin.com/images/order_images/',
-                'status_message' => $result->result_array());
+                'imageBasePath' => IMAGE_PATH,
+                'status_message' => $query->result_array());
         }
         return $response;
     }
@@ -118,12 +132,14 @@ class ManageOrder_model extends CI_Model {
         ));
         $closeCount=$close_query->num_rows();
 
+        $dashImg = $this->settings_model->getSettingDetails('dash_image');
         $response = array(
             'status' => 200,
             'status_message' => 'Fetched orders for given UserId',
             'activeOrders'  =>  $activeCount,
             'openOrders'  =>  $openCount,
             'closeOrders'  =>  $closeCount,
+            'userImage' =>  DASBOARDIMAGE_PATH.$dashImg['setting_value']
         );
         return $response;
     }
@@ -186,7 +202,7 @@ class ManageOrder_model extends CI_Model {
             'protocol' => 'smtp',
             'smtp_host' => 'mx1.hostinger.in',
             'smtp_port' => '587',
-            'smtp_user' => 'customercare@jobmandi.in', // change it to yours
+            'smtp_user' => 'customercare@ordertracker.bizmo-tech-admin.com', // change it to yours
             'smtp_pass' => 'Descartes@1990', // change it to yours
             'mailtype' => 'html',
             'charset' => 'utf-8',

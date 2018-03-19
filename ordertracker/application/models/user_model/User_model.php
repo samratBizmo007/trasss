@@ -110,7 +110,7 @@ class User_model extends CI_Model {
             'protocol' => 'smtp',
             'smtp_host' => 'mx1.hostinger.in',
             'smtp_port' => '587',
-            'smtp_user' => 'customercare@jobmandi.in', // change it to yours
+            'smtp_user' => 'customercare@ordertracker.bizmo-tech-admin.com', // change it to yours
             'smtp_pass' => 'Descartes@1990', // change it to yours
             'mailtype' => 'html',
             'charset' => 'utf-8',
@@ -148,7 +148,7 @@ class User_model extends CI_Model {
                 'otp'   =>  $otp
             );
         } else {
-            //print_r($this->email->print_debugger());die();
+        //print_r($this->email->print_debugger());die();
             $response = array(
                 'status' => 500, //---------email send failed
                 'status_message' => 'OTP Sending Failed.'
