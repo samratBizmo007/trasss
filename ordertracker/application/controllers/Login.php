@@ -226,7 +226,6 @@ public function loginCustomer() {
 //-----------------------function ends-----------------------------//
     // ---------------function to logout------------------------//
 public function logout() {
-
     $user_id = $this->session->userdata('user_id');
         //if logout success then destroy session and unset session variables
     $path = base_url();
