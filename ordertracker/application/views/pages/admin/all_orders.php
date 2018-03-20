@@ -220,6 +220,11 @@ error_reporting(E_ERROR | E_PARSE);
                 </tbody><!-- table body close here -->
               </table>   <!-- table closed here -->
             </div>
+                <center>
+                    <div class="pagination" style=" margin: 0px; position: static;">
+                        <?php echo $ActiveOrderslinks; ?>
+                    </div>
+                </center>
           </div>
         </div>
       </div><!-- table container ends here -->
@@ -385,6 +390,11 @@ error_reporting(E_ERROR | E_PARSE);
           </tbody><!-- table body close here -->
         </table>   <!-- table closed here -->
       </div>
+            <center>
+                <div class="pagination" style=" margin: 0px; position: static;">
+                    <?php// echo $OpenOrderslinks; ?>
+                </div>
+            </center>
     </div>
   </div>     
 </div>         
@@ -526,6 +536,11 @@ error_reporting(E_ERROR | E_PARSE);
         </tbody><!-- table body close here -->
       </table><!-- table closed here -->
     </div>
+      <center>
+          <div class="pagination" style=" margin: 0px; position: static;">
+              <?php //echo $ClosedOrderslinks; ?>
+          </div>
+      </center>
   </div>
 </div>
 </div><!-- table container ends here -->
@@ -708,7 +723,7 @@ error_reporting(E_ERROR | E_PARSE);
                       success:function(html){     
                         $.alert(html);              
                         $('#Closed_Orders').load(location.href + " #Closed_Orders>*", "");
-                        location.reload();
+                        //location.reload();
                       }
                     });
                   },
@@ -738,7 +753,7 @@ error_reporting(E_ERROR | E_PARSE);
                       success:function(html){     
                         $.alert(html);              
                         $('#All_Orders').load(location.href + " #All_Orders>*", ""); 
-                        location.reload();
+                        //location.reload();
                       }
                     });
                   },
