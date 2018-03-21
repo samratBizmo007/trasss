@@ -70,7 +70,7 @@ class Login extends CI_Controller {
         $response_json = curl_exec($ch);
         curl_close($ch);
         $response = json_decode($response_json, true);
-
+        //print_r($response_json);die();
         if ($response['status'] == 500) {
             echo '<div class="alert alert-danger ">
             <strong>' . $response['status_message'] . '</strong> 
@@ -226,6 +226,7 @@ public function loginCustomer() {
 //-----------------------function ends-----------------------------//
     // ---------------function to logout------------------------//
 public function logout() {
+
     $user_id = $this->session->userdata('user_id');
         //if logout success then destroy session and unset session variables
     $path = base_url();

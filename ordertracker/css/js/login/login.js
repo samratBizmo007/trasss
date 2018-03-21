@@ -2,8 +2,7 @@
 $(function () {
     $("#register_form").submit(function () {
         dataString = $("#register_form").serialize();
-
-        $("#spinnerDiv").html('<center><img width="70%" height="auto" src="'+BASE_URL+'css/logos/reg.gif"/></center>');
+        $.LoadingOverlay("show");
         $.ajax({
             type: "POST",
             url: BASE_URL + "login/registerCustomer",
@@ -11,12 +10,18 @@ $(function () {
             data: dataString,
             return: false, //stop the actual form post !important!
             success: function (data){
-                console.log(data);  
-                $("#spinnerDiv").html('');
-                $("#registration_err").html(data);
-            
-        }
-    });
+                $.LoadingOverlay("hide");
+               // console.log(data);  
+                if(navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) {           
+                    $("html").animate({scrollTop:0},"slow");
+                } else {
+                   $("html,body").animate({scrollTop:0},"slow");
+               }
+               $("#spinnerDiv").html('');
+               $("#registration_err").html(data);
+               
+           }
+       });
         return false;  //stop the actual form post !important!
     });
 });
@@ -26,7 +31,7 @@ $(function () {
 //  -------------------REGISTER FORM------------------------ //
 //$(function () {
 //    $("#register_form").submit(function () {
-//    	
+//      
 //        dataString = $("#register_form").serialize();
 //        $("#spinnerDiv").html('<center><img width="70%" height="auto" src="'+BASE_URL+'css/logos/reg.gif"/></center>');
 //        $.ajax({
@@ -39,15 +44,15 @@ $(function () {
 //                //console.log(data);  
 //                var key=JSON.parse(data);
 //                if(key.status == 200){  
-//                	//$('#OTP_div').css('display','block');
-//                	$('#hide_div').css('display','block');
-//                	$('#message_div').css('display','block');
-//                	$('#heading_div').css('display','block');
-//                	$('#Login_RegisterDiv').css('display','block');
+//                  //$('#OTP_div').css('display','block');
+//                  $('#hide_div').css('display','block');
+//                  $('#message_div').css('display','block');
+//                  $('#heading_div').css('display','block');
+//                  $('#Login_RegisterDiv').css('display','block');
 //                       // $('#OTP_div').css('display','block');
 //                        $('#registerDiv').css('display','block');
-//                $('#user_id').val(key.user_id);	
-//                $('#OTP_id').val(key.otp);	
+//                $('#user_id').val(key.user_id);   
+//                $('#OTP_id').val(key.otp);    
 //                 //$('#Login_RegisterDiv').load(location.href + " #Login_RegisterDiv>*", ""); 
 //                 $("#spinnerDiv").html('');
 //                 $("#messageDiv").html('<div class="alert alert-success" style="margin-bottom:5px"><strong>'+key.status_message+'</strong></div>');
@@ -73,7 +78,7 @@ $(function () {
     $("#login_form").submit(function () {
         dataString = $("#login_form").serialize();
 
-        $("#spinnerDiv").html('<center><img width="70%" height="auto" src="'+BASE_URL+'css/logos/reg.gif"/></center>');
+        $.LoadingOverlay("show");
         $.ajax({
             type: "POST",
             url: BASE_URL + "login/loginCustomer",
@@ -81,10 +86,17 @@ $(function () {
             return: false, //stop the actual form post !important!
             success: function (data)
             {
-                $("#spinnerDiv").html('');
-                $("#login_err").html(data);
-            }
-        });
+                $.LoadingOverlay("hide");
+                if(navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) {           
+                    $("html").animate({scrollTop:0},"slow");
+                } else {
+                   $("html,body").animate({scrollTop:0},"slow");
+               }
+               
+               $("#spinnerDiv").html('');
+               $("#login_err").html(data);
+           }
+       });
         return false;  //stop the actual form post !important!
     });
 });
@@ -94,8 +106,8 @@ $(function () {
 $(function () {
     $("#Adminlogin_form").submit(function () {
         dataString = $("#Adminlogin_form").serialize();
+        $.LoadingOverlay("show");
 
-        $("#spinnerDiv").html('<center><img width="70%" height="auto" src="'+BASE_URL+'css/logos/reg.gif"/></center>');
         $.ajax({
             type: "POST",
             url: BASE_URL + "admin_login/adminLogin",
@@ -103,7 +115,7 @@ $(function () {
             return: false, //stop the actual form post !important!
             success: function (data)
             {
-                $("#spinnerDiv").html('');
+                $.LoadingOverlay("hide");
                 $("#login_err").html(data);
             }
         });
