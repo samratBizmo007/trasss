@@ -39,12 +39,35 @@ class Dashboard extends CI_Controller
         $data['FreelancEmployer_ratings'] = Dashboard::getAverageRatingsOf_FreelancEmployer();
         $data['Testimonials_For_Freellancer'] = Dashboard::getTestomonials();
          $data['job_bookmarks'] = Dashboard::show_BookmarkedJobs();
+         $data['chat_box'] = Dashboard::chat_box();
          //print_r($data['job_bookmarks']);die();
         $this->load->view('includes/header.php');
         $this->load->view('pages/profile/dashboard', $data);
         $this->load->view('includes/footer.php');
     }	
 //-----------------------------------------------------------------------------
+
+    //-------------Chat Function demo--------------//
+ public function chat_box() {
+        $user_name = $this->session->userdata('user_name');
+      $url = "http://api.cometondemand.net/api/";
+$fields = array("PARAMETER_NAME"=>$user_name);
+$fields_string = '';
+foreach($fields as $key=>$value) { $fields_string .= $key.'='.($value).'&'; }
+$fields_string = rtrim($fields_string, '&');
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL,$url);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS,$fields_string);
+curl_setopt($ch,CURLOPT_HTTPHEADER,array('api-key: 50319xf20aa466051ce53da59ae70fbe975d9e'));
+$result = curl_exec($ch);
+if (empty($result)) {
+    die(curl_error($ch));
+}
+curl_close ($ch);
+echo $result;
+    }
+//---------Chat Function demo----//
 //-------------function for bookmark job--------------//
  public function show_BookmarkedJobs() {
         $user_id = $this->session->userdata('user_id');

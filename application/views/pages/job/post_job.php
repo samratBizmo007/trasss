@@ -433,13 +433,9 @@
                                 <label class=" w3-small">Required Skills :</label>
                                 <span class="w3-text-red">*</span>                                  
                                 <select id="select-skill" style="width: 100%; top: 36px; height: 34px; left: 0px;" name="skill[]" multiple class="selectized" placeholder="Select a skill..." required>
-                                   <!--  <?php 
-                                    foreach ($all_skills['status_message'] as $row) { ?>	
-                                    <option value="<?php echo $row['jm_skill_id']; ?>"><?php 
-                                    echo $row['jm_skill_name']; ?></option>
-                                    <?php } ?> -->
+                        
                                 </select>
-                                <!-- <script>$('#select-skill').selectize({});</script> -->
+                                <script>$('#select-skill').selectize({});</script>
                             </div>
                             <div class="col-lg-6">
                                 <label class=" w3-small">Job Type :</label>
@@ -531,18 +527,7 @@
 $(function () {
     $("#post_jobForm").submit(function (e) {
         e.preventDefault();
-        var $Requirements = $("#Requirements");
-        //$Requirements.text($Requirements.richText("getText"));
-        $Requirements=$("#Requirements").richText("getContent");
-
-        var $Address = $("#Address");
-       // $Address.text($Address.richText("getText"));
-       $Address=$("#Address").richText("getContent");
-
-       var $Responsibility = $("#Responsibility");
-       // $Responsibility.text($Responsibility.richText("getText"));
-       $Responsibility=$("#Responsibility").richText("getContent");
-
+       
        dataString = $("#post_jobForm").serialize();
        var user_id=$('#userValue').val();
        var profile_id=$('#profileValue').val();
@@ -614,7 +599,9 @@ $(function () {
             $("#selectDiv").load(location.href+" #selectDiv>*", "");  
             var category_id=$('#categories').val();
             var dataString = 'category_id='+category_id;
+            var text = '';
             $('#selectDiv').html('<span class="w3-text-grey w3-small"><i class="fa fa-circle-o-notch fa-spin"></i> Loading skills</span>');
+            $('#select-skill').selectize({});
             $.ajax
             ({
               type: "POST",
@@ -624,19 +611,22 @@ $(function () {
               //dataType: "text",
               success: function(data)
               {
+                console.log(data);  
                 var key=JSON.parse(data);
-
                 if(key['status'] == '200'){
                     for(var i=0; i<(key['status_message']).length; i++){                                              
                         $('#select-skill').append('<option value="'+key['status_message'][i]['jm_skill_id']+'"><b>'+key['status_message'][i]['jm_skill_name']+'</b></option>');
+                        text += '{text:'+key['status_message'][i]['jm_skill_name']+',value:'+key['status_message'][i]['jm_skill_id']+'}';
+        //$('#select-skill').selectize({options:[]});   
                     }
-                    $('#select-skill').selectize({});
+                    $('#select-skill').selectize({options:[text]});
                 }
             }
         }).done(function() {
+          $('#select-skill').selectize();
         });                                    
     });
-
+          $('#select-skill').selectize();
     });
 
 </script>

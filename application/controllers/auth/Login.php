@@ -381,6 +381,7 @@ class Login extends CI_Controller
 		$url = $path.'api/auth_api/login';
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_POST, true);
+		
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$response_json = curl_exec($ch);

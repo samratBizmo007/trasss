@@ -356,15 +356,7 @@ echo $_COOKIE['cookie_uname']; ?>" required>
 				$(this).addClass('active');
 				e.preventDefault();
 			});
-			$('#forget_link').click(function(e) {
-				$("#forget_password").delay(100).fadeIn(100);
-				$("#login_form").fadeOut(100);
-				$('#login_form-link').html('<i class="fa fa-unlock"></i> Forget Password');
-				$('#register_form-link').html('');
-				$('#login_form-link').removeClass('active');
-				$(this).addClass('active');
-				e.preventDefault();
-			});
+			
 		});
 
 	</script>

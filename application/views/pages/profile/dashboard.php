@@ -2287,7 +2287,7 @@ function FetchSkills(job_id,Skills){
 
 <script type="text/javascript" charset="utf-8" src="//fast.cometondemand.net/50319x_x3a1bc.js"></script>
 <link type="text/css" rel="stylesheet" media="all" href="//fast.cometondemand.net/50319x_x3a1bc.css" />
-<a href="javascript:void(0)" onclick="javascript:jqcc.cometchat.chatWith(20);">Chat with me<a>
+<a href="javascript:void(0)" onclick="javascript:jqcc.cometchat.chatWith('20');">Chat with me<a>
 
 <!-- script ends here -->
 </body>

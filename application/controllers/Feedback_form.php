@@ -45,7 +45,7 @@ class Feedback_form extends CI_Controller
   		$response_json = curl_exec($ch);	  
   		curl_close($ch);
   		$response = json_decode($response_json, true); 
-  		print_r($response_json);die();
+  		//print_r($response_json);die();
   		//echo $response['status_message'];
   		 if ($response['status'] == 200) {
             echo'
