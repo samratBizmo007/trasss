@@ -227,7 +227,7 @@ class Profile_model extends CI_Model{
 	//-------------------------------------------------------------//
 	public function get_userPortfolio($user_id,$profile_type){
 
-		$query = "SELECT * FROM jm_portfolio_data WHERE jm_user_id='$user_id' AND jm_profile_type='$profile_type'";
+		$query = "SELECT * FROM jm_portfolio_data WHERE jm_user_id='$user_id'";
 		//echo $query;die();
 		$result = $this->db->query($query);
 

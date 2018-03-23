@@ -471,10 +471,11 @@ error_reporting(E_ERROR | E_PARSE);
 							}
 							?>
 						</select>
+						<span class="w3-text-red w3-small">NOTE: You can select maximum 10 skills.</span>
 					</div>
 					<script>
 						$('#select-skill').selectize({
-							maxItems: 8
+							maxItems: 10
 						});
 					</script>
 				</div>

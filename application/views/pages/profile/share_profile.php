@@ -560,7 +560,7 @@ switch ($profile_type) {
 
                 <div class="w3-col l12" id="portfolio_list">
                   <?php 
-
+//print_r($all_userPortfolio);die();
                   if($all_userPortfolio['status']!=200){
                     echo '<center class="w3-light-grey w3-padding"><label class="w3-medium w3-text-grey">'.$all_userPortfolio['status_message'].'</label></center>';
                   }
@@ -569,7 +569,6 @@ switch ($profile_type) {
 
                     <div class="w3-col l3 w3-padding-small">
                       <div class="w3-col l12  w3-round-large">
-                        <a class="btn w3-small w3-right" style="padding:0;margin:0" title="Remove"><i class="w3-text-grey fa fa-remove" onclick="del_portfolio('<?php echo $key['jm_portfolio_id']; ?>')"></i></a>
                         <a style="padding:0;margin:0" data-toggle="modal" data-target="#Portfolio_<?php echo $key['jm_portfolio_id']; ?>" class="btn profile_portfolio">
                           <img class="img img-thumbnail" alt="Portfolio Image not found" style="height: 100%; width: 100%; object-fit: contain" src="<?php echo base_url().''.$key['jm_portfolio_file']; ?>" onerror="this.src='<?php echo base_url()?>images/default_image.png'">
                         </a>

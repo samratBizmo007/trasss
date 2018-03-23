@@ -105,6 +105,14 @@ class Post_jobs extends CI_Controller {
         curl_close($ch);
         $response = json_decode($response_json, true);
 print_r($response_json);
+// for ($i=0; $i < count($response['status_message']) ; $i++) { 
+//      echo '<option value="'.$response['status_message'][$i]['jm_skill_id'].'"><b>'.$response['status_message'][$i]['jm_skill_name'].'</b></option>';
+// }
+// foreach ($response['status_message'] as $key) {
+//     //print_r($key['jm_skill_id']);
+//     echo '<option value="'.$key['jm_skill_id'].'"><b>'.$key['jm_skill_name'].'</b></option>';
+// }
+
 //        $key='';
 //        if($response['status']==200){
 //        foreach($response['status_message'] as $key) {

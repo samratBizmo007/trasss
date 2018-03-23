@@ -3,7 +3,7 @@ error_reporting(E_ERROR | E_PARSE);
 $user_name=$this->session->userdata('user_name');
 
 $profile_type=$this->session->userdata('profile_type');
-// /echo $profile_type;
+// echo $profile_type;
 ?>
 <!DOCTYPE html>
 <html>

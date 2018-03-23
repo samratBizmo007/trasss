@@ -155,7 +155,7 @@ class Membership_model extends CI_Model
 					'status_message' => ' Update Failed...!');
 			}			
 		}
-		print_r($response);
+		return $response;
 	}
 
 	public function	cron_job_membership()

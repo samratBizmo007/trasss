@@ -176,13 +176,15 @@ class Share_profile extends CI_Controller
 //			}
 		//Connection establishment, processing of data and response from REST API
 			$path=base_url();
-			$url = $path.'api/ViewProfile_api/get_userPortfolio?user_id='.$user_id.'&profile_type='.$profile_type;	
+			$url = $path.'api/ViewProfile_api/get_userPortfolio?user_id='.$user_id.'&profile_type='.$profile_type;
+			//echo $url;die();	
 			$ch = curl_init($url);
 			curl_setopt($ch, CURLOPT_HTTPGET, true);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			$response_json = curl_exec($ch);
 			curl_close($ch);
 			$response=json_decode($response_json, true);
+			//print_r($response_json);die();
 			return $response;	
 		}
 	// ---------------------function ends----------------------------------//	

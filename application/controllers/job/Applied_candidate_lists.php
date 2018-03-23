@@ -123,17 +123,11 @@ class Applied_candidate_lists extends CI_Controller {
         extract($_POST);
        // print_r($_POST);die();
         if($candidate_id == ''){
-            echo'<div class="alert alert-danger w3-margin" style="text-align: center;">
-            <strong>Please Select At Least One Candidate...!</strong> 
-            </div>    
-            ';
+            echo'<label class="w3-text-red w3-padding w3-xlarge"><i class="fa fa-warning "></i> Alert!</label><p class="w3-text-grey w3-medium w3-padding">Please Select At Least One Candidate!</p>';
             die();
         }
         if($Candidate_Status == '0'){
-            echo'<div class="alert alert-danger w3-margin" style="text-align: center;">
-            <strong>Please Select Status...!</strong> 
-            </div>    
-            '; 
+            echo'<label class="w3-text-red w3-padding w3-xlarge"><i class="fa fa-warning "></i> Alert!</label><p class="w3-text-grey w3-medium w3-padding">Please Select Status!</p>'; 
             die();
         }
         $candidate_id = json_encode($candidate_id);
@@ -147,15 +141,10 @@ class Applied_candidate_lists extends CI_Controller {
         $response = json_decode($response_json, true);
         //print_r($response_json);
         if ($response['status'] == 200) {
-            echo'<div class="alert alert-success w3-margin" style="text-align: center;">
-            <strong>' . $response['status_message'] . '</strong> 
-            </div>    
+            echo '<label class="bluish-green w3-padding w3-xlarge"><i class="fa fa-check "></i> Success!</label> <p class="w3-text-grey w3-medium w3-padding">'.$response['status_message'].'</p>               
             ';
         } else {
-            echo'<div class="alert alert-danger w3-margin" style="text-align: center;">
-            <strong>' . $response['status_message'] . '</strong> 
-            </div>    
-            ';
+            echo '<label class="w3-text-red w3-padding w3-xlarge"><i class="fa fa-warning "></i> Warning!</label><p class="w3-text-grey w3-medium w3-padding">'.$response['status_message'].'</p>';
         }
     }
 
@@ -164,10 +153,7 @@ class Applied_candidate_lists extends CI_Controller {
         extract($_POST);
        // print_r($_POST);die();
         if($candidate_id == ''){
-            echo'<div class="alert alert-danger w3-margin" style="text-align: center;">
-            <strong>Please Select At Least One Candidate...!</strong> 
-            </div>    
-            ';
+            echo '<label class="w3-text-red w3-padding w3-xlarge"><i class="fa fa-warning "></i> Alert!</label><p class="w3-text-grey w3-medium w3-padding">Please Select At Least One Candidate!</p>';
             die();
         }
         $candidate_id = json_encode($candidate_id);
@@ -182,31 +168,21 @@ class Applied_candidate_lists extends CI_Controller {
         $response = json_decode($response_json, true);
         //print_r($response_json);die();
         if ($response['status'] == 200) {
-            echo'<div class="alert alert-success" style="margin-bottom:5px">
-            <strong>'.$response['status_message'].'</strong> 
-            </div>
+            echo '
+            <label class="bluish-green w3-padding w3-xlarge"><i class="fa fa-check "></i> Success!</label> <p class="w3-text-grey w3-medium w3-padding">'.$response['status_message'].'</p>
             <script>
             window.setTimeout(function() {
-              $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-                 $(this).remove(); 
-             });
-             window.location.href="'.base_url().'profile/dashboard";
-         }, 100);
-         </script>';
-     } else {
-        echo'<div class="alert alert-danger" style="margin-bottom:5px">
-        <strong>'.$response['status_message'].'</strong> 
-        </div>
-        <script>
-        window.setTimeout(function() {
-          $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
-             $(this).remove(); 
-         });
-         window.location.href="'.base_url().'profile/dashboard";
-     }, 100);
-     </script>    
-     ';
- }            
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+                //window.location.href="'.base_url().'profile/dashboard";
+                location.reload();
+            }, 1000);
+            </script>    
+            ';
+        } else {
+            echo '<label class="w3-text-red w3-padding w3-xlarge"><i class="fa fa-warning "></i> Warning!</label><p class="w3-text-grey w3-medium w3-padding">'.$response['status_message'].'</p>';
+        }     
 }
     //----------------------------ENDS-----------------------------------//
 }

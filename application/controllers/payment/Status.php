@@ -54,7 +54,7 @@ class Status extends CI_Controller {
           $response_json = curl_exec($ch);
           curl_close($ch);
           $response = json_decode($response_json, true);
-//print_r($response_json);die();
+//print_r($status);die();
           $data['response'] = $response;
         if($status == 'success' && $response['status']==200){
           //echo $response_json;die();

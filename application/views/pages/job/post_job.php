@@ -431,8 +431,8 @@
 
                             <div class="col-lg-6" id="selectDiv">
                                 <label class=" w3-small">Required Skills :</label>
-                                <span class="w3-text-red">*</span>                                  
-                                <select id="select-skill" style="width: 100%; top: 36px; height: 34px; left: 0px;" name="skill[]" multiple class="selectized" placeholder="Select a skill..." required>
+                                <span class="w3-text-red"></span>                                  
+                                <select id="select-skill" style="width: 100%; top: 36px; height: 34px; left: 0px;" name="skill[]" multiple class="selectized" placeholder="Select a skill...">
                         
                                 </select>
                                 <script>$('#select-skill').selectize({});</script>
@@ -611,13 +611,12 @@ $(function () {
               //dataType: "text",
               success: function(data)
               {
-                console.log(data);  
+                //console.log(data);  
                 var key=JSON.parse(data);
                 if(key['status'] == '200'){
                     for(var i=0; i<(key['status_message']).length; i++){                                              
                         $('#select-skill').append('<option value="'+key['status_message'][i]['jm_skill_id']+'"><b>'+key['status_message'][i]['jm_skill_name']+'</b></option>');
                         text += '{text:'+key['status_message'][i]['jm_skill_name']+',value:'+key['status_message'][i]['jm_skill_id']+'}';
-        //$('#select-skill').selectize({options:[]});   
                     }
                     $('#select-skill').selectize({options:[text]});
                 }

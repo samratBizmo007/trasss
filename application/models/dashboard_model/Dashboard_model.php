@@ -390,7 +390,7 @@ public function get_allSkills(){
 	// -----------------------GET ALL SKILLS  BY CATEGORY MODEL----------------------//
 	//-------------------------------------------------------------//
 public function getSkill_byCategory($category_id){
-  $query = "SELECT * FROM jm_skills_tab WHERE category_id = $category_id";
+  $query = "SELECT jm_skill_id,jm_skill_name FROM jm_skills_tab WHERE category_id = $category_id";
                // echo $query;die();
   $result = $this->db->query($query);
 

@@ -273,7 +273,7 @@ echo $_COOKIE['cookie_uname']; ?>" required>
 										<div class="row">
 											<div class="col-lg-12">
 												<div class="text-center">
-													<a href="#" tabindex="5" id="forget_link" class="forgot-password">Forgot Password?</a>
+													<a href="#" tabindex="5" id="forget_link" class="forgot-password">Forgot your Password? Click Here.</a>
 												</div>
 											</div>
 										</div>
@@ -294,6 +294,15 @@ echo $_COOKIE['cookie_uname']; ?>" required>
 									</div>
 									<div class="col-sm-6 col-sm-offset-3">
 										<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn bluishGreen_bg" value="Submit">
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-lg-12 w3-margin-top">
+												<div class="text-center">
+													<a href="<?php echo base_url(); ?>auth/login" id="back_toLogin" class="forgot-password"><i class="fa fa-chevron-left"></i> Back To Login</a>
+												</div>
+											</div>
+										</div>
 									</div>
 								</form>
 								<form id="register_form" role="form" method='post' enctype='multipart/form-data' style="display: none;">
@@ -356,7 +365,15 @@ echo $_COOKIE['cookie_uname']; ?>" required>
 				$(this).addClass('active');
 				e.preventDefault();
 			});
-			
+			$('#forget_link').click(function(e) {
+				$("#forget_password").delay(100).fadeIn(100);
+				$("#login_form").fadeOut(100);
+				$('#login_form-link').html('<i class="fa fa-unlock"></i> Forget Password');
+				$('#register_form-link').html('');
+				$('#login_form-link').removeClass('active');
+				$(this).addClass('active');
+				e.preventDefault();
+			});
 		});
 
 	</script>
@@ -378,17 +395,11 @@ echo $_COOKIE['cookie_uname']; ?>" required>
 	            	//alert(data);
 	            	var key=JSON.parse(data);
 	            	if(key.status == 200){                    
-	            		$('#Login_RegisterDiv').load(location.href + " #Login_RegisterDiv>*", ""); 
-	            		$('#login_form-link').html('<i class="fa fa-unlock-alt"></i> Login');
+	            		//$('#Login_RegisterDiv').load(location.href + " #Login_RegisterDiv>*", ""); 
+	            		//$('#login_form-link').html('<i class="fa fa-unlock-alt"></i> Login');
 	            		$("#spinnerDiv").html('');
 	            		$("#messageDiv").html('<div class="alert alert-success" style="margin-bottom:5px"><strong>'+key.status_message+'</strong></div><div class="col-lg-12 alert alert-info alert-dismissable fade in"><a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a><span><strong><i class="fa fa-warning"></i></strong>Please Check your Email... We have sent your password on your Registered Email-ID..!</span></div>');
-	            		window.setTimeout(
-	            			function(){
-	            				location.reload(true)
-	            			},
-	            			3000
-	            			);
-
+	            		
 	            	}else{ 
 	            		$("#spinnerDiv").html('');               
 	            		$("#messageDiv").html('<div class="alert alert-danger" style="margin-bottom:5px"><strong>'+key.status_message+'</strong></div>');

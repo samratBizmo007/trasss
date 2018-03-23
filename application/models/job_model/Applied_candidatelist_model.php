@@ -204,7 +204,7 @@ public function sendMail_ToSelected_Candidates($email_id,$job_name,$company_name
             'protocol' => 'smtp',
             'smtp_host' => 'mx1.hostinger.in',
             'smtp_port' => '587',
-            'smtp_user' => 'customercare@jobmandi.in', // change it to yours
+            'smtp_user' => 'jobmandi@bms.bizmo-tech-admin.com', // change it to yours
             'smtp_pass' => 'Descartes@1990', // change it to yours
             'mailtype' => 'html',
             'charset' => 'utf-8',
@@ -215,25 +215,9 @@ public function sendMail_ToSelected_Candidates($email_id,$job_name,$company_name
             $current_date = date('Y-m-d');                
             $this->load->library('email', $config);
             $this->email->set_newline("\r\n");
-            $this->email->from('customercare@jobmandi.in', "Admin Team");
+            $this->email->from('jobmandi@bms.bizmo-tech-admin.com', "Admin Team");
             $this->email->to($email_id);
             $this->email->subject("JOBMANDI-Job Selection");
-//            $this->email->message('<html>'
-//                . '<head>'
-//                . '<title>Congratulations...!</title>'
-//                . '</head>'
-//                . '<body>'                        
-//                . '<form action="/action_page.php">'
-//                . '<fieldset>'
-//                . '<legend>Congratulations...! - '.$username.'</legend>'
-//                . '<p><label>You Have Been Selected For Your Applied Job Position- '.$job_name.'</label></p>'
-//                . '<p><label>Company Name- '.$company_name.'</label></p>'
-//                . '<a class="btn" href="'. base_url().'auth/login?profile=3">login</a>'
-//                . '</fieldset>'
-//                . '</form>'
-//                . '</body>'
-//                . '</html>');
-
                 
             $this->email->message('<html>
 			<head>

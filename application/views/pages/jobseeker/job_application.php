@@ -95,7 +95,7 @@
     
     <body>
         <div class="w3-col l12" style="padding-left:10px" >
-            <a class="btn w3-round-jumbo w3-margin-top w3-text-black" title="Back To Job List" href="<?php echo base_url(); ?>jobseeker/Jobseeker_lists"><i class="fa fa-backward"> To Job List</i></a>            
+            <a class="btn w3-round-jumbo w3-margin-top w3-text-black" title="Back To Job List" href="<?php echo base_url(); ?>jobseeker/Jobseeker_lists"><i class="fa fa-backward"> Job List</i></a>            
         </div>
 
         <div class=" col-lg-2"></div>
@@ -225,7 +225,7 @@
                             <div class="row w3-col l12 ">
                                 <div class="w3-col l5 w3-left">
                                     <label>Contact No(optional) :</label>
-                                    <input type="tel" name="contact_no" maxlength="10" id="contact_no" class="form-control" placeholder="Contact Number">
+                                    <input type="number" name="contact_no" maxlength="10" id="contact_no" class="form-control" placeholder="Contact Number">
                                 </div>
                                 <div class="w3-col l5 w3-right ">
                                     <label>Message(optional) :</label>

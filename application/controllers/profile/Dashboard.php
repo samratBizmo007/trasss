@@ -38,8 +38,8 @@ class Dashboard extends CI_Controller
         $data['freelancer_ratings'] = Dashboard::getAverageRatingsOf_Freelancer();
         $data['FreelancEmployer_ratings'] = Dashboard::getAverageRatingsOf_FreelancEmployer();
         $data['Testimonials_For_Freellancer'] = Dashboard::getTestomonials();
-         $data['job_bookmarks'] = Dashboard::show_BookmarkedJobs();
-         $data['chat_box'] = Dashboard::chat_box();
+        $data['job_bookmarks'] = Dashboard::show_BookmarkedJobs();
+         // $data['chat_box'] = Dashboard::chat_box();
          //print_r($data['job_bookmarks']);die();
         $this->load->view('includes/header.php');
         $this->load->view('pages/profile/dashboard', $data);

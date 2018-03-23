@@ -808,12 +808,15 @@ public function sort_projectb_type()
         $response_json = curl_exec($ch);
         curl_close($ch);
         $response = json_decode($response_json, true); 
-        print_r($response_json);die();
+        //print_r($response_json);die();
        // echo ($response['status_message']);
-       echo'<div class="alert alert-success w3-margin" style="text-align: center;">
-            <strong>' . $response['status_message'] . '</strong> 
-            </div>    
-            ';   
+      if ($response['status'] == 200) {
+            echo'
+            <label class="bluish-green w3-padding w3-xlarge"><i class="fa fa-check "></i> Success!</label> <p class="w3-text-grey w3-medium w3-padding">'.$response['status_message'].'</p>   
+            ';
+        } else {
+            echo '<label class="w3-text-red w3-padding w3-xlarge"><i class="fa fa-warning "></i> Warning!</label><p class="w3-text-grey w3-medium w3-padding">'.$response['status_message'].'</p>';
+        } 
       }
     // -----------------Award Poroject function---------------//
 
